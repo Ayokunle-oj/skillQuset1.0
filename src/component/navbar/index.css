@@ -88,12 +88,6 @@
 }
 
 /* ─── RIGHT SIDE WRAPPER ──────────────────────────────────────────────── */
-.ss {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.25rem;
-}
 
 /* ─── MENU LIST ───────────────────────────────────────────────────────── */
 .navbar__menu {
@@ -186,6 +180,19 @@
 /* ─── HAMBURGER ICON ──────────────────────────────────────────────────── */
 .menu__icon {
   display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1001;
 }
 
 /* ─── BUTTONS ─────────────────────────────────────────────────────────── */
@@ -416,19 +423,6 @@
   /* Hamburger */
   .menu__icon {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: white;
-    cursor: pointer;
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease;
-    font-size: 1.2rem;
-    position: relative;
-    z-index: 1001;
   }
 
   .menu__icon:hover {

@@ -69,69 +69,68 @@ function Navbar() {
           </div>
 
           {/* Right side: nav links + buttons */}
-          <div className="ss">
-            <ul className={menu ? "navbar__menu active" : "navbar__menu"}>
-              <li className="navbar__item">
-                <Link
-                  to="/discover"
-                  className="navbar__links"
-                  onClick={closeMobileMenu}
-                >
-                  Discover
-                </Link>
-              </li>
-              <li className="navbar__item">
-                <Link
-                  to="/about"
-                  className="navbar__links"
-                  onClick={closeMobileMenu}
-                >
-                  About
-                </Link>
-              </li>
-              <li className="navbar__item">
-                <Link
-                  to="/whats-new"
-                  className="navbar__links"
-                  onClick={closeMobileMenu}
-                >
-                  What's New
-                </Link>
-              </li>
 
-              {/* Mobile-only CTA buttons inside the drawer */}
-              <li className="navbar__item">
-                <Link
-                  to="/sign__up"
-                  className="navbar__links__mobile"
-                  onClick={closeMobileMenu}
-                >
-                  Sign up
-                </Link>
-              </li>
-              <li className="navbar__item">
-                <Link
-                  to="/register"
-                  className="navbar__links__mobile"
-                  onClick={closeMobileMenu}
-                >
-                  Log in
-                </Link>
-              </li>
-            </ul>
+          <ul className={menu ? "navbar__menu active" : "navbar__menu"}>
+            <li className="navbar__item">
+              <Link
+                to="/discover"
+                className="navbar__links"
+                onClick={closeMobileMenu}
+              >
+                Discover
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link
+                to="/about"
+                className="navbar__links"
+                onClick={closeMobileMenu}
+              >
+                About
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link
+                to="/whats-new"
+                className="navbar__links"
+                onClick={closeMobileMenu}
+              >
+                What's New
+              </Link>
+            </li>
 
-            {/* Desktop buttons */}
-            {button && (
-              <button onClick={handleLogIn} className="btn__outline">
-                Log in
-              </button>
-            )}
-            {button && (
-              <button onClick={handleSign} className="btn__outline">
+            {/* Mobile-only CTA buttons inside the drawer */}
+            <li className="navbar__item">
+              <Link
+                to="/sign__up"
+                className="navbar__links__mobile"
+                onClick={closeMobileMenu}
+              >
                 Sign up
-              </button>
-            )}
-          </div>
+              </Link>
+            </li>
+            <li className="navbar__item">
+              <Link
+                to="/register"
+                className="navbar__links__mobile"
+                onClick={closeMobileMenu}
+              >
+                Log in
+              </Link>
+            </li>
+          </ul>
+
+          {/* Desktop buttons */}
+          {button && (
+            <button onClick={handleLogIn} className="btn__outline">
+              Log in
+            </button>
+          )}
+          {button && (
+            <button onClick={handleSign} className="btn__outline">
+              Sign up
+            </button>
+          )}
         </nav>
       </header>
     </>
