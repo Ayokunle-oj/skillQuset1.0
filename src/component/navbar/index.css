@@ -1,0 +1,385 @@
+/* ─── NAVBAR ──────────────────────────────────────────────────────────── */
+
+.header {
+  background-color: var(--Neutral2, #ffffff);
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  /* Glass-morphism feel */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background-color: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  /* Slide-down entrance on load */
+  animation: navSlideDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes navSlideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 72px;
+  max-width: 1400px;
+  padding: 0 32px;
+  margin: 0 auto;
+}
+
+/* ─── LOGO ────────────────────────────────────────────────────────────── */
+.navbar__logo {
+  color: var(--text, #111);
+  text-decoration: none;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
+  /* Subtle shimmer on load */
+  animation: logoReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes logoReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.navbar__logo::before {
+  content: "◈";
+  font-size: 1.1rem;
+  color: var(--btn, #4f46e5);
+  animation: spin 6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.navbar__logo:hover {
+  color: var(--btn, #4f46e5);
+  transition: color 0.25s ease;
+}
+
+/* ─── RIGHT SIDE WRAPPER ──────────────────────────────────────────────── */
+.ss {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ─── MENU LIST ───────────────────────────────────────────────────────── */
+.navbar__menu {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+/* Staggered reveal for each nav item on load */
+.navbar__item:nth-child(1) { animation: linkFadeIn 0.5s ease 0.35s both; }
+.navbar__item:nth-child(2) { animation: linkFadeIn 0.5s ease 0.45s both; }
+.navbar__item:nth-child(3) { animation: linkFadeIn 0.5s ease 0.55s both; }
+.navbar__item:nth-child(4) { animation: linkFadeIn 0.5s ease 0.65s both; }
+.navbar__item:nth-child(5) { animation: linkFadeIn 0.5s ease 0.75s both; }
+
+@keyframes linkFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.navbar__item {
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+/* ─── NAV LINKS ───────────────────────────────────────────────────────── */
+.navbar__links {
+  color: var(--text, #111);
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1.1rem;
+  height: 100%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+/* Animated underline that expands from centre */
+.navbar__links::after {
+  content: "";
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: calc(100% - 2.2rem);
+  height: 2px;
+  background: var(--btn, #4f46e5);
+  border-radius: 2px;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar__links:hover {
+  color: var(--btn, #4f46e5);
+}
+
+.navbar__links:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Mobile-only link — hidden on desktop */
+.navbar__links__mobile {
+  display: none;
+}
+
+/* ─── HAMBURGER ICON ──────────────────────────────────────────────────── */
+.menu__icon {
+  display: none;
+}
+
+/* ─── BUTTONS ─────────────────────────────────────────────────────────── */
+.btn__outline {
+  background-color: transparent;
+  border: 1.5px solid rgba(0, 0, 0, 0.18);
+  color: var(--text, #111);
+  border-radius: 8px;
+  padding: 0 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  height: 38px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.22s ease, border-color 0.22s ease,
+              color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Filled variant for the Sign up button (last .btn__outline) */
+.btn__outline:last-of-type {
+  background-color: var(--btn, #4f46e5);
+  border-color: var(--btn, #4f46e5);
+  color: #fff;
+}
+
+.btn__outline:first-of-type:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn__outline:last-of-type:hover {
+  background-color: var(--btn-hover, #4338ca);
+  border-color: var(--btn-hover, #4338ca);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+}
+
+.btn__outline:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Ripple on click */
+.btn__outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+  border-radius: inherit;
+}
+
+.btn__outline:active::before {
+  transform: scaleX(1);
+}
+
+/* ─── OVERLAY (fixed — works regardless of scroll position) ───────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 998; /* just below navbar (999) */
+  animation: overlayFadeIn 0.3s ease both;
+  cursor: pointer;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── UTILITY ─────────────────────────────────────────────────────────── */
+.disable   { display: none; }
+.notDisable { color: var(--text, #111); }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media screen and (max-width: 960px) {
+
+  .navbar__container {
+    padding: 0 20px;
+  }
+
+  /* Slide-in mobile menu panel */
+  .navbar__menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    width: 72%;
+    max-width: 320px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    opacity: 0;
+    transition: left 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.42s ease;
+    background: #ffffff;
+    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    gap: 0;
+    border-right: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .navbar__menu.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  /* Staggered mobile item entrance */
+  .navbar__menu.active .navbar__item:nth-child(1) { animation: mobileItemIn 0.4s ease 0.1s both; }
+  .navbar__menu.active .navbar__item:nth-child(2) { animation: mobileItemIn 0.4s ease 0.17s both; }
+  .navbar__menu.active .navbar__item:nth-child(3) { animation: mobileItemIn 0.4s ease 0.24s both; }
+  .navbar__menu.active .navbar__item:nth-child(4) { animation: mobileItemIn 0.4s ease 0.31s both; }
+  .navbar__menu.active .navbar__item:nth-child(5) { animation: mobileItemIn 0.4s ease 0.38s both; }
+
+  @keyframes mobileItemIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .navbar__item {
+    height: auto;
+    width: 100%;
+  }
+
+  .navbar__links {
+    padding: 1rem 2rem;
+    width: 100%;
+    height: auto;
+    font-size: 1.1rem;
+    justify-content: flex-start;
+    border-radius: 0;
+  }
+
+  .navbar__links::after {
+    bottom: 8px;
+    left: 2rem;
+    transform: scaleX(0);
+    width: calc(100% - 4rem);
+  }
+
+  .navbar__links:hover {
+    background-color: rgba(79, 70, 229, 0.06);
+  }
+
+  .navbar__links__mobile {
+    display: block;
+    margin: 0.4rem 1.5rem;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: var(--btn, #4f46e5);
+    color: #fff;
+    border: none;
+    transition: background 0.25s ease, transform 0.18s ease;
+    width: calc(100% - 3rem);
+  }
+
+  .navbar__links__mobile:last-of-type {
+    background-color: transparent;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    color: var(--text, #111);
+    margin-top: 0.5rem;
+  }
+
+  .navbar__links__mobile:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  .btn__outline {
+    display: none;
+  }
+
+  /* Hamburger */
+  .menu__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .menu__icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.08);
+  }
+
+  .menu__icon:active {
+    transform: scale(0.94);
+  }
+
+  .navbar__logo {
+    position: static;
+    transform: none;
+  }
+
+  .disable { display: none; }
+}

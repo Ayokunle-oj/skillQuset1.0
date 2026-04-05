@@ -1,0 +1,183 @@
+@import "../../app.css";
+.hero__container {
+  width: 100%;
+  max-width: 3000px;
+  height: calc(100vh - 80px);
+}
+
+.hero__img {
+  position: relative; /* IMPORTANT for overlay */
+  background: center center/cover no-repeat;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* 🔥 Cinematic zoom */
+  transform: scale(1);
+  transition: transform 10s ease;
+}
+
+/* optional zoom class */
+.hero__img.zoom {
+  transform: scale(1.05);
+}
+
+/* 🔥 Animated overlay (replaces your old box-shadow) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 1);
+  opacity: 0.3; /* default slight dark */
+  transition: opacity 1.5s ease-in-out;
+  z-index: 1;
+}
+
+/* when fading to black */
+.overlay.dark {
+  opacity: 1;
+}
+
+/* TEXT ABOVE OVERLAY */
+.hero__text {
+  position: relative;
+  z-index: 2;
+  border: none;
+  color: var(--text);
+  margin: 0 20px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__text > h2 {
+  margin-top: 6rem;
+  margin-left: 40px;
+  font-size: var(--large--text);
+}
+
+.hero__text > p {
+  margin-top: 10px;
+  font-size: var(--large--small--text);
+  margin-left: 46px;
+}
+
+.hero__btn {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Get__started {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border: solid var(--btn);
+  font-size: var(--large--font--text);
+  text-align: center;
+  background-color: var(--sq-violet);
+  justify-content: space-evenly;
+  transition: transform 0.4s ease-in-out;
+  color: var(--text);
+  width: 15rem;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10rem;
+}
+
+.Get__started:hover {
+  background-color: var(--btn);
+  transform: scale(1.1);
+  border: solid 3px var(--Neutral2);
+}
+
+.Get__started:active {
+  background-color: var(--sq-violet-lt);
+  transform: scale(1);
+}
+
+.hero__text .courses {
+  width: 12rem;
+  height: 40px;
+  color: white;
+  border: 3px solid var(--sq-violet);
+  font-weight: bolder;
+  background: none;
+  cursor: pointer;
+  margin-left: 60px;
+  border-radius: 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.hero__text .courses:hover {
+  background-color: var(--sq-violet);
+  border: solid 3px var(--Neutral1);
+  transform: scale(1.1);
+}
+
+.hero__text .courses:active {
+  transform: scale(1);
+  background-color: var(--sq-violet-lt);
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 960px) {
+  .hero__text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__text h2 {
+    text-align: center;
+    font-size: var(--large--mid--text);
+    margin-top: 8vh;
+    margin-left: 2px;
+  }
+
+  .hero__text .text {
+    text-align: center;
+    margin-left: 3px;
+  }
+
+  .hero__btn {
+    margin-top: 13vh;
+  }
+
+  .Get__started {
+    margin-right: 2rem;
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .hero__text h2 {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .hero__text .text {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .hero__btn {
+    margin-top: 50px;
+    flex-direction: column;
+  }
+
+  .Get__started {
+    margin: 1rem;
+    width: 13rem;
+    margin-top: 40px;
+  }
+
+  .hero__text .courses {
+    margin-left: 1px;
+  }
+}
