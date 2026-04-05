@@ -1,8 +1,15 @@
 /* ─── NAVBAR ──────────────────────────────────────────────────────────── */
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 16px;
+}
 .header {
-  background-color: var(--Neutral2, #ffffff);
-  height: 72px;
+  background-color: #170b48;
+  height: 80px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +19,6 @@
   /* Glass-morphism feel */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background-color: rgba(255, 255, 255, 0.88);
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   /* Slide-down entrance on load */
   animation: navSlideDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -34,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 72px;
+  height: 80px;
   max-width: 1400px;
   padding: 0 32px;
   margin: 0 auto;
@@ -42,14 +48,13 @@
 
 /* ─── LOGO ────────────────────────────────────────────────────────────── */
 .navbar__logo {
-  color: var(--text, #111);
+  color: white;
   text-decoration: none;
-  font-size: 1.65rem;
+  font-size: 2.4rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
   position: relative;
   /* Subtle shimmer on load */
   animation: logoReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
@@ -69,19 +74,17 @@
 .navbar__logo::before {
   content: "◈";
   font-size: 1.1rem;
-  color: var(--btn, #4f46e5);
   animation: spin 6s linear infinite;
   display: inline-block;
 }
 
 @keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.navbar__logo:hover {
-  color: var(--btn, #4f46e5);
-  transition: color 0.25s ease;
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── RIGHT SIDE WRAPPER ──────────────────────────────────────────────── */
@@ -104,15 +107,31 @@
 }
 
 /* Staggered reveal for each nav item on load */
-.navbar__item:nth-child(1) { animation: linkFadeIn 0.5s ease 0.35s both; }
-.navbar__item:nth-child(2) { animation: linkFadeIn 0.5s ease 0.45s both; }
-.navbar__item:nth-child(3) { animation: linkFadeIn 0.5s ease 0.55s both; }
-.navbar__item:nth-child(4) { animation: linkFadeIn 0.5s ease 0.65s both; }
-.navbar__item:nth-child(5) { animation: linkFadeIn 0.5s ease 0.75s both; }
+.navbar__item:nth-child(1) {
+  animation: linkFadeIn 0.5s ease 0.35s both;
+}
+.navbar__item:nth-child(2) {
+  animation: linkFadeIn 0.5s ease 0.45s both;
+}
+.navbar__item:nth-child(3) {
+  animation: linkFadeIn 0.5s ease 0.55s both;
+}
+.navbar__item:nth-child(4) {
+  animation: linkFadeIn 0.5s ease 0.65s both;
+}
+.navbar__item:nth-child(5) {
+  animation: linkFadeIn 0.5s ease 0.75s both;
+}
 
 @keyframes linkFadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .navbar__item {
@@ -123,13 +142,13 @@
 
 /* ─── NAV LINKS ───────────────────────────────────────────────────────── */
 .navbar__links {
-  color: var(--text, #111);
+  color: white;
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 0 1.1rem;
   height: 100%;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.01em;
   position: relative;
@@ -146,13 +165,13 @@
   transform-origin: center;
   width: calc(100% - 2.2rem);
   height: 2px;
-  background: var(--btn, #4f46e5);
+  background: #6d6dff;
   border-radius: 2px;
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .navbar__links:hover {
-  color: var(--btn, #4f46e5);
+  color: #6d6dff;
 }
 
 .navbar__links:hover::after {
@@ -172,17 +191,22 @@
 /* ─── BUTTONS ─────────────────────────────────────────────────────────── */
 .btn__outline {
   background-color: transparent;
-  border: 1.5px solid rgba(0, 0, 0, 0.18);
-  color: var(--text, #111);
+  border: 1.5px solid white;
+  margin: auto 15px;
+  color: white;
   border-radius: 8px;
   padding: 0 1.1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
-  height: 38px;
+  height: 40px;
   cursor: pointer;
   letter-spacing: 0.01em;
-  transition: background 0.22s ease, border-color 0.22s ease,
-              color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.18s ease,
+    box-shadow 0.22s ease;
   position: relative;
   overflow: hidden;
 }
@@ -195,7 +219,8 @@
 }
 
 .btn__outline:first-of-type:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: white;
+  color: #000;
   border-color: rgba(0, 0, 0, 0.3);
   transform: translateY(-1px);
 }
@@ -240,17 +265,24 @@
 }
 
 @keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ─── UTILITY ─────────────────────────────────────────────────────────── */
-.disable   { display: none; }
-.notDisable { color: var(--text, #111); }
+.disable {
+  display: none;
+}
+.notDisable {
+  color: var(--text, #111);
+}
 
 /* ─── RESPONSIVE ──────────────────────────────────────────────────────── */
 @media screen and (max-width: 960px) {
-
   .navbar__container {
     padding: 0 20px;
   }
@@ -268,13 +300,14 @@
     top: 0;
     left: -100%;
     opacity: 0;
-    transition: left 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.42s ease;
+    transition:
+      left 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.42s ease;
     background: #ffffff;
     box-shadow: 8px 0 40px rgba(0, 0, 0, 0.12);
     z-index: 1000;
     gap: 0;
-    border-right: 1px solid rgba(0,0,0,0.07);
+    border-right: 1px solid rgba(0, 0, 0, 0.07);
   }
 
   .navbar__menu.active {
@@ -283,15 +316,31 @@
   }
 
   /* Staggered mobile item entrance */
-  .navbar__menu.active .navbar__item:nth-child(1) { animation: mobileItemIn 0.4s ease 0.1s both; }
-  .navbar__menu.active .navbar__item:nth-child(2) { animation: mobileItemIn 0.4s ease 0.17s both; }
-  .navbar__menu.active .navbar__item:nth-child(3) { animation: mobileItemIn 0.4s ease 0.24s both; }
-  .navbar__menu.active .navbar__item:nth-child(4) { animation: mobileItemIn 0.4s ease 0.31s both; }
-  .navbar__menu.active .navbar__item:nth-child(5) { animation: mobileItemIn 0.4s ease 0.38s both; }
+  .navbar__menu.active .navbar__item:nth-child(1) {
+    animation: mobileItemIn 0.4s ease 0.1s both;
+  }
+  .navbar__menu.active .navbar__item:nth-child(2) {
+    animation: mobileItemIn 0.4s ease 0.17s both;
+  }
+  .navbar__menu.active .navbar__item:nth-child(3) {
+    animation: mobileItemIn 0.4s ease 0.24s both;
+  }
+  .navbar__menu.active .navbar__item:nth-child(4) {
+    animation: mobileItemIn 0.4s ease 0.31s both;
+  }
+  .navbar__menu.active .navbar__item:nth-child(5) {
+    animation: mobileItemIn 0.4s ease 0.38s both;
+  }
 
   @keyframes mobileItemIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .navbar__item {
@@ -331,13 +380,15 @@
     background-color: var(--btn, #4f46e5);
     color: #fff;
     border: none;
-    transition: background 0.25s ease, transform 0.18s ease;
+    transition:
+      background 0.25s ease,
+      transform 0.18s ease;
     width: calc(100% - 3rem);
   }
 
   .navbar__links__mobile:last-of-type {
     background-color: transparent;
-    border: 1.5px solid rgba(0,0,0,0.15);
+    border: 1.5px solid rgba(0, 0, 0, 0.15);
     color: var(--text, #111);
     margin-top: 0.5rem;
   }
@@ -361,7 +412,9 @@
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.05);
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
     font-size: 1.2rem;
     position: relative;
     z-index: 1001;
@@ -381,5 +434,7 @@
     transform: none;
   }
 
-  .disable { display: none; }
+  .disable {
+    display: none;
+  }
 }

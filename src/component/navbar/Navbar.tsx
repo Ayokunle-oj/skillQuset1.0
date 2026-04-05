@@ -10,7 +10,6 @@ function Navbar() {
   const navigate = useNavigate();
   const [menu, setMenu] = useState<boolean>(false);
   const [button, setButton] = useState<boolean>(window.innerWidth > 960);
-
   const handleSign = () => navigate("./register");
   const handleLogIn = () => navigate("./sign__up");
   const closeMobileMenu = () => setMenu(false);
@@ -19,7 +18,9 @@ function Navbar() {
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menu ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menu]);
 
   // Track viewport width for desktop buttons
@@ -46,11 +47,7 @@ function Navbar() {
         This means it works correctly regardless of scroll position.
       */}
       {menu && (
-        <div
-          className="overlay"
-          onClick={closeMobileMenu}
-          aria-hidden="true"
-        />
+        <div className="overlay" onClick={closeMobileMenu} aria-hidden="true" />
       )}
 
       <header className="header">
