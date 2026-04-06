@@ -22,13 +22,13 @@
  */
 export interface Comment {
   id: string;
-  author: string;           // display name
-  avatar: string;           // initials string e.g. "BO" — shown in avatar circle
-  avatarColor: string;      // background colour for the avatar circle
-  body: string;             // comment text
-  timestamp: string;        // human-readable e.g. "2 hours ago"
-  likes: number;            // number of likes on this comment
-  replies: Comment[];       // nested replies (one level only)
+  author: string; // display name
+  avatar: string; // initials string e.g. "BO" — shown in avatar circle
+  avatarColor: string; // background colour for the avatar circle
+  body: string; // comment text
+  timestamp: string; // human-readable e.g. "2 hours ago"
+  likes: number; // number of likes on this comment
+  replies: Comment[]; // nested replies (one level only)
 }
 
 /**
@@ -36,15 +36,15 @@ export interface Comment {
  */
 export interface Announcement {
   id: string;
-  tab: "platform" | "content";  // which tab this post belongs to
-  category: string;             // label e.g. "Feature", "Content Drop"
-  categoryColor: string;        // hex colour for the category pill
-  date: string;                 // e.g. "April 2, 2026"
+  tab: "platform" | "content"; // which tab this post belongs to
+  category: string; // label e.g. "Feature", "Content Drop"
+  categoryColor: string; // hex colour for the category pill
+  date: string; // e.g. "April 2, 2026"
   title: string;
-  body: string;                 // full post body (shown expanded or truncated)
-  likes: number;                // initial like count
-  comments: Comment[];          // seeded comment threads
-  isHighlighted?: boolean;      // true = featured/pinned post (shown with accent border)
+  body: string; // full post body (shown expanded or truncated)
+  likes: number; // initial like count
+  comments: Comment[]; // seeded comment threads
+  isHighlighted?: boolean; // true = featured/pinned post (shown with accent border)
 }
 
 /**
@@ -55,11 +55,11 @@ export interface Review {
   author: string;
   avatar: string;
   avatarColor: string;
-  rating: number;           // 1–5 stars
-  title: string;            // short review headline
-  body: string;             // full review text
+  rating: number; // 1–5 stars
+  title: string; // short review headline
+  body: string; // full review text
   date: string;
-  helpful: number;          // "X people found this helpful"
+  helpful: number; // "X people found this helpful"
 }
 
 // ── SEEDED COMMENTS (reusable across posts) ───────────────────
@@ -171,7 +171,8 @@ export const PLATFORM_UPDATES: Announcement[] = [
     category: "Feature Launch",
     categoryColor: "#7c6ff7",
     date: "April 2, 2026",
-    title: "Introducing the SkillQuest AI Tutor — Your Personal Learning Assistant",
+    title:
+      "Introducing the SkillQuest AI Tutor — Your Personal Learning Assistant",
     body: `We're thrilled to announce the official launch of the SkillQuest AI Tutor — the most significant feature we've shipped since the platform launched.
 
 The AI Tutor lives inside every course and lecture on the platform. Ask it anything about the content you're studying and it will explain concepts in plain language, give you worked examples, quiz you on key points, and adapt its responses based on your level.
@@ -215,7 +216,8 @@ We believe motivation comes from seeing progress clearly. This update is our com
     category: "Partnership",
     categoryColor: "#16a34a",
     date: "March 20, 2026",
-    title: "SkillQuest Partners with 6 Nigerian Universities for Official Lecture Access",
+    title:
+      "SkillQuest Partners with 6 Nigerian Universities for Official Lecture Access",
     body: `We're proud to announce formal partnerships with six Nigerian universities who have granted SkillQuest official rights to host and distribute their lecture recordings.
 
 **Partner institutions:**
@@ -278,7 +280,8 @@ export const CONTENT_DROPS: Announcement[] = [
     category: "Content Drop",
     categoryColor: "#7c6ff7",
     date: "April 3, 2026",
-    title: "240 New University Lectures Added — Sciences, Law, Medicine & Engineering",
+    title:
+      "240 New University Lectures Added — Sciences, Law, Medicine & Engineering",
     body: `This is the largest single content drop in SkillQuest history: 240 new university lectures across four faculties, sourced directly from our partner institutions.
 
 **What's included:**
@@ -306,7 +309,8 @@ All lectures include transcripts, downloadable notes, and AI Tutor support (for 
     category: "New Course",
     categoryColor: "#0ea5e9",
     date: "April 1, 2026",
-    title: "New SkillQuest Course: Full-Stack Web Development with React & Node.js",
+    title:
+      "New SkillQuest Course: Full-Stack Web Development with React & Node.js",
     body: `Our most requested course is finally here.
 
 **Full-Stack Web Development with React & Node.js** is a 32-hour, 210-lesson deep dive into building real production-grade web applications from the ground up. This is not a hello-world tutorial — you will build four complete projects:
@@ -396,7 +400,7 @@ export const REVIEWS: Review[] = [
     avatarColor: "#7c6ff7",
     rating: 5,
     title: "The best learning platform built for Nigerians, by Nigerians",
-    body: "I've tried Coursera, Udemy, and Khan Academy. None of them understand my context the way SkillQuest does. The university lecture partnerships are incredibly valuable — I'm a law student and having Bowen's actual lecture recordings available is something I genuinely couldn't believe when I first saw it. The AI Tutor is a bonus on top of an already brilliant product.",
+    body: "I've tried Coursera, Udemy, and Khan Academy. None of them understand my context the way SkillQuest does. The university lecture partnerships are incredibly valuable — I'm a mechatronics  student and having Bowen's actual lecture recordings available is something I genuinely couldn't believe when I first saw it. The AI Tutor is a bonus on top of an already brilliant product.",
     date: "April 1, 2026",
     helpful: 48,
   },
@@ -432,5 +436,16 @@ export const REVIEWS: Review[] = [
     body: "I'm a SS3 student preparing for JAMB and the past questions library on this platform is unlike anything I've seen. Every question from 2010 to 2025, with worked solutions and explanations. I've been doing 30 questions a day and my mock scores have gone from 180 to 256 in 8 weeks. This is a life-changing resource for Nigerian students.",
     date: "March 18, 2026",
     helpful: 89,
+  },
+  {
+    id: "rv-5",
+    author: "olatunde emmanuel",
+    avatar: "EO",
+    avatarColor: "#ec4899",
+    rating: 5,
+    title: "The best learning platform ever",
+    body: "This learning platform have made me improve on my education,enabling me to get better result in my examination, understanding the course i found hard and it made learning much more easy and faster.",
+    date: "March 5, 2026",
+    helpful: 70,
   },
 ];
