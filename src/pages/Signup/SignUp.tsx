@@ -8,12 +8,21 @@
  *           Per-rule checklist · On-blur validation ·
  *           Red highlight + error text under bad fields
  *
+ * Email Verification Flow (Flow B):
+ *   Step 1 — User fills in the registration form and submits.
+ *   Step 2 — Backend sends a 6-digit OTP to the user's email
+ *            WITHOUT creating the account yet.
+ *   Step 3 — OTP panel replaces the form in-place (same page).
+ *   Step 4 — User enters the code; it is sent to the backend
+ *            for validation. Only then is the account created.
+ *   Step 5 — Success screen appears.
+ *
  * All user input is sanitized and validated client-side before
  * any network request is fired.
  * ─────────────────────────────────────────────────────────────
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   trim,
@@ -28,18 +37,28 @@ import {
 import "./signup.css";
 
 // ════════════════════════════════════════════════════════════════
-//  ⚠️  DEV STUB — DELETE THIS BLOCK WHEN WIRING UP YOUR BACKEND
+//  ⚠️  DEV STUB — DELETE THIS ENTIRE BLOCK WHEN BACKEND IS READY
 //  ─────────────────────────────────────────────────────────────
-//  This is self-contained: removing it won't break anything else.
-//  Also remove the devLog() call inside handleSubmit() below
-//  (clearly marked with the same warning).
+//  Contains TWO stubs:
+//    1. devLog()           — logs registration payload to console
+//    2. devMockSendOtp()   — simulates the "send OTP" API call
+//    3. devMockVerifyOtp() — simulates the "verify OTP" API call
+//
+//  Each stub call inside the component is marked with the same
+//  ⚠️ warning so they're easy to find and delete.
+//
+//  Removing this block and its three call-sites won't break
+//  anything else in the file.
 // ════════════════════════════════════════════════════════════════
+
 const DEV_ADMIN_USERNAME = "ADMIN";
-const DEV_ADMIN_PASSWORD = ""; // ← fill in a test value if you want
+const DEV_ADMIN_PASSWORD = "$killQuest123"; // ← fill in a test value if you want
+
+/** The hard-coded OTP code used during development. */
+const DEV_MOCK_OTP = "123456";
 
 /**
- * Logs the sanitized form payload to the browser console so you
- * can verify the data shape before hooking up a real API.
+ * Logs the sanitized form payload to the browser console.
  * DELETE this function and its call in handleSubmit when done.
  */
 const devLog = (payload: Record<string, string | boolean>) => {
@@ -51,6 +70,48 @@ const devLog = (payload: Record<string, string | boolean>) => {
     DEV_ADMIN_PASSWORD || "(not set)",
   );
 };
+
+/**
+ * Simulates the backend call that sends an OTP to the user's email.
+ * In production this would be: POST /api/auth/send-otp  { email }
+ * The real endpoint should generate the code server-side, store it
+ * (hashed + expiry), and email it — the code must NEVER travel back
+ * to the client.
+ *
+ * DELETE this function and replace its call in handleSubmit with
+ * your real fetch() call when the backend is connected.
+ */
+const devMockSendOtp = async (email: string): Promise<void> => {
+  console.log(
+    `[DEV STUB] Pretending to send OTP to: ${email}`,
+    `\n[DEV STUB] Mock OTP code is: ${DEV_MOCK_OTP}  ← delete this log in production`,
+  );
+  // Simulate network delay so the loading spinner is visible
+  await new Promise((resolve) => setTimeout(resolve, 800));
+};
+
+/**
+ * Simulates the backend call that validates the OTP the user typed.
+ * In production this would be: POST /api/auth/verify-otp  { email, code }
+ * The real endpoint should compare the submitted code against the
+ * stored hash, check expiry, then create the user account on success.
+ *
+ * Returns true if the code is correct, false if wrong or expired.
+ *
+ * DELETE this function and replace its call in handleOtpSubmit with
+ * your real fetch() call when the backend is connected.
+ */
+const devMockVerifyOtp = async (
+  _email: string,
+  code: string,
+): Promise<boolean> => {
+  console.log(
+    `[DEV STUB] Verifying OTP: "${code}" against mock "${DEV_MOCK_OTP}"`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 800));
+  return code === DEV_MOCK_OTP;
+};
+
 // ════════════════════════════════════════════════════════════════
 //  END OF DEV STUB
 // ════════════════════════════════════════════════════════════════
@@ -70,6 +131,23 @@ interface FormState {
 // All fields that can have an error message
 type ErrorKeys = keyof Omit<FormState, "agreeTerms"> | "agreeTerms" | "general";
 type FormErrors = Record<ErrorKeys, string>;
+
+/**
+ * The three screens this page can be in:
+ *   "form"    — the registration form (initial state)
+ *   "otp"     — the 6-digit OTP verification panel
+ *   "success" — account created, show the success message
+ */
+type PageScreen = "form" | "otp" | "success";
+
+/** Number of digits in the OTP code. */
+const OTP_LENGTH = 6;
+
+/**
+ * How long (in seconds) the user must wait before they can
+ * request a new OTP code. Matches the backend expiry window.
+ */
+const OTP_RESEND_COOLDOWN_SECONDS = 60;
 
 // ── INITIAL STATE ────────────────────────────────────────────
 const INITIAL_FORM: FormState = {
@@ -99,12 +177,49 @@ const INITIAL_ERRORS: FormErrors = {
 function SignUp() {
   // const navigate = useNavigate();
 
+  // ── FORM STATE ────────────────────────────────────────────
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [errors, setErrors] = useState<FormErrors>(INITIAL_ERRORS);
   const [showPw, setShowPw] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false); // success state
+
+  // ── SCREEN STATE ──────────────────────────────────────────
+  /**
+   * Controls which panel is currently visible.
+   * "form" → "otp" → "success" is the normal happy path.
+   */
+  const [screen, setScreen] = useState<PageScreen>("form");
+
+  // ── OTP STATE ─────────────────────────────────────────────
+  /**
+   * Array of OTP_LENGTH strings, one per input box.
+   * Stored as individual characters so each box is controlled.
+   */
+  const [otpDigits, setOtpDigits] = useState<string[]>(
+    Array(OTP_LENGTH).fill(""),
+  );
+
+  /** Error message shown on the OTP screen (wrong code, expired, etc.) */
+  const [otpError, setOtpError] = useState("");
+
+  /** Whether the OTP submission is in-flight. */
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  /**
+   * Seconds remaining before the user can request a new code.
+   * Counts down from OTP_RESEND_COOLDOWN_SECONDS to 0.
+   * When 0, the "Resend code" button becomes active.
+   */
+  const [resendCooldown, setResendCooldown] = useState(0);
+
+  /**
+   * Ref array for the 6 OTP input boxes so we can programmatically
+   * move focus between them as the user types.
+   */
+  const otpRefs = useRef<Array<HTMLInputElement | null>>(
+    Array(OTP_LENGTH).fill(null),
+  );
 
   // ── PASSWORD STRENGTH ──────────────────────────────────────
   const strength = checkPasswordStrength(form.password);
@@ -255,7 +370,13 @@ function SignUp() {
     return valid;
   };
 
-  // ── SUBMIT ─────────────────────────────────────────────────
+  // ── SUBMIT (Step 1 of Flow B) ──────────────────────────────
+  /**
+   * Called when the user clicks "Create Account".
+   * Validates and sanitizes the form, then asks the backend to
+   * send an OTP to the supplied email. The account is NOT created
+   * here — that happens only after the OTP is verified (Step 4).
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -282,21 +403,35 @@ function SignUp() {
     setErrors((prev) => ({ ...prev, general: "" }));
 
     try {
-      /**
-       * TODO: Replace with your real registration endpoint.
-       *
-       * Example:
-       *   const res = await fetch("/api/auth/register", {
-       *     method:  "POST",
-       *     headers: { "Content-Type": "application/json" },
-       *     body:    JSON.stringify(payload),
-       *   });
-       *   if (!res.ok) throw new Error(await res.text());
-       *   navigate("/login");
-       */
-      throw new Error("API not yet connected"); // ← remove when backend is ready
-    } catch (err) {
-      // Show a generic error — never expose internal server messages to users
+      // ════════════════════════════════════════════════════════
+      //  ⚠️  DEV STUB CALL — replace with your real fetch() call:
+      //
+      //    const res = await fetch("/api/auth/send-otp", {
+      //      method:  "POST",
+      //      headers: { "Content-Type": "application/json" },
+      //      body:    JSON.stringify({ email: payload.email }),
+      //    });
+      //    if (!res.ok) throw new Error(await res.text());
+      //
+      //  The backend should:
+      //    • generate a 6-digit code
+      //    • store it hashed alongside an expiry timestamp
+      //    • email it to the user
+      //    • NOT return the code in the response (data leak risk)
+      // ════════════════════════════════════════════════════════
+      await devMockSendOtp(payload.email);
+      // ════════════════════════════════════════════════════════
+      //  END OF DEV STUB CALL
+      // ════════════════════════════════════════════════════════
+
+      // OTP sent — move to the verification screen and start
+      // the resend cooldown timer
+      setOtpDigits(Array(OTP_LENGTH).fill(""));
+      setOtpError("");
+      setScreen("otp");
+      startResendCooldown();
+    } catch {
+      // Show a generic error — never expose internal messages
       setErrors((prev) => ({
         ...prev,
         general: "Something went wrong. Please try again later.",
@@ -306,14 +441,188 @@ function SignUp() {
     }
   };
 
+  // ── OTP HELPERS ────────────────────────────────────────────
+
+  /**
+   * Starts (or restarts) the resend cooldown countdown.
+   * Ticks every second; clears itself when it reaches 0.
+   */
+  const startResendCooldown = () => {
+    setResendCooldown(OTP_RESEND_COOLDOWN_SECONDS);
+
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  /**
+   * Called when any of the 6 OTP digit inputs changes.
+   * Accepts only a single numeric digit, updates state, and
+   * automatically advances focus to the next box.
+   */
+  const handleOtpChange = (index: number, value: string) => {
+    // Strip non-digits and take only the last character typed
+    // (handles paste of a full code — see handleOtpPaste)
+    const digit = value.replace(/\D/g, "").slice(-1);
+
+    const next = [...otpDigits];
+    next[index] = digit;
+    setOtpDigits(next);
+    setOtpError(""); // clear error as user corrects
+
+    // Advance focus to the next box if a digit was entered
+    if (digit && index < OTP_LENGTH - 1) {
+      otpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  /**
+   * Called on keydown inside an OTP box.
+   * Backspace on an empty box moves focus back to the previous box.
+   */
+  const handleOtpKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
+      otpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  /**
+   * Handles paste events on any OTP box.
+   * If the user pastes a 6-digit string, fills all boxes at once.
+   * Non-digit characters are silently stripped.
+   */
+  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "");
+    if (!pasted) return;
+
+    const next = Array(OTP_LENGTH).fill("");
+    for (let i = 0; i < OTP_LENGTH && i < pasted.length; i++) {
+      next[i] = pasted[i];
+    }
+    setOtpDigits(next);
+    setOtpError("");
+
+    // Focus the box after the last filled digit (or the last box)
+    const focusIndex = Math.min(pasted.length, OTP_LENGTH - 1);
+    otpRefs.current[focusIndex]?.focus();
+  };
+
+  // ── OTP SUBMIT (Step 4 of Flow B) ─────────────────────────
+  /**
+   * Called when the user clicks "Verify Email" on the OTP screen.
+   * Sends the entered code to the backend. On success the backend
+   * creates the account and we show the success screen.
+   */
+  const handleOtpSubmit = async () => {
+    const code = otpDigits.join("");
+
+    // Basic client-side guard — full validation is on the backend
+    if (code.length < OTP_LENGTH) {
+      setOtpError("Please enter all 6 digits of the verification code.");
+      return;
+    }
+
+    setIsVerifying(true);
+    setOtpError("");
+
+    try {
+      // ════════════════════════════════════════════════════════
+      //  ⚠️  DEV STUB CALL — replace with your real fetch() call:
+      //
+      //    const res = await fetch("/api/auth/verify-otp", {
+      //      method:  "POST",
+      //      headers: { "Content-Type": "application/json" },
+      //      body:    JSON.stringify({
+      //        email: trim(form.email).toLowerCase(),
+      //        code,
+      //      }),
+      //    });
+      //    if (!res.ok) {
+      //      const msg = await res.text();
+      //      // Backend should return a user-safe message in the body
+      //      throw new Error(msg || "Invalid or expired code.");
+      //    }
+      //    // navigate("/dashboard"); // ← redirect after success
+      // ════════════════════════════════════════════════════════
+      const isValid = await devMockVerifyOtp(
+        trim(form.email).toLowerCase(),
+        code,
+      );
+
+      if (!isValid) {
+        // Wrong code — highlight all boxes and show error
+        setOtpError("Incorrect code. Please check your email and try again.");
+        return;
+      }
+      // ════════════════════════════════════════════════════════
+      //  END OF DEV STUB CALL
+      // ════════════════════════════════════════════════════════
+
+      // Code verified — account created by the backend
+      setScreen("success");
+    } catch {
+      setOtpError("Something went wrong. Please try again.");
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  // ── RESEND OTP ─────────────────────────────────────────────
+  /**
+   * Lets the user request a fresh code after the cooldown expires.
+   * Resets the digit inputs and restarts the countdown.
+   */
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0) return; // button should be disabled, but guard anyway
+
+    setIsVerifying(true);
+    setOtpError("");
+
+    try {
+      // ════════════════════════════════════════════════════════
+      //  ⚠️  DEV STUB CALL — replace with your real fetch() call:
+      //
+      //    const res = await fetch("/api/auth/send-otp", {
+      //      method:  "POST",
+      //      headers: { "Content-Type": "application/json" },
+      //      body:    JSON.stringify({ email: trim(form.email).toLowerCase() }),
+      //    });
+      //    if (!res.ok) throw new Error(await res.text());
+      // ════════════════════════════════════════════════════════
+      await devMockSendOtp(trim(form.email).toLowerCase());
+      // ════════════════════════════════════════════════════════
+      //  END OF DEV STUB CALL
+      // ════════════════════════════════════════════════════════
+
+      setOtpDigits(Array(OTP_LENGTH).fill(""));
+      startResendCooldown();
+      // Focus the first box after resend
+      otpRefs.current[0]?.focus();
+    } catch {
+      setOtpError("Could not resend the code. Please try again.");
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
   // ── GOOGLE ─────────────────────────────────────────────────
   const handleGoogle = () => {
     // TODO: wire up Google OAuth (Firebase / NextAuth / Supabase etc.)
     console.log("Google sign-up triggered");
   };
 
-  // ── SUCCESS STATE ──────────────────────────────────────────
-  if (submitted) {
+  // ── SUCCESS SCREEN ─────────────────────────────────────────
+  if (screen === "success") {
     return (
       <div className="signup__page">
         <aside className="signup__panel" aria-hidden="true" />
@@ -322,8 +631,8 @@ function SignUp() {
             <span className="signup__success__icon">🎉</span>
             <h2>You're all set!</h2>
             <p>
-              Your account has been created. Check your email to verify your
-              address, then{" "}
+              Your account has been created and your email is verified. You can
+              now{" "}
               <Link to="/login" style={{ color: "#170b48", fontWeight: 700 }}>
                 sign in
               </Link>
@@ -335,7 +644,177 @@ function SignUp() {
     );
   }
 
-  // ── RENDER ─────────────────────────────────────────────────
+  // ── OTP SCREEN ─────────────────────────────────────────────
+  if (screen === "otp") {
+    /**
+     * The full code the user has typed so far (may be incomplete).
+     * Used to enable/disable the submit button.
+     */
+    const otpCode = otpDigits.join("");
+    const otpComplete = otpCode.length === OTP_LENGTH;
+
+    // Mask the email for display: show first 2 chars + *** + domain
+    // e.g.  janedoe@example.com  →  ja***@example.com
+    // This avoids showing the full address in the UI (privacy).
+    const rawEmail = trim(form.email).toLowerCase();
+    const [localPart, domain] = rawEmail.split("@");
+    const maskedEmail =
+      localPart.length > 2
+        ? `${localPart.slice(0, 2)}***@${domain}`
+        : `***@${domain}`;
+
+    return (
+      <div className="signup__page">
+        {/* ── LEFT PANEL (reused, step 2 marked active) ──── */}
+        <aside className="signup__panel" aria-hidden="true">
+          <div className="signup__panel__dots">
+            {Array.from({ length: 25 }).map((_, i) => (
+              <span key={i} />
+            ))}
+          </div>
+
+          <div className="signup__brand">
+            <span className="signup__brand__icon">◈</span>
+            <h1 className="signup__brand__name">SkillQuest</h1>
+            <p className="signup__brand__tagline">
+              One step away — check your inbox.
+            </p>
+          </div>
+
+          <div className="signup__steps">
+            <div className="signup__step done">
+              <div className="signup__step__num">1</div>
+              <span className="signup__step__label">Create your account</span>
+            </div>
+            {/* Step 2 is now the active step */}
+            <div className="signup__step done">
+              <div className="signup__step__num">2</div>
+              <span className="signup__step__label">Verify your email</span>
+            </div>
+            <div className="signup__step">
+              <div className="signup__step__num">3</div>
+              <span className="signup__step__label">Start learning</span>
+            </div>
+          </div>
+        </aside>
+
+        {/* ── RIGHT PANEL (OTP entry) ──────────────────────── */}
+        <main className="signup__form__side">
+          <div className="signup__card">
+            <h2 className="signup__heading">Check your email</h2>
+            <p className="signup__subheading">
+              We sent a 6-digit code to{" "}
+              <strong style={{ color: "#170b48" }}>{maskedEmail}</strong>. Enter
+              it below to verify your email address.
+            </p>
+
+            {/* ── OTP DIGIT BOXES ─────────────────────────── */}
+            <div
+              className="otp__boxes"
+              role="group"
+              aria-label="6-digit verification code"
+            >
+              {otpDigits.map((digit, index) => (
+                <input
+                  key={index}
+                  ref={(el) => {
+                    otpRefs.current[index] = el;
+                  }}
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={1}
+                  className={`otp__box ${otpError ? "otp__box--error" : digit ? "otp__box--filled" : ""}`}
+                  value={digit}
+                  onChange={(e) => handleOtpChange(index, e.target.value)}
+                  onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                  onPaste={handleOtpPaste}
+                  autoComplete="one-time-code"
+                  aria-label={`Digit ${index + 1} of ${OTP_LENGTH}`}
+                  aria-invalid={!!otpError}
+                  disabled={isVerifying}
+                />
+              ))}
+            </div>
+
+            {/* OTP error — both boxes go red AND a message appears */}
+            {otpError && (
+              <div
+                className="otp__error"
+                role="alert"
+                style={{
+                  fontSize: "0.83rem",
+                  color: "#dc2626",
+                  background: "rgba(220,38,38,0.06)",
+                  border: "1px solid rgba(220,38,38,0.15)",
+                  borderRadius: "8px",
+                  padding: "0.6rem 0.8rem",
+                  marginTop: "0.75rem",
+                  fontWeight: 500,
+                }}
+              >
+                ⚠ {otpError}
+              </div>
+            )}
+
+            {/* ── VERIFY BUTTON ───────────────────────────── */}
+            <button
+              type="button"
+              className="signup__submit"
+              style={{ marginTop: "1.25rem" }}
+              onClick={handleOtpSubmit}
+              disabled={!otpComplete || isVerifying}
+              aria-busy={isVerifying}
+            >
+              {isVerifying ? "Verifying…" : "Verify Email"}
+            </button>
+
+            {/* ── RESEND CODE ─────────────────────────────── */}
+            <div className="otp__resend">
+              {resendCooldown > 0 ? (
+                /* Cooldown active — show countdown, button disabled */
+                <p className="otp__resend__wait">
+                  Resend code in{" "}
+                  <span className="otp__resend__timer">{resendCooldown}s</span>
+                </p>
+              ) : (
+                /* Cooldown expired — enable resend */
+                <p className="otp__resend__wait">
+                  Didn't receive a code?{" "}
+                  <button
+                    type="button"
+                    className="otp__resend__btn"
+                    onClick={handleResendOtp}
+                    disabled={isVerifying}
+                  >
+                    Resend code
+                  </button>
+                </p>
+              )}
+            </div>
+
+            {/* ── BACK LINK ───────────────────────────────── */}
+            <p className="signup__footer" style={{ marginTop: "0.5rem" }}>
+              <button
+                type="button"
+                className="otp__back__btn"
+                onClick={() => {
+                  // Return to the form so the user can correct their email
+                  setScreen("form");
+                  setOtpDigits(Array(OTP_LENGTH).fill(""));
+                  setOtpError("");
+                }}
+              >
+                ← Wrong email? Go back
+              </button>
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // ── RENDER (registration form) ─────────────────────────────
   return (
     <div className="signup__page">
       {/* ── LEFT PANEL ───────────────────────────────────── */}
@@ -818,9 +1297,8 @@ function SignUp() {
               className="signup__submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              onClick={() => setSubmitted(true)}
             >
-              {isLoading ? "Creating account…" : "Create Account"}
+              {isLoading ? "Sending code…" : "Create Account"}
             </button>
           </form>
 

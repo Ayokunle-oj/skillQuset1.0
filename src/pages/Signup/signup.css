@@ -31,8 +31,14 @@
 }
 
 @keyframes panelIn {
-  from { transform: translateX(-100%); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Geometric decoration */
@@ -90,8 +96,14 @@
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .signup__brand__icon {
@@ -103,8 +115,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .signup__brand__name {
@@ -141,9 +157,15 @@
   animation: fadeUp 0.6s ease both;
 }
 
-.signup__step:nth-child(1) { animation-delay: 0.45s; }
-.signup__step:nth-child(2) { animation-delay: 0.6s; }
-.signup__step:nth-child(3) { animation-delay: 0.75s; }
+.signup__step:nth-child(1) {
+  animation-delay: 0.45s;
+}
+.signup__step:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.signup__step:nth-child(3) {
+  animation-delay: 0.75s;
+}
 
 .signup__step__num {
   width: 28px;
@@ -177,7 +199,7 @@
 .signup__form__side {
   flex: 1;
   display: flex;
-  align-items: flex-start;   /* top-align so the scroll feels natural */
+  align-items: flex-start; /* top-align so the scroll feels natural */
   justify-content: center;
   padding: 3rem 2rem;
   background-color: #ffffff;
@@ -186,8 +208,14 @@
 }
 
 @keyframes formIn {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .signup__card {
@@ -228,8 +256,11 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease,
-              box-shadow 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
   margin-bottom: 1.5rem;
 }
 
@@ -240,7 +271,9 @@
   transform: translateY(-1px);
 }
 
-.signup__google__btn:active { transform: translateY(0); }
+.signup__google__btn:active {
+  transform: translateY(0);
+}
 
 .signup__google__icon {
   width: 18px;
@@ -330,8 +363,10 @@
   color: #170b48;
   background: #ffffff;
   outline: none;
-  transition: border-color 0.22s ease, box-shadow 0.22s ease,
-              background 0.22s ease;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
@@ -358,11 +393,22 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-5px); }
-  40%       { transform: translateX(5px); }
-  60%       { transform: translateX(-4px); }
-  80%       { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 /* Password input right padding */
@@ -406,7 +452,9 @@
   transition: color 0.18s ease;
 }
 
-.signup__pw__toggle:hover { color: #170b48; }
+.signup__pw__toggle:hover {
+  color: #170b48;
+}
 
 /* Error message */
 .signup__error {
@@ -421,8 +469,14 @@
 }
 
 @keyframes errorAppear {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── PASSWORD STRENGTH METER ───────────────────────────────── */
@@ -515,7 +569,9 @@
   cursor: pointer;
   position: relative;
   margin-top: 1px;
-  transition: background 0.18s ease, border-color 0.18s ease;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
   flex-shrink: 0;
 }
 
@@ -562,8 +618,11 @@
   font-family: inherit;
   cursor: pointer;
   letter-spacing: 0.01em;
-  transition: background 0.22s ease, transform 0.15s ease,
-              box-shadow 0.22s ease, opacity 0.22s ease;
+  transition:
+    background 0.22s ease,
+    transform 0.15s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease;
   margin-top: 0.25rem;
 }
 
@@ -598,7 +657,9 @@
   transition: opacity 0.18s ease;
 }
 
-.signup__footer a:hover { opacity: 0.65; }
+.signup__footer a:hover {
+  opacity: 0.65;
+}
 
 /* ── SUCCESS STATE ──────────────────────────────────────────── */
 .signup__success {
@@ -615,8 +676,14 @@
 }
 
 @keyframes popIn {
-  from { transform: scale(0); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .signup__success h2 {
@@ -633,6 +700,144 @@
   line-height: 1.6;
 }
 
+/* ── OTP BOX ROW ─────────────────────────────────────────────── */
+
+/*
+ * Flex row that holds the 6 individual digit inputs.
+ * Centred horizontally with a small gap between each box.
+ */
+.otp__boxes {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* ── SINGLE DIGIT INPUT ──────────────────────────────────────── */
+
+/*
+ * Each box is a fixed-size square.
+ * text-align: center keeps the digit visually centred.
+ * font-size is intentionally large so the digit is easy to read.
+ */
+.otp__box {
+  width: 3rem;
+  height: 3.5rem;
+  border: 2px solid #d1cce8; /* matches existing input border colour */
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #170b48; /* brand deep indigo */
+  background: #ffffff;
+  outline: none;
+  cursor: text;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+  /* Prevent mobile browsers from adding extra padding */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Focus ring — matches the existing .signup__input:focus style */
+.otp__box:focus {
+  border-color: #7c6ff7; /* brand accent purple */
+  box-shadow: 0 0 0 3px rgba(124, 111, 247, 0.15);
+}
+
+/* A digit has been filled in — subtle accent border */
+.otp__box--filled {
+  border-color: #7c6ff7;
+}
+
+/* Error state — all boxes go red when the code is wrong */
+.otp__box--error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Disabled state while the API call is in-flight */
+.otp__box:disabled {
+  background: #f5f4fc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ── RESEND ROW ──────────────────────────────────────────────── */
+
+/*
+ * Sits below the Verify button.
+ * Small, muted text; the resend button looks like a text link.
+ */
+.otp__resend {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.otp__resend__wait {
+  font-size: 0.83rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Countdown number styled in brand accent colour */
+.otp__resend__timer {
+  font-weight: 700;
+  color: #7c6ff7;
+}
+
+/* The "Resend code" button — styled as an inline text link */
+.otp__resend__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #7c6ff7;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.otp__resend__btn:hover:not(:disabled) {
+  color: #170b48;
+}
+
+.otp__resend__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── BACK BUTTON ─────────────────────────────────────────────── */
+
+/*
+ * "← Wrong email? Go back" — looks like a muted text link,
+ * keeps the same footer style as the rest of the page.
+ */
+.otp__back__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.otp__back__btn:hover {
+  color: #170b48;
+}
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════════════════════════════ */
@@ -647,10 +852,16 @@
     animation: none;
   }
 
-  .signup__steps { display: none; }
+  .signup__steps {
+    display: none;
+  }
 
-  .signup__brand__name    { font-size: 1.65rem; }
-  .signup__brand__tagline { font-size: 0.85rem; }
+  .signup__brand__name {
+    font-size: 1.65rem;
+  }
+  .signup__brand__tagline {
+    font-size: 0.85rem;
+  }
 
   .signup__form__side {
     padding: 2rem 1.25rem;
@@ -658,12 +869,26 @@
     overflow-y: visible;
   }
 
-  .signup__card { max-width: 100%; }
+  .signup__card {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
   /* Stack name row on very small screens */
   .signup__row {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .otp__box {
+    width: 2.4rem;
+    height: 3rem;
+    font-size: 1.25rem;
+  }
+
+  .otp__boxes {
+    gap: 0.35rem;
   }
 }
