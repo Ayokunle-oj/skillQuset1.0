@@ -17,7 +17,7 @@
 /* ── PAGE SHELL ──────────────────────────────────────────────────── */
 .wn__page {
   min-height: 100vh;
-  background-color: #f7f6fb;      /* same soft off-white as login/signup */
+  background-color: #f7f6fb; /* same soft off-white as login/signup */
   font-family: -apple-system, "Segoe UI", Ubuntu, sans-serif;
   color: #170b48;
 }
@@ -43,8 +43,14 @@
 }
 
 @keyframes wn-slide-down {
-  from { transform: translateY(-100%); opacity: 0; }
-  to   { transform: translateY(0);     opacity: 1; }
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Left side: logo + breadcrumb */
@@ -74,8 +80,12 @@
 }
 
 @keyframes wn-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .wn__nav__sep {
@@ -106,8 +116,10 @@
   font-family: inherit;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease,
-              transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .wn__nav__home:hover {
@@ -129,8 +141,14 @@
 }
 
 @keyframes wn-fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Decorative radial glow behind the headline */
@@ -138,9 +156,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%,
+  background: radial-gradient(
+    ellipse at 50% 0%,
     rgba(124, 111, 247, 0.35) 0%,
-    transparent 65%);
+    transparent 65%
+  );
   pointer-events: none;
 }
 
@@ -188,7 +208,7 @@
 }
 
 .wn__hero__title span {
-  color: #a89be8;    /* accent the "New" word */
+  color: #a89be8; /* accent the "New" word */
 }
 
 .wn__hero__sub {
@@ -246,7 +266,7 @@
   background: #ffffff;
   border-bottom: 1px solid rgba(23, 11, 72, 0.08);
   position: sticky;
-  top: 64px;       /* sticks just below the navbar */
+  top: 64px; /* sticks just below the navbar */
   z-index: 100;
 }
 
@@ -350,7 +370,7 @@
   flex-direction: column;
   gap: 1.25rem;
   position: sticky;
-  top: 120px;   /* below nav + tabs */
+  top: 120px; /* below nav + tabs */
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -470,7 +490,9 @@
   transition: opacity 0.18s ease;
 }
 
-.wn__card__read__more:hover { opacity: 0.7; }
+.wn__card__read__more:hover {
+  opacity: 0.7;
+}
 
 /* ── Card action bar (likes · comments · share) ─────────────────── */
 .wn__card__actions {
@@ -497,8 +519,11 @@
   font-weight: 600;
   color: rgba(23, 11, 72, 0.5);
   cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease,
-              color 0.18s ease, transform 0.12s ease;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.12s ease;
 }
 
 .wn__action__btn:hover {
@@ -521,8 +546,12 @@
 }
 
 @keyframes wn-heart-pop {
-  from { transform: scale(0.7); }
-  to   { transform: scale(1); }
+  from {
+    transform: scale(0.7);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* Comment open state */
@@ -578,7 +607,9 @@
   font-family: inherit;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.2s ease, transform 0.12s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -609,7 +640,9 @@
   outline: none;
   min-height: 72px;
   line-height: 1.55;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .wn__comment__textarea:focus {
@@ -640,8 +673,12 @@
   font-weight: 500;
 }
 
-.wn__char__count.near-limit { color: #f59e0b; }
-.wn__char__count.at-limit   { color: #dc2626; }
+.wn__char__count.near-limit {
+  color: #f59e0b;
+}
+.wn__char__count.at-limit {
+  color: #dc2626;
+}
 
 .wn__comment__submit {
   padding: 0.5rem 1.1rem;
@@ -653,8 +690,10 @@
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.12s ease,
-              opacity 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease,
+    opacity 0.2s ease;
 }
 
 .wn__comment__submit:hover:not(:disabled) {
@@ -699,6 +738,9 @@
 /* Comment bubble */
 .wn__comment__bubble {
   flex: 1;
+  /* min-width: 0 lets the flex child shrink below its content size,
+     which is required for overflow-wrap to work inside a flex container. */
+  min-width: 0;
   background: #ffffff;
   border: 1px solid rgba(23, 11, 72, 0.07);
   border-radius: 12px;
@@ -729,6 +771,10 @@
   font-size: 0.86rem;
   color: rgba(23, 11, 72, 0.7);
   line-height: 1.6;
+  /* Wrap long unbroken strings (URLs, mashed keys) instead of
+     stretching the bubble and causing horizontal page scroll. */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Comment sub-actions: like + reply */
@@ -754,9 +800,13 @@
   transition: color 0.18s ease;
 }
 
-.wn__comment__action:hover { color: #170b48; }
+.wn__comment__action:hover {
+  color: #170b48;
+}
 
-.wn__comment__action.liked__comment { color: #170b48; }
+.wn__comment__action.liked__comment {
+  color: #170b48;
+}
 
 /* ── REPLIES (nested one level) ─────────────────────────────────── */
 .wn__replies {
@@ -798,7 +848,9 @@
   outline: none;
   min-height: 58px;
   line-height: 1.5;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .wn__reply__textarea:focus {
@@ -820,8 +872,10 @@
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.12s ease,
-              opacity 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease,
+    opacity 0.2s ease;
   flex-shrink: 0;
   align-self: flex-end;
 }
@@ -851,7 +905,9 @@
   transition: color 0.18s ease;
 }
 
-.wn__reply__cancel:hover { color: #170b48; }
+.wn__reply__cancel:hover {
+  color: #170b48;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    SIDEBAR WIDGETS
@@ -900,7 +956,9 @@
   font-family: inherit;
   width: 100%;
   text-align: left;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
 .wn__widget__link:hover {
@@ -924,7 +982,9 @@
   color: #170b48;
   outline: none;
   margin-bottom: 0.65rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .wn__widget__input:focus {
@@ -947,7 +1007,9 @@
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.12s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease;
 }
 
 .wn__widget__btn:hover {
@@ -1000,8 +1062,13 @@
   color: #e2e0ed;
 }
 
-.wn__star.filled  { color: #fbbf24; }
-.wn__star.partial { color: #fbbf24; opacity: 0.5; }
+.wn__star.filled {
+  color: #fbbf24;
+}
+.wn__star.partial {
+  color: #fbbf24;
+  opacity: 0.5;
+}
 
 .wn__rating__total {
   font-size: 0.78rem;
@@ -1098,7 +1165,9 @@
   color: #e2e0ed;
 }
 
-.wn__review__star.filled { color: #fbbf24; }
+.wn__review__star.filled {
+  color: #fbbf24;
+}
 
 .wn__review__title {
   font-size: 0.96rem;
@@ -1138,8 +1207,10 @@
   color: rgba(23, 11, 72, 0.5);
   padding: 0.2rem 0.6rem;
   cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease,
-              border-color 0.18s ease;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .wn__helpful__btn:hover {
@@ -1190,7 +1261,9 @@
   font-size: 1.8rem;
   cursor: pointer;
   color: #e2e0ed;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
   background: none;
   border: none;
   padding: 0;
@@ -1229,7 +1302,9 @@
   color: #170b48;
   background: #ffffff;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .wn__review__input:focus,
@@ -1278,8 +1353,10 @@
   font-family: inherit;
   cursor: pointer;
   margin-top: 0.25rem;
-  transition: background 0.2s ease, transform 0.12s ease,
-              box-shadow 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
 }
 
 .wn__review__form__submit:hover:not(:disabled) {
@@ -1313,20 +1390,45 @@
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .wn__nav { padding: 0 1rem; }
-  .wn__nav__page__label { display: none; }
-  .wn__nav__sep { display: none; }
+  .wn__nav {
+    padding: 0 1rem;
+  }
+  .wn__nav__page__label {
+    display: none;
+  }
+  .wn__nav__sep {
+    display: none;
+  }
 
-  .wn__hero { padding: 2.5rem 1.25rem 2rem; }
-  .wn__hero__dots { display: none; }
-  .wn__hero__stats { gap: 1.25rem; }
-  .wn__hero__stat__divider { display: none; }
+  .wn__hero {
+    padding: 2.5rem 1.25rem 2rem;
+  }
+  .wn__hero__dots {
+    display: none;
+  }
+  .wn__hero__stats {
+    gap: 1.25rem;
+  }
+  .wn__hero__stat__divider {
+    display: none;
+  }
 
-  .wn__tabs { padding: 0 1rem; overflow-x: auto; scrollbar-width: none; }
-  .wn__tabs::-webkit-scrollbar { display: none; }
-  .wn__tab { padding: 0.85rem 0.9rem; font-size: 0.82rem; }
+  .wn__tabs {
+    padding: 0 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .wn__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .wn__tab {
+    padding: 0.85rem 0.9rem;
+    font-size: 0.82rem;
+  }
 
-  .wn__layout { padding: 1.5rem 1rem; }
+  .wn__layout {
+    padding: 1.5rem 1rem;
+  }
 
   .wn__card__header,
   .wn__card__title,
@@ -1337,15 +1439,29 @@
     padding-right: 1.1rem;
   }
 
-  .wn__comments { padding: 1rem 1.1rem 1.25rem; }
+  .wn__comments {
+    padding: 1rem 1.1rem 1.25rem;
+  }
 
-  .wn__rating__summary { gap: 1.25rem; padding: 1.25rem; }
+  .wn__rating__summary {
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
 
-  .wn__review__form__wrap { padding: 1.25rem; }
+  .wn__review__form__wrap {
+    padding: 1.25rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .wn__hero__stat__num { font-size: 1.25rem; }
-  .wn__card__actions { gap: 0.3rem; }
-  .wn__action__btn { padding: 0.4rem 0.6rem; font-size: 0.78rem; }
+  .wn__hero__stat__num {
+    font-size: 1.25rem;
+  }
+  .wn__card__actions {
+    gap: 0.3rem;
+  }
+  .wn__action__btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+  }
 }

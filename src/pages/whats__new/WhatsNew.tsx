@@ -32,20 +32,21 @@ import {
 } from "./whatsNewData";
 import "./whatsNew.css";
 
-// ── SANITIZE HELPERS (inline — no extra import needed) ────────────
 /**
- * Trims whitespace and escapes HTML special characters.
- * Always call this before displaying any user-supplied text.
+ * Strips dangerous HTML characters from user input before it is
+ * stored in state or sent to the backend.
+ *
+ * WHY STRIP instead of escape:
+ *   React renders text nodes — not innerHTML — so it already prevents
+ *   XSS at render time. HTML-escaping on top of that causes visible
+ *   artefacts in the UI (the user sees "&lt;" instead of "<").
+ *   Stripping removes the characters entirely, which is both safe and
+ *   artefact-free.
+ *
+ * Call this on every user-supplied string before storing or sending.
  */
 const sanitize = (value: string): string =>
-  value
-    .trim()
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
+  value.trim().replace(/[<>'"&]/g, ""); // strip HTML-special chars; React handles the rest
 /** Maximum characters allowed in a comment or reply. */
 const MAX_COMMENT_LENGTH = 500;
 
@@ -102,18 +103,6 @@ function charCountClass(length: number, max: number): string {
   if (length >= max) return "wn__char__count at-limit";
   if (length >= max * 0.85) return "wn__char__count near-limit";
   return "wn__char__count";
-}
-
-/**
- * Generates initials from a display name.
- * "bammy__oj" → "BO" | "SkillQuest Team" → "ST"
- */
-function getInitials(name: string): string {
-  const words = name.replace(/__/g, " ").split(/\s+/);
-  return words
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? "")
-    .join("");
 }
 
 /** Renders filled/empty stars for a given rating (1–5). */
@@ -1094,7 +1083,8 @@ function WhatsNew() {
 
   /** Newsletter submission */
   const handleNewsletter = () => {
-    const email = newsletterEmail.trim().toLowerCase();
+    // Trim, lowercase, and strip any injected characters before use
+    const email = sanitize(newsletterEmail).toLowerCase();
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       setNewsletterErr("Please enter a valid email address.");
