@@ -1,0 +1,1072 @@
+/* ═══════════════════════════════════════════════════════════════════
+   discover.css  —  SkillQuest Discover Page
+   Theme   : Dark mode · Base #170b48 · Deep space aesthetic
+   Font    : System sans-serif stack (no external fonts)
+   Layout  : Top navbar (desktop) + Bottom tab bar (mobile)
+   Rules   : No CSS :root · No dark-mode toggle · No Google Fonts
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── FONT STACK ──────────────────────────────────────────────────────
+   Best system sans-serif on each platform:
+   -apple-system  → San Francisco  (macOS / iOS)
+   Segoe UI       → Windows
+   Ubuntu         → Linux
+   sans-serif     → universal fallback
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── RESET / BASE ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── PAGE SHELL ─────────────────────────────────────────────────── */
+.discover__page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #0b0618;           /* very dark indigo-black */
+  color: #e8e4f8;
+  font-family: -apple-system, "Segoe UI", Ubuntu, sans-serif;
+  /* Leave room at the bottom for the mobile tab bar (64px) */
+  padding-bottom: 64px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TOP NAVBAR (desktop & tablet)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.discover__nav {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  height: 64px;
+  background: rgba(11, 6, 24, 0.85);      /* semi-transparent dark */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+  /* Slide down on load */
+  animation: navSlideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes navSlideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+/* Logo area inside discover nav */
+.discover__nav__logo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #e8e4f8;
+  text-decoration: none;
+  letter-spacing: -0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.discover__nav__logo__icon {
+  color: #7c6ff7;
+  display: inline-block;
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Dropdown menu items row */
+.discover__nav__items {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  flex: 1;
+}
+
+/* Each nav item wrapper (for positioning the dropdown) */
+.discover__nav__item {
+  position: relative;
+}
+
+/* The clickable nav button */
+.discover__nav__btn {
+  background: none;
+  border: none;
+  color: rgba(232, 228, 248, 0.7);
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.discover__nav__btn:hover,
+.discover__nav__btn.active {
+  color: #e8e4f8;
+  background: rgba(124, 111, 247, 0.12);
+}
+
+/* Chevron icon inside the button */
+.discover__nav__chevron {
+  font-size: 0.65rem;
+  transition: transform 0.22s ease;
+  opacity: 0.6;
+}
+
+.discover__nav__btn.open .discover__nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── DROPDOWN PANEL ─────────────────────────────────────────────── */
+.discover__dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 200px;
+  background: #150d3a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  /* Animate in */
+  animation: dropdownIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+  z-index: 600;
+}
+
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+.discover__dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  color: rgba(232, 228, 248, 0.75);
+  font-size: 0.87rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+  background: none;
+  border: none;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.discover__dropdown__item:hover {
+  background: rgba(124, 111, 247, 0.15);
+  color: #e8e4f8;
+}
+
+.discover__dropdown__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── HOME BUTTON ────────────────────────────────────────────────── */
+.discover__home__btn {
+  margin-left: auto;           /* pushes it to the far right */
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid rgba(124, 111, 247, 0.4);
+  border-radius: 8px;
+  background: rgba(124, 111, 247, 0.1);
+  color: #a89be8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.discover__home__btn:hover {
+  background: rgba(124, 111, 247, 0.2);
+  border-color: rgba(124, 111, 247, 0.7);
+  color: #e8e4f8;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MAIN CONTENT AREA
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;                    /* sections control their own spacing */
+}
+
+/* ── SEARCH BAR ─────────────────────────────────────────────────── */
+.discover__search__wrap {
+  padding: 1.75rem 2rem 1.25rem;
+  background: #0b0618;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.discover__search__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.discover__search__icon {
+  position: absolute;
+  left: 1.1rem;
+  color: rgba(232, 228, 248, 0.35);
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.discover__search__input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  color: #e8e4f8;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.22s ease, background 0.22s ease,
+              box-shadow 0.22s ease;
+}
+
+.discover__search__input::placeholder {
+  color: rgba(232, 228, 248, 0.35);
+}
+
+.discover__search__input:focus {
+  border-color: rgba(124, 111, 247, 0.6);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px rgba(124, 111, 247, 0.12);
+}
+
+/* Clear button inside search (shown only when there is text) */
+.discover__search__clear {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: rgba(232, 228, 248, 0.4);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.18s ease;
+}
+
+.discover__search__clear:hover { color: #e8e4f8; }
+
+/* ── SEARCH RESULTS NOTICE ──────────────────────────────────────── */
+.discover__search__notice {
+  max-width: 780px;
+  margin: 0.5rem auto 0;
+  font-size: 0.83rem;
+  color: rgba(232, 228, 248, 0.5);
+  padding: 0 0.25rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FEATURED CAROUSEL
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__carousel__wrap {
+  padding: 0 2rem 2rem;
+  animation: fadeUp 0.55s ease 0.3s both;
+}
+
+.discover__carousel {
+  position: relative;
+  max-width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  /* Subtle outer glow */
+  box-shadow: 0 8px 40px rgba(124, 111, 247, 0.15);
+}
+
+/* The sliding track — all slides sit side by side */
+.discover__carousel__track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* One individual slide */
+.discover__carousel__slide {
+  flex: 0 0 100%;
+  min-height: 260px;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative radial glow on each slide */
+.discover__carousel__slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 70%);
+  pointer-events: none;
+}
+
+.discover__carousel__tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 0.75rem;
+}
+
+.discover__carousel__headline {
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  max-width: 520px;
+  margin-bottom: 0.6rem;
+}
+
+.discover__carousel__subline {
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 1.4rem;
+}
+
+.discover__carousel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  align-self: flex-start;
+  color: #ffffff;
+}
+
+.discover__carousel__cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Arrow navigation buttons */
+.discover__carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s ease, transform 0.15s ease;
+  backdrop-filter: blur(4px);
+}
+
+.discover__carousel__arrow:hover {
+  background: rgba(124, 111, 247, 0.5);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.discover__carousel__arrow.prev { left: 1rem; }
+.discover__carousel__arrow.next { right: 1rem; }
+
+/* Dot indicators at the bottom */
+.discover__carousel__dots {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.4rem;
+  z-index: 10;
+}
+
+.discover__carousel__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, width 0.25s ease, border-radius 0.25s ease;
+}
+
+/* Active dot stretches into a pill */
+.discover__carousel__dot.active {
+  background: #ffffff;
+  width: 20px;
+  border-radius: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SUGGESTION CHIPS
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__chips__wrap {
+  padding: 0 2rem 2rem;
+  animation: fadeUp 0.55s ease 0.35s both;
+}
+
+.discover__chips__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(232, 228, 248, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+/* Horizontal scroll container — hides scrollbar for clean look */
+.discover__chips__row {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;           /* space for the hidden scrollbar */
+  /* Hide scrollbar on all browsers */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.discover__chips__row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual chip */
+.discover__chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(232, 228, 248, 0.75);
+  font-size: 0.84rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              color 0.2s ease, transform 0.15s ease;
+}
+
+.discover__chip:hover {
+  background: rgba(124, 111, 247, 0.18);
+  border-color: rgba(124, 111, 247, 0.5);
+  color: #e8e4f8;
+  transform: translateY(-1px);
+}
+
+.discover__chip.active {
+  background: rgba(124, 111, 247, 0.25);
+  border-color: #7c6ff7;
+  color: #e8e4f8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION — shared styles for all course row sections
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__section {
+  padding: 0 2rem 2.5rem;
+  animation: fadeUp 0.55s ease both;
+}
+
+/* Section header row (title + "See all" link) */
+.discover__section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  gap: 1rem;
+}
+
+.discover__section__title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #e8e4f8;
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.discover__section__icon {
+  font-size: 1.1rem;
+}
+
+.discover__see__all {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #7c6ff7;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: color 0.18s ease, opacity 0.18s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.discover__see__all:hover { opacity: 0.75; }
+
+/* Horizontal scrolling row of cards */
+.discover__cards__row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;          /* breathing room for the shadow */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.discover__cards__row::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   COURSE CARD
+   ─────────────────────────────────────────────────────────────────
+   Fixed dimensions:
+     • Card width  : 260px (desktop) / 220px (mobile) / 200px (small)
+     • Card height : 340px — locked so every card in a row is the
+                     same height regardless of title length
+     • Thumbnail   : 148px fixed height — never grows or shrinks
+     • Body        : fills the remaining 192px with flex column +
+                     space-between, pushing stats to the bottom
+   Text overflow is hard-clamped so nothing ever breaks the layout.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.discover__card {
+  /* Fixed width — flex row won't shrink this */
+  flex: 0 0 260px;
+  width: 260px;
+
+  /* Fixed total height — every card in a row is identical */
+  height: 340px;
+
+  border-radius: 14px;
+  background: #120a30;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  /* Hide any overflow so nothing bleeds outside the fixed height */
+  overflow: hidden;
+
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+              border-color 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+
+  /* Column layout: thumbnail stacked above body */
+  display: flex;
+  flex-direction: column;
+}
+
+.discover__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(124, 111, 247, 0.25);
+  border-color: rgba(124, 111, 247, 0.25);
+}
+
+/* ── Thumbnail ────────────────────────────────────────────────────
+   Fixed height of 148px — exactly 148/340 of the card.
+   flex-shrink: 0 prevents it from compressing when the body
+   content is tall.
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__thumb {
+  width: 100%;
+  height: 148px;          /* fixed — never grows or shrinks */
+  flex-shrink: 0;         /* critical: don't let flex squash this */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient background — replace with <img> when you have real images */
+.discover__card__thumb__bg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+.discover__card:hover .discover__card__thumb__bg {
+  transform: scale(1.06);
+}
+
+/* ── Badges (top-left of thumbnail) ─────────────────────────────── */
+.discover__card__badges {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  display: flex;
+  gap: 0.3rem;
+  /* Don't wrap — badges sit on one line */
+  flex-wrap: nowrap;
+  /* Prevent badges from overflowing into the difficulty badge */
+  max-width: calc(100% - 90px);
+  overflow: hidden;
+}
+
+.discover__card__badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.18rem 0.5rem;
+  border-radius: 5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;        /* never wrap badge text */
+  flex-shrink: 0;
+}
+
+/* Creator-type badge colours */
+.discover__card__badge.official   { background: rgba(124, 111, 247, 0.85); color: #fff; }
+.discover__card__badge.university { background: rgba(56, 189, 248, 0.85);  color: #fff; }
+.discover__card__badge.user       { background: rgba(251, 191, 36, 0.85);  color: #0b0618; }
+
+/* "New" badge */
+.discover__card__badge.new {
+  background: rgba(74, 222, 128, 0.85);
+  color: #052e16;
+}
+
+/* ── Difficulty badge (top-right) ────────────────────────────────── */
+.discover__card__difficulty {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.18rem 0.5rem;
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+
+.discover__card__difficulty.Beginner     { background: rgba(74, 222, 128, 0.8);  color: #052e16; }
+.discover__card__difficulty.Intermediate { background: rgba(251, 191, 36, 0.8);  color: #0b0618; }
+.discover__card__difficulty.Advanced     { background: rgba(248, 113, 113, 0.8); color: #fff; }
+
+/* ── Duration pill (bottom-right of thumbnail) ───────────────────── */
+.discover__card__duration {
+  position: absolute;
+  bottom: 0.55rem;
+  right: 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 0.18rem 0.5rem;
+  border-radius: 5px;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* ── Card body ────────────────────────────────────────────────────
+   Fills the remaining 192px (340 - 148).
+   space-between pushes the stats row to the very bottom so all
+   cards align their stats on the same baseline regardless of
+   how many lines the title takes.
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__body {
+  /* Fill exactly the remaining height */
+  flex: 1;
+  min-height: 0;              /* lets flex children shrink below their natural size */
+
+  padding: 0.8rem 0.9rem 0.85rem;
+
+  display: flex;
+  flex-direction: column;
+  /* Space between pushes stats to the bottom — key to uniform alignment */
+  justify-content: space-between;
+
+  /* No gap here — we use justify-content: space-between instead */
+  gap: 0;
+
+  overflow: hidden;           /* hard clip — nothing can escape */
+}
+
+/* ── Category label ───────────────────────────────────────────────
+   Single line, truncated if somehow too long.
+   Height is predictable: 1 line × font-size × line-height ≈ 16px
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__category {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #7c6ff7;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  /* Single line hard clamp */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Fixed height slot */
+  height: 1rem;
+  line-height: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── Title ────────────────────────────────────────────────────────
+   Always exactly 2 lines, never more.
+   line-height 1.35 × font-size 0.92rem × 2 lines ≈ 40px reserved.
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #e8e4f8;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+
+  /* Hard clamp to exactly 2 lines — no exceptions */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* Reserve exactly 2-line height so shorter titles don't collapse */
+  min-height: calc(0.92rem * 1.38 * 2);   /* ≈ 2.54rem / ~40px */
+  max-height: calc(0.92rem * 1.38 * 2);
+  flex-shrink: 0;
+}
+
+/* ── Creator row ──────────────────────────────────────────────────
+   Single line, icon + name, truncated with ellipsis if too long.
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__creator {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.77rem;
+  color: rgba(232, 228, 248, 0.5);
+  /* Prevent this row from wrapping */
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.discover__card__creator__icon {
+  font-size: 0.82rem;
+  flex-shrink: 0;   /* icon must never shrink or disappear */
+}
+
+.discover__card__creator__name {
+  font-weight: 600;
+  color: rgba(232, 228, 248, 0.7);
+  /* Truncate long creator names with ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Stats row ────────────────────────────────────────────────────
+   Rating · Views · Lessons — always one line at the bottom.
+   flex-wrap: nowrap prevents line-breaking.
+   overflow: hidden clips anything that would overflow.
+   ──────────────────────────────────────────────────────────────── */
+.discover__card__stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.73rem;
+  color: rgba(232, 228, 248, 0.45);
+  /* Single line — never wrap */
+  flex-wrap: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* A little top breathing room */
+  margin-top: 0.1rem;
+}
+
+.discover__card__stat {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.discover__card__rating {
+  color: #fbbf24;
+  font-weight: 600;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Separator dot between stats */
+.discover__card__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(232, 228, 248, 0.25);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SEARCH RESULTS GRID
+   (shown when the user has typed a search query)
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__results__wrap {
+  padding: 0 2rem 2.5rem;
+  animation: fadeUp 0.35s ease both;
+}
+
+.discover__results__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #e8e4f8;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.1rem;
+}
+
+.discover__results__title span {
+  color: #7c6ff7;
+}
+
+/* Responsive grid for search results */
+.discover__results__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* In the search results grid, cards fill the cell width but keep fixed height */
+.discover__results__grid .discover__card {
+  flex: unset;
+  width: 100%;
+  height: 340px;    /* same fixed height as horizontal-row cards */
+}
+
+/* Empty results state */
+.discover__results__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(232, 228, 248, 0.4);
+}
+
+.discover__results__empty__icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.discover__results__empty p {
+  font-size: 0.95rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BOTTOM TAB BAR (mobile only — shown below 768px)
+   ═══════════════════════════════════════════════════════════════════ */
+.discover__tab__bar {
+  display: none;                /* hidden on desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(11, 6, 24, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 500;
+  /* safe area for iPhones with home indicator */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.discover__tab__bar__inner {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* One tab item */
+.discover__tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  transition: background 0.18s ease;
+  flex: 1;
+  font-family: inherit;
+}
+
+.discover__tab:hover {
+  background: rgba(124, 111, 247, 0.1);
+}
+
+.discover__tab__icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.discover__tab__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(232, 228, 248, 0.45);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Active tab */
+.discover__tab.active .discover__tab__label {
+  color: #7c6ff7;
+}
+
+.discover__tab.active .discover__tab__icon {
+  filter: drop-shadow(0 0 6px rgba(124, 111, 247, 0.8));
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (below 1024px) ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .discover__nav__items {
+    gap: 0;
+  }
+
+  .discover__nav__btn {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.65rem;
+  }
+}
+
+/* ── Mobile (below 768px) ──────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Hide the top nav links on mobile — tabs replace them */
+  .discover__nav__items {
+    display: none;
+  }
+
+  /* Show the bottom tab bar */
+  .discover__tab__bar {
+    display: block;
+  }
+
+  /* Tighten up horizontal padding */
+  .discover__search__wrap,
+  .discover__carousel__wrap,
+  .discover__chips__wrap,
+  .discover__section,
+  .discover__results__wrap {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Carousel slide becomes a bit shorter */
+  .discover__carousel__slide {
+    min-height: 200px;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .discover__carousel__arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  /* Cards narrower on mobile — height adjusted proportionally */
+  .discover__card {
+    flex: 0 0 220px;
+    width: 220px;
+    height: 320px;
+  }
+
+  /* Thumbnail scales down with the card */
+  .discover__card__thumb {
+    height: 124px;
+  }
+
+  /* Section header font slightly smaller */
+  .discover__section__title {
+    font-size: 1.05rem;
+  }
+
+  /* Search bar */
+  .discover__search__input {
+    font-size: 0.92rem;
+  }
+}
+
+/* ── Very small screens (below 400px) ──────────────────────────── */
+@media (max-width: 400px) {
+  .discover__card {
+    flex: 0 0 200px;
+    width: 200px;
+    height: 310px;
+  }
+
+  .discover__card__thumb {
+    height: 114px;
+  }
+
+  .discover__carousel__headline {
+    font-size: 1.2rem;
+  }
+
+  .discover__nav__logo {
+    font-size: 1.1rem;
+  }
+}

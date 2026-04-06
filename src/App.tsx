@@ -5,6 +5,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Navbar from "./component/navbar/Navbar";
+import Discover from "./pages/Discover/Discover";
 import SignUp from "./pages/Signup/SignUp";
 import Login from "./pages/Login/Login";
 import About from "./pages/About/About";
@@ -21,6 +22,7 @@ function AppContent() {
 
       <Routes>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/discover" element={<Discover />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About />} />
