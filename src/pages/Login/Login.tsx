@@ -36,7 +36,7 @@ import "./login.css";
 //  handleSubmit() below (clearly marked with the same warning).
 // ════════════════════════════════════════════════════════════════
 const DEV_ADMIN_USERNAME = "ADMIN";
-const DEV_ADMIN_PASSWORD = ""; // ← fill in your test password here
+const DEV_ADMIN_PASSWORD = "$killQuest123"; // ← fill in your test password here
 
 /**
  * Simulates an API response using the dev credentials above.
@@ -46,7 +46,7 @@ const DEV_ADMIN_PASSWORD = ""; // ← fill in your test password here
 const devCredentialCheck = (username: string, password: string): boolean => {
   return (
     username === DEV_ADMIN_USERNAME &&
-    (DEV_ADMIN_PASSWORD === "" || password === DEV_ADMIN_PASSWORD)
+    (DEV_ADMIN_PASSWORD === "$killQuest123" || password === DEV_ADMIN_PASSWORD)
   );
 };
 // ════════════════════════════════════════════════════════════════
@@ -193,7 +193,7 @@ function Login() {
     //  when wiring up your real backend.
     // ══════════════════════════════════════════════════════════
     const isDevMatch = devCredentialCheck(cleanUsername, cleanPassword);
-    if (DEV_ADMIN_PASSWORD !== "" && isDevMatch) {
+    if (DEV_ADMIN_PASSWORD === "$killQuest123" && isDevMatch) {
       // Dev mode fast-path — skip the real API
       resetAttempts();
       navigate("/dashboard");
