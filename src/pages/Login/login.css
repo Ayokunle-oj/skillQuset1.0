@@ -1,0 +1,564 @@
+/* ═══════════════════════════════════════════════════════════════
+   login.css  —  SkillQuest Login Page
+   Design: Split-screen · Minimal & airy · Base colour #170b48
+   Font: System sans-serif stack (no external fonts)
+   No dark mode · No CSS :root variables (colours declared inline)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── FONT STACK ─────────────────────────────────────────────── */
+/*
+  We use the best system sans-serif available on each platform:
+  -apple-system  → San Francisco (macOS / iOS)
+  Segoe UI       → Windows
+  Ubuntu         → Linux
+  sans-serif     → universal fallback
+*/
+
+/* ── PAGE WRAPPER ───────────────────────────────────────────── */
+.login__page {
+  display: flex;
+  min-height: 100vh;
+  font-family: -apple-system, "Segoe UI", Ubuntu, sans-serif;
+  background-color: #f7f6fb;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LEFT PANEL — branding / decorative side
+   ══════════════════════════════════════════════════════════════ */
+.login__panel {
+  /* Takes 45% of the screen on desktop */
+  flex: 0 0 45%;
+  background-color: #170b48;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+
+  /* Slide in from the left on load */
+  animation: panelSlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes panelSlideIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* Decorative geometric circles — purely visual, no extra HTML needed */
+.login__panel::before,
+.login__panel::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+
+/* Large circle — top right */
+.login__panel::before {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  right: -140px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Smaller circle — bottom left */
+.login__panel::after {
+  width: 260px;
+  height: 260px;
+  bottom: -80px;
+  left: -80px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Extra decorative dot grid */
+.login__panel__dots {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  opacity: 0.12;
+}
+
+.login__panel__dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: block;
+}
+
+/* Brand mark inside left panel */
+.login__brand {
+  text-align: center;
+  z-index: 1;
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.login__brand__icon {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 1.2rem;
+  animation: spin 8s linear infinite;
+  display: inline-block;
+  color: #a89be8;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.login__brand__name {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  margin: 0 0 0.75rem;
+}
+
+.login__brand__tagline {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  max-width: 280px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Floating feature pills */
+.login__features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 3rem;
+  z-index: 1;
+  width: 100%;
+  max-width: 300px;
+}
+
+.login__feature__pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.88rem;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  /* Staggered entrance */
+  animation: fadeUp 0.6s ease both;
+}
+
+.login__feature__pill:nth-child(1) { animation-delay: 0.5s; }
+.login__feature__pill:nth-child(2) { animation-delay: 0.65s; }
+.login__feature__pill:nth-child(3) { animation-delay: 0.8s; }
+
+.login__feature__icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RIGHT PANEL — the actual form
+   ══════════════════════════════════════════════════════════════ */
+.login__form__side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background-color: #ffffff;
+
+  /* Fade in slightly after the left panel */
+  animation: formFadeIn 0.6s ease 0.25s both;
+}
+
+@keyframes formFadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.login__card {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Page heading */
+.login__heading {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #170b48;
+  letter-spacing: -0.035em;
+  margin: 0 0 0.4rem;
+}
+
+.login__subheading {
+  font-size: 0.95rem;
+  color: #7a7a8c;
+  margin: 0 0 2rem;
+  font-weight: 400;
+}
+
+/* ── GOOGLE BUTTON ──────────────────────────────────────────── */
+.login__google__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid #e2e0ed;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #170b48;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              box-shadow 0.2s ease, transform 0.15s ease;
+  margin-bottom: 1.5rem;
+}
+
+.login__google__btn:hover {
+  background: #f7f6fb;
+  border-color: #c2bedd;
+  box-shadow: 0 2px 12px rgba(23, 11, 72, 0.08);
+  transform: translateY(-1px);
+}
+
+.login__google__btn:active { transform: translateY(0); }
+
+.login__google__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ── DIVIDER ────────────────────────────────────────────────── */
+.login__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  color: #b0adc4;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.login__divider::before,
+.login__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e8e6f3;
+}
+
+/* ── FORM ───────────────────────────────────────────────────── */
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* Field group = label + input wrapper + error message */
+.login__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.login__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #170b48;
+  letter-spacing: 0.02em;
+}
+
+/* Input wrapper (contains input + optional icon) */
+.login__input__wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.login__input {
+  width: 100%;
+  padding: 0.78rem 1rem;
+  border: 1.5px solid #e2e0ed;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #170b48;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease,
+              background 0.22s ease;
+  box-sizing: border-box;
+}
+
+/* Lift effect on focus */
+.login__input:focus {
+  border-color: #170b48;
+  box-shadow: 0 0 0 3px rgba(23, 11, 72, 0.08);
+  background: #faf9fd;
+}
+
+/* Valid state */
+.login__input.valid {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.08);
+}
+
+/* Error state */
+.login__input.error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* Password input needs right padding for the toggle button */
+.login__input.password__input {
+  padding-right: 3rem;
+}
+
+/* Show / hide password toggle */
+.login__pw__toggle {
+  position: absolute;
+  right: 0.85rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9995b3;
+  font-size: 1rem;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.18s ease;
+  line-height: 1;
+}
+
+.login__pw__toggle:hover { color: #170b48; }
+
+/* Error message */
+.login__error {
+  font-size: 0.78rem;
+  color: #dc2626;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  animation: errorAppear 0.25s ease both;
+}
+
+@keyframes errorAppear {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── REMEMBER ME + FORGOT PASSWORD ROW ─────────────────────── */
+.login__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Custom checkbox */
+.login__remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #4a4860;
+  cursor: pointer;
+  user-select: none;
+}
+
+.login__remember input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  border: 1.5px solid #c2bedd;
+  border-radius: 5px;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.login__remember input[type="checkbox"]:checked {
+  background: #170b48;
+  border-color: #170b48;
+}
+
+.login__remember input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #ffffff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.login__forgot {
+  font-size: 0.85rem;
+  color: #170b48;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.18s ease;
+}
+
+.login__forgot:hover { opacity: 0.65; }
+
+/* ── SUBMIT BUTTON ──────────────────────────────────────────── */
+.login__submit {
+  width: 100%;
+  padding: 0.88rem;
+  background: #170b48;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.96rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.22s ease, transform 0.15s ease,
+              box-shadow 0.22s ease, opacity 0.22s ease;
+  margin-top: 0.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.login__submit:hover:not(:disabled) {
+  background: #2d1a7a;
+  box-shadow: 0 8px 24px rgba(23, 11, 72, 0.28);
+  transform: translateY(-1px);
+}
+
+.login__submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Disabled / locked-out state */
+.login__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── LOCKOUT NOTICE ─────────────────────────────────────────── */
+.login__lockout {
+  font-size: 0.82rem;
+  color: #dc2626;
+  text-align: center;
+  font-weight: 500;
+  padding: 0.6rem 0.8rem;
+  background: rgba(220, 38, 38, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+}
+
+/* ── FOOTER LINKS ───────────────────────────────────────────── */
+.login__footer {
+  text-align: center;
+  font-size: 0.87rem;
+  color: #7a7a8c;
+  margin-top: 1.5rem;
+}
+
+.login__footer a {
+  color: #170b48;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+}
+
+.login__footer a:hover { opacity: 0.65; }
+
+.login__terms {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #b0adc4;
+  margin-top: 1rem;
+}
+
+.login__terms a {
+  color: #7a6faa;
+  text-decoration: underline;
+  text-decoration-color: rgba(122, 111, 170, 0.4);
+  transition: color 0.18s ease;
+}
+
+.login__terms a:hover { color: #170b48; }
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — collapse to single column below 768px
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .login__page {
+    flex-direction: column;
+  }
+
+  /* Left panel becomes a compact header strip */
+  .login__panel {
+    flex: 0 0 auto;
+    padding: 2rem 1.5rem 1.5rem;
+    min-height: 0;
+    animation: none;
+  }
+
+  .login__features {
+    display: none; /* hide feature pills on small screens */
+  }
+
+  .login__brand__name {
+    font-size: 1.7rem;
+  }
+
+  .login__brand__tagline {
+    font-size: 0.88rem;
+  }
+
+  .login__form__side {
+    padding: 2rem 1.25rem;
+    animation: none;
+  }
+
+  .login__card {
+    max-width: 100%;
+  }
+}

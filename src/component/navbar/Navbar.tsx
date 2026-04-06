@@ -10,8 +10,8 @@ function Navbar() {
   const navigate = useNavigate();
   const [menu, setMenu] = useState<boolean>(false);
   const [button, setButton] = useState<boolean>(window.innerWidth > 960);
-  const handleSign = () => navigate("./register");
-  const handleLogIn = () => navigate("./sign__up");
+  const handleSign = () => navigate("./signup");
+  const handleLogIn = () => navigate("./login");
   const closeMobileMenu = () => setMenu(false);
   const handleClick = () => setMenu((prev) => !prev);
 
@@ -102,7 +102,7 @@ function Navbar() {
             {/* Mobile-only CTA buttons inside the drawer */}
             <li className="navbar__item">
               <Link
-                to="/sign__up"
+                to="/signup"
                 className="navbar__links__mobile"
                 onClick={closeMobileMenu}
               >
@@ -111,26 +111,25 @@ function Navbar() {
             </li>
             <li className="navbar__item">
               <Link
-                to="/register"
+                to="/login"
                 className="navbar__links__mobile"
                 onClick={closeMobileMenu}
               >
-                Log in
+                Login
               </Link>
             </li>
+            {/* Desktop buttons */}
+            {button && (
+              <button onClick={handleLogIn} className="btn__outline">
+                Login
+              </button>
+            )}
+            {button && (
+              <button onClick={handleSign} className="btn__outline">
+                Sign up
+              </button>
+            )}
           </ul>
-
-          {/* Desktop buttons */}
-          {button && (
-            <button onClick={handleLogIn} className="btn__outline">
-              Log in
-            </button>
-          )}
-          {button && (
-            <button onClick={handleSign} className="btn__outline">
-              Sign up
-            </button>
-          )}
         </nav>
       </header>
     </>
