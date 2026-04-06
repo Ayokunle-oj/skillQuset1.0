@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./component/navbar/Navbar";
 import Discover from "./pages/Discover/Discover";
+import WhatsNew from "./pages/whats__new/WhatsNew";
 import SignUp from "./pages/Signup/SignUp";
 import Login from "./pages/Login/Login";
 import About from "./pages/About/About";
@@ -22,6 +23,8 @@ function AppContent() {
 
       <Routes>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/whats-new" element={<WhatsNew />} />
+
         <Route path="/discover" element={<Discover />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
