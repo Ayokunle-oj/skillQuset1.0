@@ -1,4 +1,14 @@
-@import "../../app.css";
+/*
+  Color reference (replaces all var() tokens):
+  --sq-violet      → #7c6ff7   (accent purple — primary brand)
+  --sq-violet-lt   → #a99ef9   (lighter tint of accent purple — active/pressed state)
+  --btn            → #170b48   (deep indigo — border & hover background)
+  --text           → #ffffff   (button label text)
+  --Neutral1       → #ffffff   (border on hover for .courses)
+  --Neutral2       → #e0deff   (border on hover for .Get__started)
+  --large--font--text → 16px
+*/
+
 .hero__container {
   width: 100%;
   max-width: 3000px;
@@ -6,45 +16,42 @@
 }
 
 .hero__img {
-  position: relative; /* IMPORTANT for overlay */
-  background: center center/cover no-repeat;
+  position: relative; /* IMPORTANT: needed so .overlay can use position: absolute */
+  background: center center / cover no-repeat;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* 🔥 Cinematic zoom */
   transform: scale(1);
   transition: transform 10s ease;
 }
 
-/* optional zoom class */
+/* Optional zoom class — apply via JS if you want a Ken Burns effect */
 .hero__img.zoom {
   transform: scale(1.05);
 }
 
-/* 🔥 Animated overlay (replaces your old box-shadow) */
+/* Animated dark overlay — sits above the background image, below the text */
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 1);
-  opacity: 0.3; /* default slight dark */
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0.3; /* default: slight darkening */
   transition: opacity 1.5s ease-in-out;
   z-index: 1;
 }
 
-/* when fading to black */
-.overlay.dark {
+/* Triggered by isDark === true — fades the hero fully dark during image swap */
+/* .overlay.dark {
   opacity: 1;
-}
+} */
 
-/* TEXT ABOVE OVERLAY */
+/* Hero text sits ABOVE the overlay via z-index */
 .hero__text {
   position: relative;
   z-index: 2;
-  border: none;
-  color: var(--text);
+  color: #ffffff;
   margin: 0 20px;
   padding: 10px;
   width: 100%;
@@ -54,12 +61,12 @@
 .hero__text > h2 {
   margin-top: 6rem;
   margin-left: 40px;
-  font-size: var(--large--text);
+  font-size: 56px;
 }
 
 .hero__text > p {
   margin-top: 10px;
-  font-size: var(--large--small--text);
+  font-size: 20px;
   margin-left: 46px;
 }
 
@@ -71,17 +78,18 @@
   align-items: center;
 }
 
+/* ─── "Get Started" button ─────────────────────────────── */
 .Get__started {
   display: flex;
   cursor: pointer;
   align-items: center;
-  border: solid var(--btn);
-  font-size: var(--large--font--text);
+  border: solid #170b48; /* --btn */
+  font-size: 16px; /* --large--font--text */
   text-align: center;
-  background-color: var(--sq-violet);
+  background-color: #240e7c; /* --sq-violet */
   justify-content: space-evenly;
   transition: transform 0.4s ease-in-out;
-  color: var(--text);
+  color: #ffffff; /* --text */
   width: 15rem;
   height: 40px;
   border-radius: 10px;
@@ -89,21 +97,22 @@
 }
 
 .Get__started:hover {
-  background-color: var(--btn);
+  background-color: #2504a8; /* --btn */
   transform: scale(1.1);
-  border: solid 3px var(--Neutral2);
+  border: solid 3px #e0deff; /* --Neutral2 */
 }
 
 .Get__started:active {
-  background-color: var(--sq-violet-lt);
+  background-color: #a99ef9; /* --sq-violet-lt */
   transform: scale(1);
 }
 
+/* ─── "View Courses" button ────────────────────────────── */
 .hero__text .courses {
   width: 12rem;
   height: 40px;
-  color: white;
-  border: 3px solid var(--sq-violet);
+  color: #ffffff;
+  border: 3px solid #2504a8; /* --sq-violet */
   font-weight: bolder;
   background: none;
   cursor: pointer;
@@ -113,16 +122,15 @@
 }
 
 .hero__text .courses:hover {
-  background-color: var(--sq-violet);
-  border: solid 3px var(--Neutral1);
+  background-color: #2504a8; /* --sq-violet */
+  border: solid 3px #ffffff; /* --Neutral1 */
   transform: scale(1.1);
 }
 
 .hero__text .courses:active {
   transform: scale(1);
-  background-color: var(--sq-violet-lt);
+  background-color: #2504a8; /* --sq-violet-lt */
 }
-
 /* RESPONSIVE */
 
 @media screen and (max-width: 960px) {
@@ -135,7 +143,7 @@
 
   .hero__text h2 {
     text-align: center;
-    font-size: var(--large--mid--text);
+    font-size: 56px;
     margin-top: 8vh;
     margin-left: 2px;
   }
@@ -157,7 +165,7 @@
 
 @media screen and (max-width: 660px) {
   .hero__text h2 {
-    font-size: 30px;
+    font-size: 50px;
     text-align: center;
   }
 

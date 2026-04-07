@@ -24,7 +24,6 @@ function AppContent() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/whats-new" element={<WhatsNew />} />
-
         <Route path="/discover" element={<Discover />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
