@@ -2,8 +2,9 @@ type info = {
   src: string;
   title: string;
   text: string;
+  btn: string;
 };
-function About1({ src, title, text }: info) {
+function About1({ src, title, text, btn }: info) {
   return (
     <div className="about__container">
       <div className="about__us__img">
@@ -14,7 +15,7 @@ function About1({ src, title, text }: info) {
       <div className="about__us__content">
         <h2>{title}</h2>
         <p>{text}</p>
-        <button>Get started</button>
+        <button>{btn}</button>
       </div>
     </div>
   );

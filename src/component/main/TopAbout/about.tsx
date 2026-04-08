@@ -13,6 +13,7 @@ function About() {
           title="Level up your skills with SkillQuest"
           text=" Join millions of people by exploring courses,study guide, tackling
           practice problems built for you."
+          btn="Get started"
         />
         <About2
           src={gg4}
@@ -26,11 +27,13 @@ function About() {
           title="Level up your skills with SkillQuest"
           text=" Join millions of people by exploring courses,study guide, tackling
           practice problems built for you."
+          btn="Get started"
         />
         <About1
           src={gg4}
           title="SkillQuest boosts scores!"
           text="Learning has never been easier.with our advanced AI,SkillQuest adapts to your study patterns and habits helping you learn faster,smarter,and more effectively every day. "
+          btn="Learn more"
         />
       </div>
     </>
