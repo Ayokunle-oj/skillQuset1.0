@@ -1,0 +1,135 @@
+.about {
+  flex-direction: column;
+  margin-top: 70px;
+}
+.about__container {
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.about__us__img {
+  width: 50%;
+}
+.about__us__img__wrapper {
+  width: 70%;
+  transform: rotate(-10deg);
+}
+
+.about__us__img__wrapper > img {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: solid white 10px;
+  box-shadow: 0 1.25rem 40px rgba(0, 0, 0, 0.6);
+}
+.about__us__content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 40%;
+}
+.about__us__content2 > h2,
+.about__us__content > h2 {
+  font-size: 32px;
+}
+.about__us__content2 > p,
+.about__us__content > p {
+  color: gray;
+  font-size: 16px;
+}
+.about__us__content > button {
+  width: 12rem;
+  height: 2.5rem;
+  border-radius: 20px;
+  margin: 20px 40px;
+  background-color: #170b48;
+  color: white;
+  bottom: #170b48;
+}
+
+.about__us__content > button:active {
+  transform: scale(1.1);
+  background-color: #240e7c;
+  color: white;
+  bottom: #170b48;
+}
+.about__us__content2 > button {
+  width: 12rem;
+  height: 2.5rem;
+  border-radius: 20px;
+  margin: 20px 40px;
+  background-color: #170b48;
+  color: white;
+  bottom: #170b48;
+}
+
+.about__us__content2 > button:active {
+  transform: scale(1.1);
+  background-color: #240e7c;
+  color: white;
+  bottom: #170b48;
+}
+.about__us__img__wrapper2 > img {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: solid white 10px;
+  box-shadow: 0 1.25rem 40px rgba(0, 0, 0, 0.6);
+}
+.about__us__img__wrapper2 {
+  width: 70%;
+  transform: rotate(10deg);
+}
+.about__us__content2 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 40%;
+}
+.about2 {
+  display: none;
+}
+@media screen and (max-width: 960px) {
+  .about__us__img {
+    width: 60%;
+  }
+  .about__us__content > button,
+  .about__us__content2 > button {
+    width: 12rem;
+    height: 2.5rem;
+    border-radius: 20px;
+    margin: 20px 0;
+  }
+}
+@media screen and (max-width: 600px) {
+  .about__container {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .about__us__img {
+    width: 70%;
+  }
+  .about {
+    display: none;
+  }
+  .about2 {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about__us__content2,
+  .about__us__content {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+}
