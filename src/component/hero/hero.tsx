@@ -15,6 +15,7 @@ function Hero() {
 
   const navigate = useNavigate();
   const handleClick = () => navigate("./discover");
+  const handleClick1 = () => navigate("./getStarted");
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -65,7 +66,7 @@ function Hero() {
               View courses
             </button>
 
-            <button className="Get__started">
+            <button onClick={handleClick1} className="Get__started">
               <p>Get Started</p>
               <FontAwesomeIcon icon={faArrowRightLong} />
             </button>

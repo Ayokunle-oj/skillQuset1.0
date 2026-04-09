@@ -1,0 +1,506 @@
+/* ═══════════════════════════════════════════════════════════════════
+   GetStarted.css  —  SkillQuest Onboarding Wizard
+   Theme  : Deep indigo #170b48 background, accent #7c6ff7, white text
+   Rules  : No CSS root variables, no Google Fonts, plain CSS
+═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─── Root fullscreen wrapper ───────────────────────────────────── */
+
+.ob-root {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0e0829;          /* deep brand indigo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* Subtle radial glow behind everything */
+  background-image: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(124, 111, 247, 0.12) 0%,
+    transparent 60%
+  );
+}
+
+
+/* ─── Progress bar ──────────────────────────────────────────────── */
+
+.ob-progress-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.07);
+  z-index: 100;
+}
+
+.ob-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7c6ff7, #a89cf7);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ─── Back button ───────────────────────────────────────────────── */
+
+.ob-back-btn {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s ease;
+  z-index: 100;
+  padding: 4px 0;
+}
+
+.ob-back-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* ─── Screen container ──────────────────────────────────────────── */
+
+.ob-screen {
+  width: 100%;
+  max-width: 680px;
+  padding: 40px 32px;
+  box-sizing: border-box;
+}
+
+/* Slide-in animation */
+.ob-screen--in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.ob-screen--out {
+  animation: slideOut 0.22s ease forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-20px); }
+}
+
+
+/* ═══════════════════════════════════════════
+   WELCOME SCREEN
+═══════════════════════════════════════════ */
+
+.ob-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.ob-welcome__logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  margin-bottom: 48px;
+}
+
+.ob-welcome__logo span {
+  color: #7c6ff7;
+}
+
+.ob-welcome__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.ob-welcome__line {
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.ob-welcome__line--sub {
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ob-welcome__line--hint {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+
+/* Blinking cursor */
+.ob-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #7c6ff7;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Done check circle */
+.ob-done-check {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: rgba(124, 111, 247, 0.15);
+  border: 2px solid #7c6ff7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #7c6ff7;
+  margin-bottom: 8px;
+}
+
+
+/* ═══════════════════════════════════════════
+   STEP SCREEN
+═══════════════════════════════════════════ */
+
+.ob-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ob-step__question {
+  font-size: clamp(20px, 3vw, 30px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  margin: 0 0 10px;
+  min-height: 2.4em; /* reserve space while typing */
+}
+
+.ob-step__hint {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+
+.ob-step__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeUp 0.3s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ═══════════════════════════════════════════
+   OPTION BUTTONS GRID
+═══════════════════════════════════════════ */
+
+/* Varied sizes (masonry-like feel) */
+.ob-grid--varied {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Even grid */
+.ob-grid--even {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Option button base */
+.ob-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Size variants for varied grid */
+.ob-option--sm { font-size: 13px; padding: 10px 16px; }
+.ob-option--md { font-size: 14px; padding: 12px 20px; }
+.ob-option--lg { font-size: 15px; padding: 14px 24px; font-weight: 600; }
+
+.ob-option:hover {
+  background-color: rgba(124, 111, 247, 0.15);
+  border-color: rgba(124, 111, 247, 0.5);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.ob-option--selected {
+  background-color: rgba(124, 111, 247, 0.25);
+  border-color: #7c6ff7;
+  color: #ffffff;
+}
+
+.ob-option__emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+
+/* ═══════════════════════════════════════════
+   LEARNER / AI PERSONALITY CARDS
+═══════════════════════════════════════════ */
+
+.ob-learner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 18px 20px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.ob-learner-card:hover {
+  background-color: rgba(124, 111, 247, 0.12);
+  border-color: rgba(124, 111, 247, 0.4);
+  transform: translateY(-2px);
+}
+
+.ob-learner-card--selected {
+  background-color: rgba(124, 111, 247, 0.2);
+  border-color: #7c6ff7;
+}
+
+.ob-learner-card__emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.ob-learner-card__label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.ob-learner-card__desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.4;
+}
+
+
+/* ═══════════════════════════════════════════
+   INPUTS
+═══════════════════════════════════════════ */
+
+.ob-input,
+.ob-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 15px;
+  color: #ffffff;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.ob-input::placeholder,
+.ob-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.ob-input:focus,
+.ob-textarea:focus {
+  border-color: #7c6ff7;
+  background-color: rgba(124, 111, 247, 0.08);
+}
+
+.ob-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Username row */
+.ob-username-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.ob-username-wrap:focus-within {
+  border-color: #7c6ff7;
+}
+
+.ob-username-prefix {
+  padding: 14px 4px 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  user-select: none;
+}
+
+.ob-input--username {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding-left: 4px;
+}
+
+.ob-input--username:focus {
+  border: none;
+  background: transparent;
+}
+
+/* Error text */
+.ob-error {
+  font-size: 13px;
+  color: #f87171;
+  margin: 0;
+  padding: 8px 0 0;
+}
+
+
+/* ═══════════════════════════════════════════
+   NEXT / SUBMIT BUTTON
+═══════════════════════════════════════════ */
+
+.ob-next-btn {
+  align-self: flex-start;
+  padding: 13px 32px;
+  background-color: #7c6ff7;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+  letter-spacing: 0.2px;
+}
+
+.ob-next-btn:hover:not(:disabled) {
+  background-color: #6a5ee0;
+  transform: translateY(-1px);
+}
+
+.ob-next-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ob-next-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ob-next-btn--welcome {
+  margin-top: 8px;
+  padding: 15px 40px;
+  font-size: 16px;
+}
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 760px)
+═══════════════════════════════════════════ */
+
+@media (max-width: 760px) {
+  .ob-screen {
+    padding: 40px 24px;
+  }
+
+  .ob-grid--even {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 480px)
+═══════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .ob-screen {
+    padding: 32px 20px;
+  }
+
+  .ob-grid--even {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ob-next-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .ob-next-btn--welcome {
+    width: 100%;
+  }
+
+  .ob-back-btn {
+    top: 16px;
+    left: 20px;
+  }
+}

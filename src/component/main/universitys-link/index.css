@@ -1,0 +1,420 @@
+/* ═══════════════════════════════════════════════════════════════════
+   School / index.css  —  SkillQuest University Section
+   Layout : Grid (3 cols → 2 → 1), each card is a horizontal flex row
+   Theme  : White cards, jet black (#111) text, floating shadow
+   Rules  : No CSS root variables, no Google Fonts, plain CSS
+═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════
+   SECTION
+═══════════════════════════════════════════ */
+
+.school__container {
+  padding: 80px 32px 100px;
+  margin-top: 7rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Starts invisible — becomes visible when JS adds the class */
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.school__container--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.school__container > h2 {
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.4px;
+  margin: 0 0 12px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.school__container > p {
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 520px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   GRID  — 3 columns, responsive
+═══════════════════════════════════════════ */
+
+.school__sub__container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 56px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* ═══════════════════════════════════════════
+   CARD WRAPPER  — staggered entrance
+═══════════════════════════════════════════ */
+
+.school__sub__wrapper {
+  width: 100%;
+  height: 100%;
+
+  /* Entrance animation: fades up */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardFadeUp 0.5s ease forwards;
+  /* animation-delay is set inline via index prop in School.tsx */
+}
+
+/* Pause cards until section is visible */
+.school__container:not(.school__container--visible) .school__sub__wrapper {
+  animation: none;
+}
+
+@keyframes cardFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   CARD  — horizontal flex row (logo + name + arrow)
+   This is the original layout, just refined
+═══════════════════════════════════════════ */
+
+.school__sub__link {
+  width: 100%;
+  height: 100%;
+  padding: 18px 20px;
+  box-sizing: border-box;
+
+  /* Horizontal row: logo left, name middle, arrow right */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+
+  text-decoration: none;
+  color: #111111;
+  background-color: #ffffff;
+  border-radius: 14px;
+
+  /* Floating shadow — the "lifted" card feel */
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+
+  border: 1px solid #efefef;
+
+  /* Smooth hover transition */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* ── Hover: lifts higher + deeper shadow + arrow slides in ──────── */
+.school__sub__link:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.13),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: #dddddd;
+}
+
+/* ── Logo box ──────────────────────────────────────────────────── */
+.school__sub__logo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.school__sub__link:hover .school__sub__logo {
+  background-color: #ededed;
+}
+
+/* Real logo image */
+.school__sub__logo > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Initials fallback */
+.school__sub__initials {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111111;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.3px;
+}
+
+/* ── University name ───────────────────────────────────────────── */
+.school__sub__text {
+  flex: 1; /* takes all remaining horizontal space */
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+  text-align: left;
+  line-height: 1.3;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* ── Arrow — hidden by default, slides in on hover ─────────────── */
+.school__sub__arrow {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #111111;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.school__sub__link:hover .school__sub__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 960px): 2 columns
+═══════════════════════════════════════════ */
+
+@media screen and (max-width: 960px) {
+  .school__sub__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .school__container {
+    padding: 60px 24px 72px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 560px): 1 column
+═══════════════════════════════════════════ */
+
+@media screen and (max-width: 560px) {
+  .school__sub__container {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .school__container {
+    padding: 48px 16px 56px;
+  }
+
+  .school__sub__link {
+    padding: 14px 16px;
+  }
+
+  .school__sub__logo {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO STYLES  — original, untouched
+═══════════════════════════════════════════════════════════════════ */
+
+.hero__container {
+  width: 100%;
+  max-width: 3000px;
+  height: calc(100vh - 80px);
+}
+
+.hero__img {
+  position: relative;
+  background: center center/cover no-repeat;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(1);
+  transition: transform 10s ease;
+}
+
+.hero__img.zoom {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 1);
+  opacity: 0.3;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 1;
+}
+
+.overlay.dark {
+  opacity: 1;
+}
+
+.hero__text {
+  position: relative;
+  z-index: 2;
+  border: none;
+  color: var(--text);
+  margin: 0 20px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__text > h2 {
+  margin-top: 6rem;
+  margin-left: 40px;
+  font-size: var(--large--text);
+}
+
+.hero__text > p {
+  margin-top: 10px;
+  font-size: var(--large--small--text);
+  margin-left: 46px;
+}
+
+.hero__btn {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Get__started {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border: solid var(--btn);
+  font-size: var(--large--font--text);
+  text-align: center;
+  background-color: var(--sq-violet);
+  justify-content: space-evenly;
+  transition: transform 0.4s ease-in-out;
+  color: var(--text);
+  width: 15rem;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10rem;
+}
+
+.Get__started:hover {
+  background-color: var(--btn);
+  transform: scale(1.1);
+  border: solid 3px var(--Neutral2);
+}
+
+.Get__started:active {
+  background-color: var(--sq-violet-lt);
+  transform: scale(1);
+}
+
+.hero__text .courses {
+  width: 12rem;
+  height: 40px;
+  color: white;
+  border: 3px solid var(--sq-violet);
+  font-weight: bolder;
+  background: none;
+  cursor: pointer;
+  margin-left: 60px;
+  border-radius: 10px;
+  transition: transform 0.4s ease-in-out;
+}
+
+.hero__text .courses:hover {
+  background-color: var(--sq-violet);
+  border: solid 3px var(--Neutral1);
+  transform: scale(1.1);
+}
+
+.hero__text .courses:active {
+  transform: scale(1);
+  background-color: var(--sq-violet-lt);
+}
+
+@media screen and (max-width: 960px) {
+  .hero__text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__text h2 {
+    text-align: center;
+    font-size: var(--large--mid--text);
+    margin-top: 8vh;
+    margin-left: 2px;
+  }
+
+  .hero__text .text {
+    text-align: center;
+    margin-left: 3px;
+  }
+
+  .hero__btn {
+    margin-top: 13vh;
+  }
+
+  .Get__started {
+    margin-right: 2rem;
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .hero__text h2 {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .hero__text .text {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .hero__btn {
+    margin-top: 50px;
+    flex-direction: column;
+  }
+
+  .Get__started {
+    margin: 1rem;
+    width: 13rem;
+    margin-top: 40px;
+  }
+
+  .hero__text .courses {
+    margin-left: 1px;
+  }
+}

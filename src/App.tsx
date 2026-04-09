@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./component/navbar/Navbar";
 import Discover from "./pages/Discover/Discover";
+import GetStarted from "./component/Get_started/GetStarted";
 import WhatsNew from "./pages/whats__new/WhatsNew";
 import SignUp from "./pages/Signup/SignUp";
 import Login from "./pages/Login/Login";
@@ -17,12 +18,14 @@ function AppContent() {
   return (
     <>
       {location.pathname !== "/discover" &&
+        location.pathname !== "/getStarted" &&
         location.pathname !== "/dashboard" &&
         location.pathname !== "/signup" &&
         location.pathname !== "/login" && <Navbar />}
 
       <Routes>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/whats-new" element={<WhatsNew />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/login" element={<Login />} />
