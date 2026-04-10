@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 type info = {
   src: string;
   title: string;
@@ -5,6 +6,8 @@ type info = {
   btn: string;
 };
 function About1({ src, title, text, btn }: info) {
+  const navigate = useNavigate();
+  const HandleClick = () => navigate("./getStarted");
   return (
     <div className="about__container">
       <div className="about__us__img">
@@ -15,7 +18,7 @@ function About1({ src, title, text, btn }: info) {
       <div className="about__us__content">
         <h2>{title}</h2>
         <p>{text}</p>
-        <button>{btn}</button>
+        <button onClick={HandleClick}>{btn}</button>
       </div>
     </div>
   );
