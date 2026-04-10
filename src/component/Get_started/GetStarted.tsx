@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./GetStarted.css";
 import { sanitizeOnboardingPayload } from "./sanitize";
@@ -11,6 +11,7 @@ type UserPath = "university" | "school" | "home" | "";
 
 interface OnboardingData {
   purpose: string;
+  purposeCustom: string; // ← NEW: user's custom "something else" answer
   userPath: UserPath;
 
   // University path
@@ -36,6 +37,7 @@ interface OnboardingData {
 
 const EMPTY_DATA: OnboardingData = {
   purpose: "",
+  purposeCustom: "",
   userPath: "",
   universityName: "",
   uniLevel: "",
@@ -53,7 +55,6 @@ const EMPTY_DATA: OnboardingData = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  TYPING ANIMATION HOOK
-//  Types out a string character by character
 // ─────────────────────────────────────────────────────────────────────────────
 
 function useTypingAnimation(text: string, speed: number = 38) {
@@ -88,7 +89,7 @@ interface OptionBtnProps {
   emoji?: string;
   selected: boolean;
   onClick: () => void;
-  size?: "sm" | "md" | "lg"; // for varied grid sizes
+  size?: "sm" | "md" | "lg";
 }
 
 function OptionBtn({
@@ -111,27 +112,44 @@ function OptionBtn({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+//  SUGGESTED UNIVERSITIES (Nigerian + popular ones)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SUGGESTED_UNIVERSITIES = [
+  { label: "Bowen University", short: "Bowen Uni.." },
+  { label: "Covenant University", short: "Covenant.." },
+  { label: "University of Lagos", short: "UNILAG" },
+  { label: "Obafemi Awolowo University", short: "OAU" },
+  { label: "University of Ibadan", short: "UI" },
+  { label: "Lagos State University", short: "LASU" },
+  { label: "University of Benin", short: "UNIBEN" },
+  { label: "Babcock University", short: "Babcock.." },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 //  MAIN COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
 function GetStarted() {
   const navigate = useNavigate();
 
-  // Current step index (0 = welcome screen)
   const [step, setStep] = useState(0);
-
-  // All collected data
   const [data, setData] = useState<OnboardingData>(EMPTY_DATA);
-
-  // Controls screen slide direction for animation
   const [slideDir, setSlideDir] = useState<"in" | "out">("in");
-
-  // Submission state
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-
-  // Username validation
   const [usernameError, setUsernameError] = useState("");
+
+  // ── University suggestion state ──────────────────────────────
+  // Tracks whether the "Other" uni option is expanded
+  const [uniOtherOpen, setUniOtherOpen] = useState(false);
+
+  // ── Purpose "Something else?" AI state ──────────────────────
+  // Tracks whether the custom purpose panel is open
+  const [purposeCustomOpen, setPurposeCustomOpen] = useState(false);
+  // The AI-generated follow-up question
+  const [aiQuestion, setAiQuestion] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   // ── Helper: toggle multi-select ─────────────────────────────
   const toggleMulti = (field: keyof OnboardingData, value: string) => {
@@ -159,9 +177,7 @@ function GetStarted() {
     }, 220);
   };
 
-  // ── Build step list dynamically based on userPath ────────────
-  // Steps: 0=welcome, 1=purpose, 2=path-specific questions (2-4 steps),
-  //        then study style, learner type, AI personality, username, done
+  // ── Build step list dynamically ──────────────────────────────
   const getSteps = (): string[] => {
     const base = ["welcome", "purpose"];
     if (data.userPath === "university") {
@@ -183,8 +199,8 @@ function GetStarted() {
 
   const steps = getSteps();
   const currentStepId = steps[step];
-  const totalSteps = steps.length - 2; // exclude welcome & done from progress count
-  const progressStep = Math.max(0, step - 1); // step 1 onward counts
+  const totalSteps = steps.length - 2;
+  const progressStep = Math.max(0, step - 1);
   const progressPercent =
     totalSteps > 0
       ? Math.min(100, Math.round((progressStep / totalSteps) * 100))
@@ -199,17 +215,55 @@ function GetStarted() {
     return "";
   };
 
-  // ── Submit to backend ────────────────────────────────────────
-  // 🔧 BACKEND CONNECTION POINT:
-  //    Replace the simulated fetch below with your real API call.
-  //    Example:
-  //      await fetch("/api/onboarding", {
-  //        method: "POST",
-  //        headers: { "Content-Type": "application/json" },
-  //        body: JSON.stringify(cleanData),
-  //      });
-  //    Then redirect to signup: navigate("/signup");
+  // ── AI follow-up question for custom purpose ─────────────────
+  // Called when the user opens "Something else?" and types their goal
+  const fetchAiQuestion = async (goal: string) => {
+    if (!goal.trim() || goal.trim().length < 5) return;
+    setAiLoading(true);
+    setAiQuestion("");
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          system:
+            "You are helping personalize a learning platform called SkillQuest. " +
+            "The user has described a custom learning goal. " +
+            "Ask ONE short, friendly follow-up question (max 12 words) that helps understand " +
+            "what they specifically want to achieve so the platform can be tailored for them. " +
+            "No preamble. Just the question itself, ending with a question mark.",
+          messages: [
+            {
+              role: "user",
+              content: `My learning goal: "${goal}"`,
+            },
+          ],
+        }),
+      });
+      const result = await response.json();
+      const text = result?.content?.[0]?.text?.trim() ?? "";
+      setAiQuestion(text);
+    } catch {
+      // silently fail — user can still proceed without AI question
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
+  // ── Debounce the AI question fetch ──────────────────────────
+  const aiDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handlePurposeCustomChange = (val: string) => {
+    setData((p) => ({ ...p, purposeCustom: val }));
+    setAiQuestion("");
+    if (aiDebounceRef.current) clearTimeout(aiDebounceRef.current);
+    if (val.trim().length >= 8) {
+      aiDebounceRef.current = setTimeout(() => fetchAiQuestion(val), 900);
+    }
+  };
+
+  // ── Submit to backend ────────────────────────────────────────
   const handleSubmit = async () => {
     const err = validateUsername(data.username);
     if (err) {
@@ -227,10 +281,10 @@ function GetStarted() {
 
       // ⬇⬇⬇ REPLACE THIS with your real API call ⬇⬇⬇
       console.log("✅ Onboarding payload (sanitized):", cleanData);
-      await new Promise((res) => setTimeout(res, 1200)); // simulated delay
+      await new Promise((res) => setTimeout(res, 1200));
       // ⬆⬆⬆ REPLACE THIS with your real API call ⬆⬆⬆
 
-      goNext(); // go to "done" screen
+      goNext();
     } catch {
       setSubmitError("Something went wrong. Please try again.");
     } finally {
@@ -244,7 +298,7 @@ function GetStarted() {
 
   return (
     <div className="ob-root">
-      {/* ── Progress bar (hidden on welcome & done) ─────────── */}
+      {/* ── Progress bar ─────────────────────────────────────── */}
       {step > 0 && currentStepId !== "done" && (
         <div className="ob-progress-wrap">
           <div
@@ -254,7 +308,7 @@ function GetStarted() {
         </div>
       )}
 
-      {/* ── Back button ─────────────────────────────────────── */}
+      {/* ── Back button (now bold and very visible) ──────────── */}
       {step > 1 && currentStepId !== "done" && (
         <button className="ob-back-btn" onClick={goBack} type="button">
           ← Back
@@ -270,6 +324,7 @@ function GetStarted() {
 
         {/* ════════════════════════════════
             STEP 1 — PURPOSE
+            Now includes "Something else?" with AI follow-up
         ════════════════════════════════ */}
         {currentStepId === "purpose" && (
           <StepScreen
@@ -319,21 +374,99 @@ function GetStarted() {
                   key={opt.label}
                   label={opt.label}
                   emoji={opt.emoji}
-                  selected={data.purpose === opt.label}
+                  selected={data.purpose === opt.label && !purposeCustomOpen}
                   size={opt.size as "sm" | "md" | "lg"}
                   onClick={() => {
+                    setPurposeCustomOpen(false);
                     setData((prev) => ({
                       ...prev,
                       purpose: opt.label,
+                      purposeCustom: "",
                       userPath: opt.value as UserPath,
                     }));
                   }}
                 />
               ))}
+
+              {/* ── "Something else?" button ── */}
+              <button
+                className={`ob-option ob-option--md ob-option--special ${purposeCustomOpen ? "ob-option--selected" : ""}`}
+                onClick={() => {
+                  setPurposeCustomOpen((v) => !v);
+                  // Clear any preset purpose when opening custom
+                  if (!purposeCustomOpen) {
+                    setData((p) => ({
+                      ...p,
+                      purpose: "Something else",
+                      userPath: "home",
+                    }));
+                  } else {
+                    setData((p) => ({
+                      ...p,
+                      purpose: "",
+                      purposeCustom: "",
+                      userPath: "",
+                    }));
+                  }
+                }}
+                type="button"
+              >
+                <span className="ob-option__emoji">✨</span>
+                <span>Something else…</span>
+              </button>
             </div>
+
+            {/* ── Custom purpose panel ── */}
+            {purposeCustomOpen && (
+              <div className="ob-custom-purpose">
+                <p className="ob-custom-purpose__label">
+                  Tell us what you're here for:
+                </p>
+                <textarea
+                  className="ob-textarea"
+                  placeholder="e.g. I want to learn enough to switch careers into UX design…"
+                  value={data.purposeCustom}
+                  maxLength={300}
+                  rows={3}
+                  autoFocus
+                  onChange={(e) => handlePurposeCustomChange(e.target.value)}
+                />
+
+                {/* AI follow-up question */}
+                {aiLoading && (
+                  <div className="ob-ai-thinking">
+                    <span className="ob-ai-dot" />
+                    <span className="ob-ai-dot" />
+                    <span className="ob-ai-dot" />
+                  </div>
+                )}
+                {aiQuestion && !aiLoading && (
+                  <div className="ob-ai-question">
+                    <span className="ob-ai-question__icon">🤖</span>
+                    <p className="ob-ai-question__text">{aiQuestion}</p>
+                    <textarea
+                      className="ob-textarea ob-textarea--sm"
+                      placeholder="Your answer…"
+                      maxLength={300}
+                      rows={2}
+                      onChange={(e) =>
+                        setData((p) => ({
+                          ...p,
+                          purposeCustom:
+                            data.purposeCustom + "\n" + e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
             <button
               className="ob-next-btn"
-              disabled={!data.purpose}
+              disabled={
+                purposeCustomOpen ? !data.purposeCustom.trim() : !data.purpose
+              }
               onClick={goNext}
             >
               Continue →
@@ -343,21 +476,60 @@ function GetStarted() {
 
         {/* ════════════════════════════════
             UNIVERSITY STEPS
+            uni-name now has suggestion chips + Other
         ════════════════════════════════ */}
         {currentStepId === "uni-name" && (
           <StepScreen
             question="What university do you attend?"
-            hint="Type the full name"
+            hint="Pick yours or type it in below"
           >
-            <input
-              className="ob-input"
-              placeholder="e.g. Covenant University"
-              value={data.universityName}
-              maxLength={100}
-              onChange={(e) =>
-                setData((p) => ({ ...p, universityName: e.target.value }))
-              }
-            />
+            {/* ── Suggestion chips ── */}
+            <div className="ob-grid ob-grid--varied">
+              {SUGGESTED_UNIVERSITIES.map((uni) => (
+                <button
+                  key={uni.label}
+                  className={`ob-option ob-option--sm ${
+                    data.universityName === uni.label && !uniOtherOpen
+                      ? "ob-option--selected"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    setUniOtherOpen(false);
+                    setData((p) => ({ ...p, universityName: uni.label }));
+                  }}
+                  type="button"
+                >
+                  {uni.short}
+                </button>
+              ))}
+
+              {/* ── "Other" chip ── */}
+              <button
+                className={`ob-option ob-option--sm ${uniOtherOpen ? "ob-option--selected" : ""}`}
+                onClick={() => {
+                  setUniOtherOpen(true);
+                  setData((p) => ({ ...p, universityName: "" }));
+                }}
+                type="button"
+              >
+                ✏️ Other
+              </button>
+            </div>
+
+            {/* ── Manual text input (always visible when Other is open) ── */}
+            {uniOtherOpen && (
+              <input
+                className="ob-input ob-input--appear"
+                placeholder="Type your university name…"
+                value={data.universityName}
+                maxLength={100}
+                autoFocus
+                onChange={(e) =>
+                  setData((p) => ({ ...p, universityName: e.target.value }))
+                }
+              />
+            )}
+
             <button
               className="ob-next-btn"
               disabled={!data.universityName.trim()}
@@ -754,7 +926,7 @@ function GetStarted() {
         {currentStepId === "done" && (
           <DoneScreen
             username={data.username}
-            onSignup={() => navigate("/signup")} // 🔗 change route if needed
+            onSignup={() => navigate("/signup")}
           />
         )}
       </div>
@@ -763,7 +935,7 @@ function GetStarted() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  WELCOME SCREEN  — typing animation intro
+//  WELCOME SCREEN
 // ─────────────────────────────────────────────────────────────────────────────
 
 function WelcomeScreen({ onNext }: { onNext: () => void }) {
@@ -782,7 +954,6 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
       <div className="ob-welcome__logo">
         Skill<span>Quest</span>
       </div>
-
       <div className="ob-welcome__lines">
         <p className="ob-welcome__line">
           {line1.displayed}
@@ -801,7 +972,6 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
           </p>
         )}
       </div>
-
       {line3.done && (
         <button className="ob-next-btn ob-next-btn--welcome" onClick={onNext}>
           Let's get started →
@@ -812,7 +982,7 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  STEP SCREEN WRAPPER — question + children + typing question animation
+//  STEP SCREEN WRAPPER
 // ─────────────────────────────────────────────────────────────────────────────
 
 function StepScreen({
