@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./index.css";
 
 const stats = [
@@ -27,10 +28,10 @@ function Outcome() {
             hungry to grow — SkillQuest students don't just learn. They
             transform. Our AI adapts to you, not the other way around.
           </p>
-          <a href="/signup" className="outcome__cta">
+          <Link to="/signup" className="outcome__cta">
             Start your journey
             <span className="outcome__cta-arrow">→</span>
-          </a>
+          </Link>
         </div>
 
         {/* Right: stat cards */}

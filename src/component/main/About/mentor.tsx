@@ -1,4 +1,5 @@
 import "./index.css";
+import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
 // ─── Data ───────────────────────────────────────────────────────────────────
@@ -97,12 +98,13 @@ function HeroSection() {
           most direct path from where you are to where you want to be.
         </p>
         <div className="mentor__hero-actions">
-          <a href="/signup" className="mentor__btn mentor__btn--primary">
+          <Link className="mentor__btn mentor__btn--primary" to="/signup">
             Get started free
-          </a>
-          <a href="/discover" className="mentor__btn mentor__btn--ghost">
+          </Link>
+
+          <Link to="/discover" className="mentor__btn mentor__btn--ghost">
             See how it works →
-          </a>
+          </Link>
         </div>
 
         {/* floating stat pills */}
@@ -297,12 +299,12 @@ function CtaBanner() {
         <br />
         Free to start. No credit card needed.
       </p>
-      <a
-        href="/signup"
+      <Link
+        to="/signup"
         className="mentor__btn mentor__btn--primary mentor__btn--lg"
       >
         Begin your journey →
-      </a>
+      </Link>
     </section>
   );
 }
