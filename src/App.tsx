@@ -11,6 +11,8 @@ import WhatsNew from "./pages/whats__new/WhatsNew";
 import SignUp from "./pages/Signup/SignUp";
 import Login from "./pages/Login/Login";
 import About from "./pages/About/About";
+import TermsOfService from "./component/terms/TermsOfService";
+import PrivacyPolicy from "./component/privacy/PrivacyPolicy";
 import Home from "./pages/Home";
 
 function AppContent() {
@@ -19,6 +21,8 @@ function AppContent() {
     <>
       {location.pathname !== "/discover" &&
         location.pathname !== "/getStarted" &&
+        location.pathname !== "/terms" &&
+        location.pathname !== "/privacy" &&
         location.pathname !== "/dashboard" &&
         location.pathname !== "/signup" &&
         location.pathname !== "/login" && <Navbar />}
@@ -26,6 +30,9 @@ function AppContent() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/getStarted" element={<GetStarted />} />
+        <Route path="/terms" element={<TermsOfService />} />
+
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/whats-new" element={<WhatsNew />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/login" element={<Login />} />

@@ -111,7 +111,7 @@ const SOCIAL_LINKS = [
 
 const NAV_LINKS = [
   { label: "About", href: "/about" },
-  { label: "Courses", href: "/courses" },
+  { label: "Courses", href: "/discover" },
   { label: "Blog / What's New", href: "/whats-new" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
