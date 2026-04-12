@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 // ─────────────────────────────────────────────
@@ -217,9 +218,9 @@ const Footer = () => {
             {/* Social icons */}
             <div className="footer-socials">
               {SOCIAL_LINKS.map((social) => (
-                <a
+                <Link
                   key={social.name}
-                  href={social.href}
+                  to={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-icon"
@@ -227,7 +228,7 @@ const Footer = () => {
                   title={social.name}
                 >
                   {social.icon}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -238,9 +239,9 @@ const Footer = () => {
             <ul className="footer-nav-list">
               {NAV_LINKS.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="footer-nav-link">
+                  <Link to={link.href} className="footer-nav-link">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
