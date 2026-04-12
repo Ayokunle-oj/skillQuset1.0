@@ -482,7 +482,7 @@ function Login() {
 
           <p className="login__terms">
             By signing in, you agree to our{" "}
-            <Link to="/terms">Terms &amp; Conditions</Link> and{" "}
+            <Link to="/terms">Terms &amp; Conditions</Link> and
             <Link to="/privacy">Privacy Policy</Link>.
           </p>
         </div>
