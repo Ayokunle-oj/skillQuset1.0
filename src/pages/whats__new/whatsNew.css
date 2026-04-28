@@ -629,6 +629,7 @@
 
 .wn__comment__textarea {
   flex: 1;
+  width: 80%;
   padding: 0.75rem 1rem;
   border: 1.5px solid rgba(23, 11, 72, 0.12);
   border-radius: 10px;

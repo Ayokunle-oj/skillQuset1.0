@@ -147,12 +147,12 @@ function useInView(threshold = 0.15) {
             observerRef.current?.disconnect();
           }
         },
-        { threshold }
+        { threshold },
       );
 
       observerRef.current.observe(node);
     },
-    [threshold]
+    [threshold],
   );
 
   // Clean up when the component using this hook unmounts
@@ -212,19 +212,19 @@ function About() {
 
   return (
     <div className="sq-about">
-
       {/* ══════════════════════════════════════════════════════════════════
           HERO SECTION
           ══════════════════════════════════════════════════════════════════ */}
       <section className="sq-hero">
-
         {/* Decorative floating blobs in the background */}
         <div className="sq-hero-blob sq-hero-blob--1" aria-hidden="true" />
         <div className="sq-hero-blob sq-hero-blob--2" aria-hidden="true" />
 
         <div className="sq-hero-content">
           {/* Badge above the headline */}
-          <span className="sq-hero-badge">✨ The future of learning is here</span>
+          <span className="sq-hero-badge">
+            ✨ The future of learning is here
+          </span>
 
           {/* Main headline */}
           <h1 className="sq-hero-headline">
@@ -252,9 +252,7 @@ function About() {
         <div className="sq-hero-image-placeholder" aria-hidden="true">
           <span className="sq-hero-image-label">📸 Hero Image Goes Here</span>
         </div>
-
       </section>
-
 
       {/* ══════════════════════════════════════════════════════════════════
           WHY SKILL QUEST — The problem students face
@@ -295,11 +293,10 @@ function About() {
 
           <p className="sq-why-close">
             You're not the problem. The tools you've been given just weren't
-            built for the way you actually learn. <strong>Skill Quest was.</strong>
+            built for the way you actually learn. <strong>Skill Quest.</strong>
           </p>
         </div>
       </section>
-
 
       {/* ══════════════════════════════════════════════════════════════════
           WHAT WE OFFER — Core features
@@ -324,7 +321,6 @@ function About() {
         </div>
       </section>
 
-
       {/* ══════════════════════════════════════════════════════════════════
           HOW IT HELPS — Clear benefits
           ══════════════════════════════════════════════════════════════════ */}
@@ -335,7 +331,9 @@ function About() {
         <div className="sq-section-inner sq-benefits-inner">
           <div className="sq-benefits-text">
             <p className="sq-section-label">The real difference 📊</p>
-            <h2 className="sq-section-title">How Skill Quest changes the game</h2>
+            <h2 className="sq-section-title">
+              How Skill Quest changes the game
+            </h2>
             <p className="sq-section-subtitle">
               It's not just about learning more — it's about becoming the kind
               of learner who keeps going, keeps growing, and never gives up.
@@ -345,17 +343,13 @@ function About() {
           <div className="sq-benefits-list">
             {benefits.map((b, i) => (
               /* Each card gets a slight delay so they stagger in */
-              <div
-                key={b.title}
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
+              <div key={b.title} style={{ animationDelay: `${i * 0.1}s` }}>
                 <BenefitCard {...b} />
               </div>
             ))}
           </div>
         </div>
       </section>
-
 
       {/* ══════════════════════════════════════════════════════════════════
           WHAT MAKES US DIFFERENT — Unique selling points
@@ -374,17 +368,13 @@ function About() {
 
           <div className="sq-diff-grid">
             {differentiators.map((d, i) => (
-              <div
-                key={d.title}
-                style={{ animationDelay: `${i * 0.12}s` }}
-              >
+              <div key={d.title} style={{ animationDelay: `${i * 0.12}s` }}>
                 <DiffCard {...d} />
               </div>
             ))}
           </div>
         </div>
       </section>
-
 
       {/* ══════════════════════════════════════════════════════════════════
           FUN / STATS STRIP — Engaging animated numbers
@@ -411,7 +401,6 @@ function About() {
         </div>
       </section>
 
-
       {/* ══════════════════════════════════════════════════════════════════
           CALL TO ACTION — Final push
           ══════════════════════════════════════════════════════════════════ */}
@@ -434,10 +423,11 @@ function About() {
           <button className="sq-btn sq-btn--cta">
             Get Started — It's Free 🚀
           </button>
-          <p className="sq-cta-note">Join 50,000+ learners. Free forever plan available.</p>
+          <p className="sq-cta-note">
+            Join 50,000+ learners. Free forever plan available.
+          </p>
         </div>
       </section>
-
     </div>
   );
 }

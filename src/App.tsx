@@ -31,6 +31,7 @@ function AppContent() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/terms" element={<TermsOfService />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
 
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/whats-new" element={<WhatsNew />} />

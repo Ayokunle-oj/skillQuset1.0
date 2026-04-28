@@ -1263,7 +1263,7 @@ function SignUp() {
                   aria-required="true"
                 />
                 <span>
-                  I agree to the{" "}
+                  I agree to the
                   <Link
                     to="/terms"
                     className="signup__terms__link"
@@ -1271,8 +1271,8 @@ function SignUp() {
                     rel="noopener noreferrer"
                   >
                     Terms &amp; Conditions
-                  </Link>{" "}
-                  and{" "}
+                  </Link>
+                  and
                   <Link
                     to="/privacy"
                     className="signup__terms__link"
