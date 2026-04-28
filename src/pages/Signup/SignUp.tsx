@@ -1277,7 +1277,7 @@ function SignUp() {
                     to="/privacy"
                     className="signup__terms__link"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    // rel="noopener noreferrer"
                   >
                     Privacy Policy
                   </Link>
