@@ -4,6 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./About.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -209,7 +210,8 @@ function About() {
   const benefitsSection = useInView();
   const diffSection = useInView();
   const ctaSection = useInView();
-
+  const navigate = useNavigate();
+  const handleBtn = () => navigate("/getStarted");
   return (
     <div className="sq-about">
       {/* ══════════════════════════════════════════════════════════════════
@@ -239,9 +241,9 @@ function About() {
           </p>
 
           {/* CTA button in hero */}
-          <a href="#cta" className="sq-btn sq-btn--hero">
+          <Link to="/getStarted" className="sq-btn sq-btn--hero">
             Begin Your Quest →
-          </a>
+          </Link>
         </div>
 
         {/* ──────────────────────────────────────────────────────────────────
@@ -420,7 +422,7 @@ function About() {
             Thousands of students are already levelling up. Your quest starts
             with one click — no credit card, no confusion, no excuses.
           </p>
-          <button className="sq-btn sq-btn--cta">
+          <button className="sq-btn sq-btn--cta" onClick={handleBtn}>
             Get Started — It's Free 🚀
           </button>
           <p className="sq-cta-note">

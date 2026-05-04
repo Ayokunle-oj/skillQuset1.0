@@ -20,13 +20,10 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { saveRedirectPath } from "../../utils/redirectUtils";
 import {
   CAROUSEL_SLIDES,
   SUGGESTION_CHIPS,
@@ -44,21 +41,22 @@ import "./discover.css";
 //  Each item has a label and an array of dropdown sub-items.
 //  If dropdownItems is empty, the button navigates directly.
 // ════════════════════════════════════════════════════════════════
+
 const NAV_ITEMS = [
   {
     id: "top-courses",
     label: "Top Courses",
     dropdownItems: [
-      { icon: "🔥", label: "Most Popular",   path: "/discover/popular" },
-      { icon: "📈", label: "Trending Now",    path: "/discover/trending" },
-      { icon: "⭐", label: "Editor's Picks",  path: "/discover/picks" },
+      { icon: "🔥", label: "Most Popular", path: "/discover/popular" },
+      { icon: "📈", label: "Trending Now", path: "/discover/trending" },
+      { icon: "⭐", label: "Editor's Picks", path: "/discover/picks" },
     ],
   },
   {
     id: "newly-added",
     label: "Newly Added",
     dropdownItems: [
-      { icon: "🆕", label: "New This Week",  path: "/discover/new" },
+      { icon: "🆕", label: "New This Week", path: "/discover/new" },
       { icon: "📅", label: "Recent Uploads", path: "/discover/recent" },
     ],
   },
@@ -66,59 +64,70 @@ const NAV_ITEMS = [
     id: "textbooks",
     label: "Textbooks",
     dropdownItems: [
-      { icon: "🔬", label: "Sciences",       path: "/discover/textbooks/science" },
-      { icon: "⚖️", label: "Law",            path: "/discover/textbooks/law" },
-      { icon: "🩺", label: "Medicine",       path: "/discover/textbooks/medicine" },
-      { icon: "🔧", label: "Engineering",    path: "/discover/textbooks/engineering" },
-      { icon: "📊", label: "Business",       path: "/discover/textbooks/business" },
+      { icon: "🔬", label: "Sciences", path: "/discover/textbooks/science" },
+      { icon: "⚖️", label: "Law", path: "/discover/textbooks/law" },
+      { icon: "🩺", label: "Medicine", path: "/discover/textbooks/medicine" },
+      {
+        icon: "🔧",
+        label: "Engineering",
+        path: "/discover/textbooks/engineering",
+      },
+      { icon: "📊", label: "Business", path: "/discover/textbooks/business" },
     ],
   },
   {
     id: "study-materials",
     label: "Study Materials",
     dropdownItems: [
-      { icon: "📝", label: "Past Questions", path: "/discover/materials/past-q" },
-      { icon: "🗂️", label: "Flashcards",     path: "/discover/materials/flashcards" },
-      { icon: "📋", label: "Lecture Notes",  path: "/discover/materials/notes" },
+      {
+        icon: "📝",
+        label: "Past Questions",
+        path: "/discover/materials/past-q",
+      },
+      {
+        icon: "🗂️",
+        label: "Flashcards",
+        path: "/discover/materials/flashcards",
+      },
+      { icon: "📋", label: "Lecture Notes", path: "/discover/materials/notes" },
     ],
   },
   {
     id: "sq-courses",
     label: "SkillQuest Courses",
     dropdownItems: [
-      { icon: "💻", label: "Frontend",       path: "/discover/sq/frontend" },
-      { icon: "⚙️", label: "Backend",        path: "/discover/sq/backend" },
-      { icon: "📊", label: "Data Science",   path: "/discover/sq/data" },
-      { icon: "🎨", label: "Design",         path: "/discover/sq/design" },
+      { icon: "💻", label: "Frontend", path: "/discover/sq/frontend" },
+      { icon: "⚙️", label: "Backend", path: "/discover/sq/backend" },
+      { icon: "📊", label: "Data Science", path: "/discover/sq/data" },
+      { icon: "🎨", label: "Design", path: "/discover/sq/design" },
     ],
   },
   {
     id: "skills",
     label: "Skills",
     dropdownItems: [
-      { icon: "🌐", label: "Web Dev",        path: "/discover/skills/webdev" },
-      { icon: "📱", label: "Mobile Dev",     path: "/discover/skills/mobile" },
-      { icon: "🧠", label: "AI & ML",        path: "/discover/skills/ai" },
-      { icon: "💼", label: "Soft Skills",    path: "/discover/skills/soft" },
-      { icon: "🌍", label: "Languages",      path: "/discover/skills/language" },
+      { icon: "🌐", label: "Web Dev", path: "/discover/skills/webdev" },
+      { icon: "📱", label: "Mobile Dev", path: "/discover/skills/mobile" },
+      { icon: "🧠", label: "AI & ML", path: "/discover/skills/ai" },
+      { icon: "💼", label: "Soft Skills", path: "/discover/skills/soft" },
+      { icon: "🌍", label: "Languages", path: "/discover/skills/language" },
     ],
   },
 ];
 
 // Bottom tab items (mobile only)
 const TAB_ITEMS = [
-  { id: "home",      icon: "🏠", label: "Home",     path: "/discover" },
-  { id: "courses",   icon: "📚", label: "Courses",  path: "/discover/popular" },
-  { id: "skills",    icon: "⚡", label: "Skills",   path: "/discover/skills" },
-  { id: "library",   icon: "📖", label: "Library",  path: "/discover/textbooks" },
-  { id: "profile",   icon: "👤", label: "Profile",  path: "/profile" },
+  { id: "home", icon: "🏠", label: "Home", path: "/discover" },
+  { id: "courses", icon: "📚", label: "Courses", path: "/discover/popular" },
+  { id: "skills", icon: "⚡", label: "Skills", path: "/discover/skills" },
+  { id: "library", icon: "📖", label: "Library", path: "/discover/textbooks" },
 ];
 
 // ════════════════════════════════════════════════════════════════
 //  HELPER: Creator icon based on creator type
 // ════════════════════════════════════════════════════════════════
 function creatorIcon(type: Course["creatorType"]): string {
-  if (type === "official")   return "◈";
+  if (type === "official") return "◈";
   if (type === "university") return "🏛️";
   return "👤";
 }
@@ -137,24 +146,40 @@ function formatRating(rating: number): string {
 // ════════════════════════════════════════════════════════════════
 function CourseCard({ course }: { course: Course }) {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   // Navigate to the course detail page when the card is clicked
-  const handleClick = () => {
-    navigate(`/course/${course.id}`);
-  };
+  // const handleClick = () => {
+  //   navigate(`/course/${course.id}`);
+  // };
+  function handleCourseClick(courseId: string) {
+    const coursePath = `/course/${courseId}`;
+
+    if (!isLoggedIn) {
+      // Save where the user wanted to go before redirecting.
+      saveRedirectPath(coursePath);
+      navigate("/login");
+      return;
+    }
+
+    // ⚠️ DEV STUB — Replace with the real course page route when ready.
+    // e.g. navigate(`/course/${courseId}`) — CoursePage must exist as a
+    // ProtectedRoute in App.tsx for the protection to be end-to-end.
+    navigate(coursePath);
+  }
 
   // Allow keyboard users to activate the card with Enter or Space
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      handleClick();
+      handleCourseClick(course.id);
     }
   };
 
   return (
     <article
       className="discover__card"
-      onClick={handleClick}
+      onClick={() => handleCourseClick(course.id)}
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
@@ -175,8 +200,8 @@ function CourseCard({ course }: { course: Course }) {
             {course.creatorType === "official"
               ? "SkillQuest"
               : course.creatorType === "university"
-              ? "University"
-              : "Community"}
+                ? "University"
+                : "Community"}
           </span>
           {course.isNew && (
             <span className="discover__card__badge new">New</span>
@@ -192,7 +217,10 @@ function CourseCard({ course }: { course: Course }) {
         </span>
 
         {/* Duration (bottom right) */}
-        <span className="discover__card__duration" aria-label={`Duration: ${course.duration}`}>
+        <span
+          className="discover__card__duration"
+          aria-label={`Duration: ${course.duration}`}
+        >
           ⏱ {course.duration}
         </span>
       </div>
@@ -210,7 +238,9 @@ function CourseCard({ course }: { course: Course }) {
           <span className="discover__card__creator__icon" aria-hidden="true">
             {creatorIcon(course.creatorType)}
           </span>
-          <span className="discover__card__creator__name">{course.creator}</span>
+          <span className="discover__card__creator__name">
+            {course.creator}
+          </span>
         </div>
 
         {/* Stats row */}
@@ -222,13 +252,19 @@ function CourseCard({ course }: { course: Course }) {
           <span className="discover__card__dot" aria-hidden="true" />
 
           {/* Views */}
-          <span className="discover__card__stat" aria-label={`${course.views} views`}>
+          <span
+            className="discover__card__stat"
+            aria-label={`${course.views} views`}
+          >
             👁 {course.views}
           </span>
           <span className="discover__card__dot" aria-hidden="true" />
 
           {/* Lessons */}
-          <span className="discover__card__stat" aria-label={`${course.lessons} lessons`}>
+          <span
+            className="discover__card__stat"
+            aria-label={`${course.lessons} lessons`}
+          >
             📑 {course.lessons} lessons
           </span>
         </div>
@@ -267,7 +303,9 @@ function CourseSection({
       {/* Header */}
       <div className="discover__section__header">
         <h2 className="discover__section__title" id={`section-${title}`}>
-          <span className="discover__section__icon" aria-hidden="true">{icon}</span>
+          <span className="discover__section__icon" aria-hidden="true">
+            {icon}
+          </span>
           {title}
         </h2>
         <button
@@ -392,7 +430,8 @@ function Discover() {
 
   // Deduplicate courses (some may appear in multiple sections)
   const uniqueCourses = allCourses.filter(
-    (course, index, self) => index === self.findIndex((c) => c.id === course.id)
+    (course, index, self) =>
+      index === self.findIndex((c) => c.id === course.id),
   );
 
   // Filter by title, category, or creator
@@ -401,7 +440,7 @@ function Discover() {
         (course) =>
           course.title.toLowerCase().includes(trimmedQuery) ||
           course.category.toLowerCase().includes(trimmedQuery) ||
-          course.creator.toLowerCase().includes(trimmedQuery)
+          course.creator.toLowerCase().includes(trimmedQuery),
       )
     : [];
 
@@ -418,7 +457,6 @@ function Discover() {
   // ── RENDER ─────────────────────────────────────────────────
   return (
     <div className="discover__page">
-
       {/* ══════════════════════════════════════════════════════
           TOP NAVBAR
           ══════════════════════════════════════════════════════ */}
@@ -428,8 +466,14 @@ function Discover() {
         aria-label="Discover navigation"
       >
         {/* Logo */}
-        <Link to="/" className="discover__nav__logo" aria-label="SkillQuest home">
-          <span className="discover__nav__logo__icon" aria-hidden="true">◈</span>
+        <Link
+          to="/"
+          className="discover__nav__logo"
+          aria-label="SkillQuest home"
+        >
+          <span className="discover__nav__logo__icon" aria-hidden="true">
+            ◈
+          </span>
           SkillQuest
         </Link>
 
@@ -446,9 +490,7 @@ function Discover() {
                   role="menuitem"
                   aria-haspopup="true"
                   aria-expanded={isOpen}
-                  onClick={() =>
-                    setOpenDropdown(isOpen ? null : item.id)
-                  }
+                  onClick={() => setOpenDropdown(isOpen ? null : item.id)}
                 >
                   {item.label}
                   <span className="discover__nav__chevron" aria-hidden="true">
@@ -473,7 +515,10 @@ function Discover() {
                           navigate(sub.path);
                         }}
                       >
-                        <span className="discover__dropdown__icon" aria-hidden="true">
+                        <span
+                          className="discover__dropdown__icon"
+                          aria-hidden="true"
+                        >
                           {sub.icon}
                         </span>
                         {sub.label}
@@ -487,7 +532,11 @@ function Discover() {
         </ul>
 
         {/* Back to Home button */}
-        <Link to="/" className="discover__home__btn" aria-label="Back to home page">
+        <Link
+          to="/"
+          className="discover__home__btn"
+          aria-label="Back to home page"
+        >
           ← Home
         </Link>
       </nav>
@@ -496,12 +545,13 @@ function Discover() {
           MAIN CONTENT
           ══════════════════════════════════════════════════════ */}
       <main className="discover__main">
-
         {/* ── SEARCH BAR ─────────────────────────────────── */}
         <div className="discover__search__wrap">
           <div className="discover__search__inner">
             {/* Search icon */}
-            <span className="discover__search__icon" aria-hidden="true">🔍</span>
+            <span className="discover__search__icon" aria-hidden="true">
+              🔍
+            </span>
 
             <input
               type="search"
@@ -555,12 +605,15 @@ function Discover() {
               </div>
             ) : (
               <div className="discover__results__empty" role="status">
-                <span className="discover__results__empty__icon" aria-hidden="true">
+                <span
+                  className="discover__results__empty__icon"
+                  aria-hidden="true"
+                >
                   🔭
                 </span>
                 <p>
-                  No courses matched "{trimmedQuery}".{" "}
-                  Try a different keyword or browse the sections below.
+                  No courses matched "{trimmedQuery}". Try a different keyword
+                  or browse the sections below.
                 </p>
               </div>
             )}
@@ -656,9 +709,7 @@ function Discover() {
                 SUGGESTION CHIPS
                 ════════════════════════════════════════════════ */}
             <div className="discover__chips__wrap">
-              <p className="discover__chips__label">
-                Browse by topic
-              </p>
+              <p className="discover__chips__label">Browse by topic</p>
               <div
                 className="discover__chips__row"
                 role="list"
@@ -736,10 +787,7 @@ function Discover() {
       {/* ══════════════════════════════════════════════════════
           BOTTOM TAB BAR (mobile only — shown below 768px)
           ══════════════════════════════════════════════════════ */}
-      <nav
-        className="discover__tab__bar"
-        aria-label="Mobile navigation"
-      >
+      <nav className="discover__tab__bar" aria-label="Mobile navigation">
         <div className="discover__tab__bar__inner">
           {TAB_ITEMS.map((tab) => (
             <button

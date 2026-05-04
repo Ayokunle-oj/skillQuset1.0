@@ -1,4 +1,5 @@
 import Hero from "../component/hero/hero";
+import Rate from "../component/main/rates/rate";
 import About2 from "../component/main/About/About";
 import Performance from "../component/main/pre/performance";
 import About from "../component/main/TopAbout/about";
@@ -8,6 +9,7 @@ function Home() {
   return (
     <div>
       <Hero />
+      <Rate />
       <About />
       <Performance />
       <About2 />

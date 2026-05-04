@@ -14,6 +14,8 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { stubLogin } from "../../hooks/useAuth";
+import { consumeRedirectPath } from "../../utils/redirectUtils";
 import {
   trim,
   sanitizeUsername,
@@ -196,7 +198,12 @@ function Login() {
     if (DEV_ADMIN_PASSWORD === "$killQuest123" && isDevMatch) {
       // Dev mode fast-path — skip the real API
       resetAttempts();
-      navigate("/dashboard");
+      // ⚠️ DEV STUB — stubLogin saves the session; consumeRedirectPath reads,
+      // validates, and immediately clears the saved redirect from sessionStorage.
+      // Replace stubLogin() with your real token/session storage when backend is ready.
+      stubLogin({ id: "stub-001", name: cleanUsername, email: "" });
+      const destination = consumeRedirectPath(); // falls back to /discover if nothing saved
+      navigate(destination, { replace: true });
       return;
     }
     // ══════════════════════════════════════════════════════════

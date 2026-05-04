@@ -1316,8 +1316,6 @@ function WhatsNew() {
                       label: "Discover courses",
                       path: "/discover",
                     },
-                    { icon: "👤", label: "My profile", path: "/profile" },
-                    { icon: "📚", label: "My learning", path: "/my-learning" },
                     {
                       icon: "🏛️",
                       label: "University lectures",
@@ -1325,7 +1323,7 @@ function WhatsNew() {
                     },
                     {
                       icon: "📋",
-                      label: "Study materials",
+                      label: "Courses",
                       path: "/discover/materials",
                     },
                     { icon: "⭐", label: "Reviews & feedback", path: "#" },
