@@ -80,13 +80,7 @@ function useToasts() {
 // ─────────────────────────────────────────────────────────────
 // FACULTY CARD — expandable, with dept & course drill-down
 // ─────────────────────────────────────────────────────────────
-function FacultyCard({
-  faculty,
-  onStudyMaterials,
-}: {
-  faculty: FacultyData;
-  onStudyMaterials: (courseTitle: string) => void;
-}) {
+function FacultyCard({ faculty }: { faculty: FacultyData }) {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [openDept, setOpenDept] = useState<string | null>(null);
@@ -465,7 +459,9 @@ export default function UniversityPage() {
   const { toasts, addToast } = useToasts();
 
   // Find the university from our data array by slug
-  const university = UNIVERSITIES.find((u) => u.slug === slug);
+  const universityResult = slug
+    ? UNIVERSITIES.find((u) => u.slug === slug)
+    : undefined;
 
   const [activeTab, setActiveTab] = useState<TabId>("overview");
 
@@ -487,7 +483,7 @@ export default function UniversityPage() {
   }, []);
 
   // ── Guard: university not found ────────────────────────────
-  if (!university) {
+  if (!universityResult) {
     return (
       <div className="upage">
         <div className="upage__notfound">
@@ -503,6 +499,9 @@ export default function UniversityPage() {
       </div>
     );
   }
+
+  // After the guard, university is guaranteed to be defined
+  const university: University = universityResult;
 
   // ── Tab definitions ────────────────────────────────────────
   const tabs: { id: TabId; label: string; badge?: string }[] = [
@@ -596,13 +595,7 @@ export default function UniversityPage() {
           <div className="upage__panel">
             <div className="upage__faculties-grid">
               {university.faculties.map((faculty) => (
-                <FacultyCard
-                  key={faculty.name}
-                  faculty={faculty}
-                  onStudyMaterials={(title) =>
-                    addToast(`Opening study materials for "${title}"`)
-                  }
-                />
+                <FacultyCard key={faculty.name} faculty={faculty} />
               ))}
             </div>
           </div>
