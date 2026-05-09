@@ -4,6 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { AuthProvider } from "./hooks/AuthContext";
 import Navbar from "./component/navbar/Navbar";
 import Discover from "./pages/Discover/Discover";
 import GetStarted from "./component/Get_started/GetStarted";
@@ -15,6 +16,9 @@ import TermsOfService from "./component/terms/TermsOfService";
 import ScrollToTop from "./component/ScrollToTop/ScrollToTop";
 import PrivacyPolicy from "./component/privacy/PrivacyPolicy";
 import Home from "./pages/Home";
+import UniversityPage from "./pages/UniversityPage/UniversityPage";
+
+// Inside your routes:
 // import ProtectedRoute from "./component/ProtectedRoute/ProtectedRoute";
 
 // ⚠️ DEV STUB — Import CoursePage when it exists:
@@ -47,6 +51,7 @@ function AppContent() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/getStarted" element={<GetStarted />} />
+        <Route path="/university/:slug" element={<UniversityPage />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
 
@@ -78,10 +83,12 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <AppContent />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 }
 

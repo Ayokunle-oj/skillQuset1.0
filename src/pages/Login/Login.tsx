@@ -14,7 +14,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { stubLogin } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/AuthContext";
 import { consumeRedirectPath } from "../../utils/redirectUtils";
 import {
   trim,
@@ -71,6 +71,7 @@ interface FormErrors {
 // ── COMPONENT ────────────────────────────────────────────────
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Form values
   const [form, setForm] = useState<FormState>({
@@ -195,13 +196,13 @@ function Login() {
     //  when wiring up your real backend.
     // ══════════════════════════════════════════════════════════
     const isDevMatch = devCredentialCheck(cleanUsername, cleanPassword);
-    if (DEV_ADMIN_PASSWORD === "$killQuest123" && isDevMatch) {
+    if (isDevMatch) {
       // Dev mode fast-path — skip the real API
       resetAttempts();
       // ⚠️ DEV STUB — stubLogin saves the session; consumeRedirectPath reads,
       // validates, and immediately clears the saved redirect from sessionStorage.
       // Replace stubLogin() with your real token/session storage when backend is ready.
-      stubLogin({ id: "stub-001", name: cleanUsername, email: "" });
+      login({ id: "stub-001", name: cleanUsername, email: "" });
       const destination = consumeRedirectPath(); // falls back to /discover if nothing saved
       navigate(destination, { replace: true });
       return;

@@ -22,7 +22,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/AuthContext";
 import { saveRedirectPath } from "../../utils/redirectUtils";
 import {
   CAROUSEL_SLIDES,

@@ -1,0 +1,949 @@
+/* ============================================================
+   UniversityPage.css
+   Styles for /university/:slug — SkillQuest UniVibes Detail Page
+   Brand: bg #ffffff | accent #7c6ff7 | text #170b48
+   No CSS custom properties. All hex values hardcoded.
+   ============================================================ */
+
+/* ── Reset / Base ─────────────────────────────────────────── */
+.upage {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #1a1a2e;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* ── Not Found ────────────────────────────────────────────── */
+.upage__notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: 16px;
+  color: #6b5fa0;
+  font-family: Georgia, serif;
+}
+
+.upage__notfound h2 {
+  font-size: 2rem;
+  color: #1a1a2e;
+}
+
+.upage__notfound a {
+  color: #7c6ff7;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.upage__hero {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  /* parallax container */
+}
+
+.upage__hero__img {
+  /* larger than viewport so parallax has room to move */
+  position: absolute;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  height: calc(60vh + 160px);
+  object-fit: cover;
+  will-change: transform;
+  transition: transform 0s linear; /* JS handles smooth via requestAnimationFrame */
+}
+
+/* dark gradient overlay — readable text over any image */
+.upage__hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 6, 30, 0.92) 0%,
+    rgba(10, 6, 30, 0.45) 50%,
+    rgba(10, 6, 30, 0.15) 100%
+  );
+}
+
+/* text block pinned bottom-left */
+.upage__hero__content {
+  position: absolute;
+  bottom: 36px;
+  left: 40px;
+  max-width: 680px;
+  z-index: 2;
+}
+
+.upage__hero__name {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 10px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.upage__hero__location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: #d0c8f5;
+  margin-bottom: 10px;
+}
+
+.upage__hero__pin {
+  font-size: 1.1rem;
+}
+
+.upage__hero__stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 1.4rem;
+}
+
+.upage__hero__star--filled {
+  color: #f4c542;
+}
+
+.upage__hero__star--empty {
+  color: #c8bfee;
+}
+
+.upage__hero__rating-text {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  color: #6b5fa0;
+  font-family: Georgia, serif;
+}
+
+/* ── Sticky Tab Nav ───────────────────────────────────────── */
+.upage__tabs-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 2px solid #7c6ff7;
+}
+
+.upage__tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 40px;
+}
+
+.upage__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.upage__tab {
+  position: relative;
+  padding: 18px 24px 16px;
+  background: none;
+  border: none;
+  color: #6b5fa0;
+  font-size: 0.92rem;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.02em;
+}
+
+.upage__tab:hover {
+  color: #170b48;
+}
+
+.upage__tab--active {
+  color: #170b48;
+}
+
+/* sliding underline indicator */
+.upage__tab--active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #7c6ff7;
+  animation: tabSlideIn 0.25s ease;
+}
+
+@keyframes tabSlideIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* "Coming Soon" badge on UniVibes tab */
+.upage__tab__badge {
+  font-size: 0.62rem;
+  font-family: Georgia, serif;
+  letter-spacing: 0.04em;
+  background-color: rgba(124, 111, 247, 0.1);
+  color: #6b5fa0;
+  border: 1px solid rgba(124, 111, 247, 0.3);
+  border-radius: 99px;
+  padding: 2px 7px;
+  text-transform: uppercase;
+}
+
+/* ── Tab Content ──────────────────────────────────────────── */
+.upage__content {
+  padding: 48px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* fade in on tab switch */
+.upage__panel {
+  animation: panelFade 0.3s ease;
+}
+
+@keyframes panelFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── OVERVIEW TAB ─────────────────────────────────────────── */
+.upage__overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.upage__section-title {
+  font-family: Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #170b48;
+  margin: 0 0 16px;
+  border-left: 3px solid #7c6ff7;
+  padding-left: 12px;
+}
+
+.upage__overview__text {
+  font-size: 0.97rem;
+  line-height: 1.8;
+  color: #4a3f6e;
+  margin: 0 0 28px;
+}
+
+/* key facts grid */
+.upage__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.upage__fact {
+  background-color: rgba(124, 111, 247, 0.06);
+  border: 1px solid rgba(124, 111, 247, 0.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.upage__fact__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7c6ff7;
+  margin-bottom: 4px;
+}
+
+.upage__fact__value {
+  font-size: 0.95rem;
+  color: #170b48;
+  font-weight: 600;
+}
+
+/* alumni cards */
+.upage__alumni {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.upage__alumni__card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f7f5ff;
+  border: 1px solid rgba(124, 111, 247, 0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.upage__alumni__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #7c6ff7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.upage__alumni__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #170b48;
+}
+
+.upage__alumni__field {
+  font-size: 0.8rem;
+  color: #6b5fa0;
+}
+
+/* fees card */
+.upage__fees {
+  background-color: #f7f5ff;
+  border: 1px solid rgba(124, 111, 247, 0.25);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.upage__fees__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(124, 111, 247, 0.12);
+}
+
+.upage__fees__row:last-child {
+  border-bottom: none;
+}
+
+.upage__fees__label {
+  font-size: 0.85rem;
+  color: #6b5fa0;
+}
+
+.upage__fees__value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7c6ff7;
+}
+
+/* ── FACULTIES TAB ────────────────────────────────────────── */
+.upage__faculties-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.upage__faculty-card {
+  background-color: #f7f5ff;
+  border: 1px solid rgba(124, 111, 247, 0.15);
+  border-left: 3px solid transparent;
+  border-radius: 10px;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-left-color 0.25s ease;
+  user-select: none;
+}
+
+.upage__faculty-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(124, 111, 247, 0.15);
+  border-left-color: #7c6ff7;
+}
+
+.upage__faculty-card--expanded {
+  border-left-color: #7c6ff7;
+  background-color: rgba(124, 111, 247, 0.07);
+}
+
+.upage__faculty-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.upage__faculty-card__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #170b48;
+  margin-bottom: 6px;
+}
+
+.upage__faculty-card__desc {
+  font-size: 0.85rem;
+  color: #6b5fa0;
+  line-height: 1.5;
+}
+
+.upage__faculty-card__arrow {
+  font-size: 1.2rem;
+  color: #7c6ff7;
+  transition: transform 0.25s ease;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.upage__faculty-card__arrow--open {
+  transform: rotate(90deg);
+}
+
+/* expanded department list */
+.upage__dept-list {
+  margin-top: 18px;
+  border-top: 1px solid rgba(124, 111, 247, 0.2);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upage__dept-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(124, 111, 247, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.upage__dept-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 16px;
+  cursor: pointer;
+  color: #3a2f6a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.upage__dept-header:hover {
+  background-color: rgba(124, 111, 247, 0.07);
+}
+
+.upage__dept-arrow {
+  font-size: 0.8rem;
+  color: #7c6ff7;
+  transition: transform 0.2s ease;
+}
+
+.upage__dept-arrow--open {
+  transform: rotate(180deg);
+}
+
+/* course list by level */
+.upage__course-list {
+  padding: 8px 16px 14px;
+}
+
+.upage__level-group {
+  margin-bottom: 12px;
+}
+
+.upage__level-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7c6ff7;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.upage__course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(124, 111, 247, 0.08);
+}
+
+.upage__course-item:last-child {
+  border-bottom: none;
+}
+
+.upage__course-title {
+  font-size: 0.87rem;
+  color: #3a2f6a;
+}
+
+.upage__course-btn {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  background-color: transparent;
+  border: 1px solid #7c6ff7;
+  border-radius: 99px;
+  color: #7c6ff7;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  white-space: nowrap;
+}
+
+.upage__course-btn:hover {
+  background-color: #7c6ff7;
+  color: #ffffff;
+}
+
+/* ── RATINGS TAB ──────────────────────────────────────────── */
+.upage__ratings {
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.upage__overall-rating {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.upage__overall-score {
+  font-size: 5rem;
+  font-weight: 700;
+  color: #170b48;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.upage__overall-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.upage__overall-label {
+  font-size: 0.9rem;
+  color: #6b5fa0;
+}
+
+/* satisfaction bars */
+.upage__satisfaction {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.upage__sat-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 48px;
+  align-items: center;
+  gap: 16px;
+}
+
+.upage__sat-label {
+  font-size: 0.88rem;
+  color: #4a3f6e;
+  text-align: right;
+}
+
+.upage__sat-track {
+  height: 8px;
+  background-color: rgba(124, 111, 247, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.upage__sat-fill {
+  height: 100%;
+  background-color: #7c6ff7;
+  border-radius: 99px;
+  width: 0%;
+  /* animated by JS via inline style when tab is active */
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.upage__sat-score {
+  font-size: 0.88rem;
+  color: #7c6ff7;
+  font-weight: 700;
+}
+
+/* review cards */
+.upage__reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.upage__review-card {
+  background-color: #f7f5ff;
+  border: 1px solid rgba(124, 111, 247, 0.15);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+
+.upage__review-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.upage__review-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #7c6ff7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.upage__review-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #170b48;
+}
+
+.upage__review-course {
+  font-size: 0.8rem;
+  color: #6b5fa0;
+}
+
+.upage__review-stars {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: #f4c542;
+}
+
+.upage__review-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #4a3f6e;
+}
+
+.upage__leave-review-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: transparent;
+  border: 2px solid #7c6ff7;
+  border-radius: 10px;
+  color: #7c6ff7;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.upage__leave-review-btn:hover {
+  background-color: #7c6ff7;
+  color: #ffffff;
+}
+
+/* ── NEWS TAB ─────────────────────────────────────────────── */
+.upage__news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.upage__news-card {
+  background-color: #f7f5ff;
+  border: 1px solid rgba(124, 111, 247, 0.15);
+  border-radius: 12px;
+  padding: 22px 24px;
+  opacity: 0;
+  transform: translateX(-32px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+/* stagger animation — triggered by JS adding this class */
+.upage__news-card--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.upage__news-date {
+  font-size: 0.78rem;
+  color: #7c6ff7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.upage__news-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #170b48;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.upage__news-excerpt {
+  font-size: 0.88rem;
+  color: #6b5fa0;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.upage__news-readmore {
+  background: none;
+  border: none;
+  color: #7c6ff7;
+  font-size: 0.9rem;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.upage__news-readmore:hover {
+  opacity: 0.75;
+}
+
+/* ── UNIVIBES TAB ─────────────────────────────────────────── */
+.upage__vibes {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px;
+}
+
+/* animated glow behind content */
+.upage__vibes__glow {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(124, 111, 247, 0.18) 0%,
+    transparent 70%
+  );
+  animation: vibePulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes vibePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.upage__vibes__icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.upage__vibes__logo {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #7c6ff7;
+  font-family: Georgia, serif;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.upage__vibes__tagline {
+  font-size: 1.15rem;
+  color: #3a2f6a;
+  margin-bottom: 28px;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+
+.upage__vibes__desc {
+  font-size: 0.97rem;
+  color: #6b5fa0;
+  max-width: 420px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.upage__vibes__form {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.upage__vibes__input {
+  padding: 13px 18px;
+  background-color: #ffffff;
+  border: 1px solid rgba(124, 111, 247, 0.4);
+  border-radius: 8px;
+  color: #170b48;
+  font-size: 0.95rem;
+  font-family: Georgia, serif;
+  width: 280px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.upage__vibes__input::placeholder {
+  color: #a89cd0;
+}
+
+.upage__vibes__input:focus {
+  border-color: #7c6ff7;
+}
+
+.upage__vibes__btn {
+  padding: 13px 28px;
+  background-color: #7c6ff7;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.upage__vibes__btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Toast Notifications ──────────────────────────────────── */
+.upage__toast-container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.upage__toast {
+  background-color: #170b48;
+  border: 1px solid #7c6ff7;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-family: Georgia, serif;
+  box-shadow: 0 8px 32px rgba(23, 11, 72, 0.2);
+  animation: toastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  max-width: 280px;
+}
+
+.upage__toast--exit {
+  animation: toastOut 0.35s ease forwards;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+
+/* ── Mobile Responsiveness ────────────────────────────────── */
+@media (max-width: 768px) {
+  .upage__hero__content {
+    left: 20px;
+    bottom: 24px;
+    max-width: calc(100% - 40px);
+  }
+
+  .upage__tabs {
+    padding: 0 16px;
+  }
+
+  .upage__content {
+    padding: 32px 20px;
+  }
+
+  .upage__overview {
+    grid-template-columns: 1fr;
+  }
+
+  .upage__faculties-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .upage__sat-row {
+    grid-template-columns: 100px 1fr 40px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .upage__hero__name {
+    font-size: 1.8rem;
+  }
+
+  .upage__vibes__input {
+    width: 100%;
+  }
+}
