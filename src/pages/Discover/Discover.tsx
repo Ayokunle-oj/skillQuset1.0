@@ -23,7 +23,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
-import { saveRedirectPath } from "../../utils/redirectUtils";
+import {
+  saveRedirectPath,
+  consumeRedirectPath,
+} from "../../utils/redirectUtils";
 import {
   CAROUSEL_SLIDES,
   SUGGESTION_CHIPS,
@@ -293,16 +296,23 @@ function CourseSection({
   animationDelay = "0s",
 }: CourseSectionProps) {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+
+  // Convert the section title to a kebab-case id for scrolling.
+  // e.g. "Top Courses" → "top-courses", "Study Materials" → "study-materials"
+  const sectionId = title.toLowerCase().replace(/\s+/g, "-");
 
   return (
+    // The id here is what we scroll to after login (e.g. #top-courses)
     <section
+      id={sectionId}
       className="discover__section"
       style={{ animationDelay }}
-      aria-labelledby={`section-${title}`}
+      aria-labelledby={`section-${sectionId}`}
     >
       {/* Header */}
       <div className="discover__section__header">
-        <h2 className="discover__section__title" id={`section-${title}`}>
+        <h2 className="discover__section__title" id={`section-${sectionId}`}>
           <span className="discover__section__icon" aria-hidden="true">
             {icon}
           </span>
@@ -310,7 +320,16 @@ function CourseSection({
         </h2>
         <button
           className="discover__see__all"
-          onClick={() => navigate(seeAllPath)}
+          onClick={() => {
+            if (!isLoggedIn) {
+              // Save "/discover#top-courses" (or whichever section) so after
+              // login the app can navigate back AND scroll to the right spot.
+              saveRedirectPath(`/discover#${sectionId}`);
+              navigate("/login");
+              return;
+            }
+            navigate(seeAllPath);
+          }}
           aria-label={`See all ${title}`}
         >
           See all →
@@ -338,6 +357,7 @@ function CourseSection({
 // ════════════════════════════════════════════════════════════════
 function Discover() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   // ── STATE ──────────────────────────────────────────────────
 
@@ -414,7 +434,33 @@ function Discover() {
     return () => document.removeEventListener("keydown", handleKey);
   }, []);
 
-  // ── SEARCH ─────────────────────────────────────────────────
+  // ── SCROLL TO SECTION AFTER LOGIN REDIRECT ─────────────────
+  // When a logged-out user clicks "See All", we save "/discover#section-id"
+  // and send them to /login. After they log in, the login page should call
+  // navigate(consumeRedirectPath()) which brings them back here with the hash.
+  // This effect runs once on mount (and whenever login state changes) and
+  // scrolls smoothly to the section referenced in the URL hash.
+  useEffect(() => {
+    // Only scroll if the user just logged in and there's a hash in the URL
+    const hash = window.location.hash; // e.g. "#top-courses"
+    if (!hash) return;
+
+    // consumeRedirectPath() reads the saved path AND removes it from sessionStorage
+    // in one step, so we don't scroll again if the user refreshes the page.
+    // We don't need the return value here — the scroll target comes from window.location.hash.
+    consumeRedirectPath();
+
+    // Give React a moment to finish rendering the sections before we scroll
+    const timer = setTimeout(() => {
+      const sectionId = hash.replace("#", ""); // "top-courses"
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 150); // 150ms is enough for the paint to settle
+
+    return () => clearTimeout(timer);
+  }, [isLoggedIn]); // re-run if login state changes (e.g. just came back from /login)
 
   // Trimmed version of the query used for actual filtering
   const trimmedQuery = searchQuery.trim().toLowerCase();

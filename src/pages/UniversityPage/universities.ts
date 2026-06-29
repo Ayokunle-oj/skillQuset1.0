@@ -233,8 +233,8 @@ const UNIVERSITIES: University[] = [
   // 2. University of Lagos (UNILAG)
   // ─────────────────────────────────────────────
   {
-    slug: "nile-university",
-    name: "Nile University",
+    slug: "unilag",
+    name: "University of Lagos",
     color: "#f4a261",
     location: "Abuja",
     founded: 1962,
@@ -541,7 +541,670 @@ const UNIVERSITIES: University[] = [
   },
 
   // ─────────────────────────────────────────────
-  // 4. Bowen University (stub — linked from homepage)
+  // 4. Nile University
+  // ─────────────────────────────────────────────
+  {
+    slug: "nile-university",
+    name: "Nile University of Nigeria",
+    color: "#00b4d8",
+    location: "Abuja, FCT",
+    founded: 2009,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 4.0,
+    image: "https://picsum.photos/seed/nile-uni/1400/800",
+    overview:
+      "Nile University of Nigeria is a private research-driven university located in Abuja, established in 2009. With strong ties to Turkish academic traditions, it offers a multicultural environment and modern facilities. The university is particularly noted for its engineering, IT, and business programmes, and attracts students from across Nigeria and West Africa seeking a cosmopolitan campus experience in the nation's capital.",
+    faculties: [
+      {
+        name: "Engineering & Technology",
+        description: "Cutting-edge technical education in the heart of Abuja.",
+        departments: [
+          {
+            name: "Computer Engineering",
+            courses: [
+              { level: "100L", title: "Introduction to Engineering" },
+              { level: "200L", title: "Digital Logic Design" },
+              { level: "300L", title: "Computer Architecture" },
+              { level: "400L", title: "VLSI Design" },
+            ],
+          },
+          {
+            name: "Electrical & Electronics Engineering",
+            courses: [
+              { level: "100L", title: "Engineering Mathematics" },
+              { level: "200L", title: "Circuit Analysis" },
+              { level: "300L", title: "Electromagnetic Fields" },
+              { level: "400L", title: "Power Electronics" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Natural & Applied Sciences",
+        description: "Advancing science research with global standards.",
+        departments: [
+          {
+            name: "Computer Science",
+            courses: [
+              { level: "100L", title: "Programming Fundamentals" },
+              { level: "200L", title: "Data Structures" },
+              { level: "300L", title: "Software Engineering" },
+              { level: "400L", title: "Machine Learning" },
+            ],
+          },
+          {
+            name: "Cyber Security",
+            courses: [
+              { level: "200L", title: "Network Security" },
+              { level: "300L", title: "Ethical Hacking" },
+              { level: "400L", title: "Digital Forensics" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Management Sciences",
+        description: "Training business leaders for a globalised economy.",
+        departments: [
+          {
+            name: "Business Administration",
+            courses: [
+              { level: "100L", title: "Principles of Management" },
+              { level: "200L", title: "Marketing Management" },
+              { level: "300L", title: "Entrepreneurship" },
+              { level: "400L", title: "Strategic Management" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title: "Nile University Opens New Postgraduate Research Centre",
+        date: "February 14, 2024",
+        excerpt:
+          "The university has commissioned a dedicated postgraduate research centre to support doctoral and master's programmes in science and technology.",
+      },
+      {
+        title: "Nile University Students Win National Debate Championship",
+        date: "October 20, 2023",
+        excerpt:
+          "The university's debate team clinched first place at the 2023 National Intercollegiate Debate Championship held in Lagos.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Aisha Buhari", field: "Public Health & Advocacy" },
+      { name: "Ibrahim Musa", field: "Technology & Innovation" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 160 },
+      { year: 2022, score: 165 },
+      { year: 2023, score: 170 },
+      { year: 2024, score: 175 },
+    ],
+    fees: {
+      tuition: "₦600,000 – ₦950,000",
+      accommodation: "₦200,000 – ₦350,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.8,
+      academics: 4.1,
+      safety: 4.4,
+      food: 3.9,
+      hostel: 4.0,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 5. Bingham University
+  // ─────────────────────────────────────────────
+  {
+    slug: "bingham-university",
+    name: "Bingham University",
+    color: "#f4a261",
+    location: "Karu, Nasarawa State",
+    founded: 2005,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 3.7,
+    image: "https://picsum.photos/seed/bingham-uni/1400/800",
+    overview:
+      "Bingham University is a faith-based private university owned by the Church of Christ in Nations (COCIN), located in Karu, Nasarawa State. Founded in 2005, the university fosters academic development rooted in Christian values. It is well regarded for its medical sciences, law, and arts programmes, and serves as a key higher education institution bridging northern and central Nigeria.",
+    faculties: [
+      {
+        name: "Health Sciences",
+        description: "Equipping compassionate healthcare professionals.",
+        departments: [
+          {
+            name: "Medicine & Surgery",
+            courses: [
+              { level: "100L", title: "Introductory Biology" },
+              { level: "200L", title: "Human Physiology" },
+              { level: "300L", title: "Pathology" },
+              { level: "400L", title: "Clinical Medicine" },
+            ],
+          },
+          {
+            name: "Pharmacy",
+            courses: [
+              { level: "100L", title: "General Chemistry" },
+              { level: "200L", title: "Pharmaceutical Chemistry" },
+              { level: "300L", title: "Pharmacology" },
+              { level: "400L", title: "Clinical Pharmacy" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Law",
+        description: "Producing principled legal practitioners.",
+        departments: [
+          {
+            name: "Law",
+            courses: [
+              { level: "100L", title: "Introduction to Nigerian Law" },
+              { level: "200L", title: "Constitutional Law" },
+              { level: "300L", title: "Commercial Law" },
+              { level: "400L", title: "Jurisprudence" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Arts & Social Sciences",
+        description: "Humanities education grounded in cultural context.",
+        departments: [
+          {
+            name: "English & Literary Studies",
+            courses: [
+              { level: "100L", title: "Introduction to Literature" },
+              { level: "200L", title: "African Literature" },
+              { level: "300L", title: "Linguistics" },
+              { level: "400L", title: "Creative Writing" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title:
+          "Bingham University Teaching Hospital Gets Federal Accreditation",
+        date: "January 30, 2024",
+        excerpt:
+          "The Federal Ministry of Health has granted full accreditation to Bingham University Teaching Hospital, enabling the institution to train specialist doctors.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Simon Lalong", field: "Politics & Governance" },
+      { name: "Yakubu Gowon", field: "Military & Statesmanship" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 140 },
+      { year: 2022, score: 145 },
+      { year: 2023, score: 150 },
+      { year: 2024, score: 155 },
+    ],
+    fees: {
+      tuition: "₦300,000 – ₦550,000",
+      accommodation: "₦100,000 – ₦180,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.2,
+      academics: 3.8,
+      safety: 4.3,
+      food: 3.5,
+      hostel: 3.6,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 6. Pan-Atlantic University
+  // ─────────────────────────────────────────────
+  {
+    slug: "pan-atlantic-university",
+    name: "Pan-Atlantic University",
+    color: "#2d6a4f",
+    location: "Lagos, Lagos State",
+    founded: 2002,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 4.2,
+    image: "https://picsum.photos/seed/pan-atlantic-uni/1400/800",
+    overview:
+      "Pan-Atlantic University (PAU) is a private institution in Lagos, Nigeria, affiliated with Opus Dei. Founded in 2002, it is home to the Lagos Business School (LBS) — one of Africa's top-ranked business schools. PAU is known for producing ethical, entrepreneurial, and leadership-driven graduates. Its small cohort sizes ensure strong faculty-student engagement and a culture of excellence in management and communication.",
+    faculties: [
+      {
+        name: "Lagos Business School",
+        description:
+          "One of Africa's premier management education institutions.",
+        departments: [
+          {
+            name: "Business Administration",
+            courses: [
+              { level: "100L", title: "Business Communication" },
+              { level: "200L", title: "Corporate Governance" },
+              { level: "300L", title: "Financial Analysis" },
+              { level: "400L", title: "Business Ethics" },
+            ],
+          },
+          {
+            name: "Entrepreneurship",
+            courses: [
+              { level: "200L", title: "Startup Fundamentals" },
+              { level: "300L", title: "Venture Capital & Finance" },
+              { level: "400L", title: "Scaling & Growth Strategy" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "School of Media & Communication",
+        description: "Shaping ethical media professionals for Africa.",
+        departments: [
+          {
+            name: "Mass Communication",
+            courses: [
+              { level: "100L", title: "Introduction to Media" },
+              { level: "200L", title: "Journalism & Reporting" },
+              { level: "300L", title: "Public Relations" },
+              { level: "400L", title: "Digital Media Strategy" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title: "Lagos Business School Ranked Best in West Africa — FT 2024",
+        date: "March 5, 2024",
+        excerpt:
+          "The Financial Times has ranked Lagos Business School the best business school in West Africa for executive education in its 2024 global ranking.",
+      },
+      {
+        title: "PAU Launches Africa Leadership Initiative",
+        date: "November 11, 2023",
+        excerpt:
+          "Pan-Atlantic University has unveiled a pan-African leadership programme designed to produce the next generation of ethical business and government leaders.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Aigboje Aig-Imoukhuede", field: "Banking & Philanthropy" },
+      { name: "Tara Fela-Durotoye", field: "Beauty & Entrepreneurship" },
+      { name: "Kola Karim", field: "Energy & Business" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 180 },
+      { year: 2022, score: 185 },
+      { year: 2023, score: 190 },
+      { year: 2024, score: 195 },
+    ],
+    fees: {
+      tuition: "₦900,000 – ₦1,500,000",
+      accommodation: "₦300,000 – ₦500,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.7,
+      academics: 4.6,
+      safety: 4.7,
+      food: 4.1,
+      hostel: 4.2,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 7. Landmark University
+  // ─────────────────────────────────────────────
+  {
+    slug: "landmark-university",
+    name: "Landmark University",
+    color: "#457b9d",
+    location: "Omu-Aran, Kwara State",
+    founded: 2011,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 4.1,
+    image: "https://picsum.photos/seed/landmark-uni/1400/800",
+    overview:
+      "Landmark University is a private Christian mission university in Omu-Aran, Kwara State, Nigeria, founded in 2011 by the Living Faith Church. It has a unique vision focused on agrarian revolution and entrepreneurship, producing graduates who are both academically sound and practically skilled. It has rapidly become one of Nigeria's most cited universities in research output and has received multiple NUC commendations.",
+    faculties: [
+      {
+        name: "Agriculture",
+        description: "Driving Nigeria's agrarian revolution through education.",
+        departments: [
+          {
+            name: "Agricultural Economics & Extension",
+            courses: [
+              { level: "100L", title: "Introduction to Agribusiness" },
+              { level: "200L", title: "Farm Management" },
+              { level: "300L", title: "Agricultural Policy" },
+              { level: "400L", title: "Rural Development" },
+            ],
+          },
+          {
+            name: "Plant Biology",
+            courses: [
+              { level: "100L", title: "Cell & Molecular Biology" },
+              { level: "200L", title: "Plant Physiology" },
+              { level: "300L", title: "Genetics" },
+              { level: "400L", title: "Biotechnology" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Engineering",
+        description: "Practical, innovation-driven engineering education.",
+        departments: [
+          {
+            name: "Chemical Engineering",
+            courses: [
+              { level: "100L", title: "Engineering Chemistry" },
+              { level: "200L", title: "Process Thermodynamics" },
+              { level: "300L", title: "Mass Transfer Operations" },
+              { level: "400L", title: "Petroleum Refining" },
+            ],
+          },
+          {
+            name: "Civil Engineering",
+            courses: [
+              { level: "100L", title: "Engineering Drawing" },
+              { level: "200L", title: "Structural Mechanics" },
+              { level: "300L", title: "Water Resources Engineering" },
+              { level: "400L", title: "Construction Management" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Sciences",
+        description: "Rigorous science education in a disciplined environment.",
+        departments: [
+          {
+            name: "Computer Science",
+            courses: [
+              { level: "100L", title: "Computational Thinking" },
+              { level: "200L", title: "Algorithms & Complexity" },
+              { level: "300L", title: "Database Systems" },
+              { level: "400L", title: "Artificial Intelligence" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title: "Landmark University Tops NUC Research Output Rankings 2024",
+        date: "February 28, 2024",
+        excerpt:
+          "The National Universities Commission has recognised Landmark University as the highest research-producing private university in Nigeria for 2023.",
+      },
+      {
+        title: "New Smart Farming Lab Commissioned",
+        date: "October 5, 2023",
+        excerpt:
+          "A state-of-the-art smart farming and precision agriculture laboratory has been opened at Landmark University, integrating IoT sensors and drone technology.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Femi Adeyemo", field: "Technology & Agriculture" },
+      { name: "Blessing Okonkwo", field: "Research & Academia" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 170 },
+      { year: 2022, score: 175 },
+      { year: 2023, score: 180 },
+      { year: 2024, score: 185 },
+    ],
+    fees: {
+      tuition: "₦500,000 – ₦800,000",
+      accommodation: "₦180,000 – ₦300,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.5,
+      academics: 4.4,
+      safety: 4.8,
+      food: 3.9,
+      hostel: 4.2,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 8. Redeemer's University
+  // ─────────────────────────────────────────────
+  {
+    slug: "redeemers-university",
+    name: "Redeemer's University",
+    color: "#e76f51",
+    location: "Ede, Osun State",
+    founded: 2005,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 4.0,
+    image: "https://picsum.photos/seed/redeemers-uni/1400/800",
+    overview:
+      "Redeemer's University (RUN) is a private Christian university founded in 2005 by the Redeemed Christian Church of God (RCCG), located in Ede, Osun State. Known for its serene, well-secured campus and strong academic environment, RUN offers programmes in sciences, management, and humanities. The university emphasises total development — intellectual, moral, and spiritual — and has earned a reputation for producing disciplined graduates.",
+    faculties: [
+      {
+        name: "Natural Sciences",
+        description: "Building the next generation of Nigerian scientists.",
+        departments: [
+          {
+            name: "Chemistry",
+            courses: [
+              { level: "100L", title: "General Chemistry I" },
+              { level: "200L", title: "Analytical Chemistry" },
+              { level: "300L", title: "Organic Chemistry" },
+              { level: "400L", title: "Industrial Chemistry" },
+            ],
+          },
+          {
+            name: "Microbiology",
+            courses: [
+              { level: "100L", title: "General Microbiology" },
+              { level: "200L", title: "Virology" },
+              { level: "300L", title: "Environmental Microbiology" },
+              { level: "400L", title: "Medical Microbiology" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Management Sciences",
+        description: "Ethical leadership for a transforming Africa.",
+        departments: [
+          {
+            name: "Accounting",
+            courses: [
+              { level: "100L", title: "Principles of Accounting" },
+              { level: "200L", title: "Intermediate Accounting" },
+              { level: "300L", title: "Cost Accounting" },
+              { level: "400L", title: "Forensic Accounting" },
+            ],
+          },
+          {
+            name: "Economics",
+            courses: [
+              { level: "100L", title: "Introduction to Economics" },
+              { level: "200L", title: "Macroeconomics" },
+              { level: "300L", title: "Public Finance" },
+              { level: "400L", title: "Development Economics" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Humanities",
+        description: "Preserving culture and shaping critical thinkers.",
+        departments: [
+          {
+            name: "English Language & Literature",
+            courses: [
+              { level: "100L", title: "Use of English" },
+              { level: "200L", title: "African Oral Literature" },
+              { level: "300L", title: "Discourse Analysis" },
+              { level: "400L", title: "Sociolinguistics" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title: "RUN Signs MOU with Three International Universities",
+        date: "March 18, 2024",
+        excerpt:
+          "Redeemer's University has signed academic exchange agreements with universities in the UK, Canada, and South Africa to facilitate student mobility programmes.",
+      },
+      {
+        title: "RUN Research Team Publishes Malaria Vaccine Study",
+        date: "December 1, 2023",
+        excerpt:
+          "A research team from the Department of Microbiology has published a landmark study on a promising malaria vaccine candidate in a peer-reviewed journal.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Bimbo Ademoye", field: "Film & Entertainment" },
+      { name: "Olawale Ogunleye", field: "Engineering & Innovation" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 160 },
+      { year: 2022, score: 165 },
+      { year: 2023, score: 168 },
+      { year: 2024, score: 172 },
+    ],
+    fees: {
+      tuition: "₦450,000 – ₦750,000",
+      accommodation: "₦160,000 – ₦280,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.4,
+      academics: 4.0,
+      safety: 4.7,
+      food: 3.7,
+      hostel: 3.9,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 9. Afe Babalola University
+  // ─────────────────────────────────────────────
+  {
+    slug: "afe-babalola-university",
+    name: "Afe Babalola University",
+    color: "#6a0572",
+    location: "Ado-Ekiti, Ekiti State",
+    founded: 2009,
+    type: "Private",
+    accreditation: "NUC Accredited",
+    rating: 4.2,
+    image: "https://picsum.photos/seed/abuad-uni/1400/800",
+    overview:
+      "Afe Babalola University, Ado-Ekiti (ABUAD) is a private university founded in 2009 by renowned legal luminary Aare Afe Babalola. Located in Ekiti State, it is one of Nigeria's fastest-growing private universities, boasting world-class facilities including a 500-bed teaching hospital, a 3000-seat auditorium, and a multi-specialty medical complex. ABUAD is renowned for its law, medicine, and engineering programmes, and prides itself on a zero-tolerance disciplinary policy.",
+    faculties: [
+      {
+        name: "Law",
+        description: "Nigeria's foremost private law school environment.",
+        departments: [
+          {
+            name: "Law",
+            courses: [
+              { level: "100L", title: "Legal Methods & Writing" },
+              { level: "200L", title: "Contract Law" },
+              { level: "300L", title: "Criminal Procedure" },
+              { level: "400L", title: "International Commercial Law" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Medicine & Health Sciences",
+        description: "A 500-bed teaching hospital anchoring clinical training.",
+        departments: [
+          {
+            name: "Medicine & Surgery",
+            courses: [
+              { level: "100L", title: "Medical Biochemistry" },
+              { level: "200L", title: "Human Anatomy" },
+              { level: "300L", title: "Physiology & Biophysics" },
+              { level: "400L", title: "Community Medicine" },
+            ],
+          },
+          {
+            name: "Physiotherapy",
+            courses: [
+              { level: "100L", title: "Anatomy for Physiotherapy" },
+              { level: "200L", title: "Kinesiology" },
+              { level: "300L", title: "Orthopaedic Physiotherapy" },
+              { level: "400L", title: "Neurological Rehabilitation" },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Engineering",
+        description: "Practical engineering for Africa's infrastructure needs.",
+        departments: [
+          {
+            name: "Petroleum Engineering",
+            courses: [
+              { level: "200L", title: "Reservoir Engineering" },
+              { level: "300L", title: "Drilling Engineering" },
+              { level: "400L", title: "Production Technology" },
+            ],
+          },
+          {
+            name: "Civil & Environmental Engineering",
+            courses: [
+              { level: "100L", title: "Engineering Surveying" },
+              { level: "200L", title: "Environmental Impact Assessment" },
+              { level: "300L", title: "Structural Design" },
+              { level: "400L", title: "Construction Project Management" },
+            ],
+          },
+        ],
+      },
+    ],
+    news: [
+      {
+        title: "ABUAD Teaching Hospital Accredited for Residency Training",
+        date: "April 2, 2024",
+        excerpt:
+          "The Medical and Dental Council of Nigeria has approved ABUAD Multi-System Hospital for postgraduate medical residency training across six specialisations.",
+      },
+      {
+        title: "ABUAD Law Students Win National Moot Court Competition",
+        date: "February 8, 2024",
+        excerpt:
+          "Students from the Faculty of Law swept the national moot court competition, defeating 27 other universities to claim first prize.",
+      },
+    ],
+    notableAlumni: [
+      { name: "Afe Babalola Jr.", field: "Law & Corporate Governance" },
+      { name: "Tolu Adesanya", field: "Medicine & Public Health" },
+    ],
+    cutoffHistory: [
+      { year: 2021, score: 175 },
+      { year: 2022, score: 180 },
+      { year: 2023, score: 185 },
+      { year: 2024, score: 190 },
+    ],
+    fees: {
+      tuition: "₦700,000 – ₦1,100,000",
+      accommodation: "₦250,000 – ₦420,000",
+    },
+    satisfactionScores: {
+      socialLife: 3.6,
+      academics: 4.4,
+      safety: 4.9,
+      food: 4.0,
+      hostel: 4.3,
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // 11. Bowen University
   // ─────────────────────────────────────────────
   {
     slug: "bowen-university",

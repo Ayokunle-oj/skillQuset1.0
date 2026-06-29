@@ -2,21 +2,27 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
   useLocation,
 } from "react-router-dom";
 import { AuthProvider } from "./hooks/AuthContext";
 import Navbar from "./component/navbar/Navbar";
-import Discover from "./pages/Discover/Discover";
+// import Discover from "./pages/Discover/Discover";
 import GetStarted from "./component/Get_started/GetStarted";
 import WhatsNew from "./pages/whats__new/WhatsNew";
-import SignUp from "./pages/Signup/SignUp";
+// import SignUp from "./pages/Signup/SignUp";
 import Login from "./pages/Login/Login";
-import About from "./pages/About/About";
+// import About from "./pages/About/About";
 import TermsOfService from "./component/terms/TermsOfService";
 import ScrollToTop from "./component/ScrollToTop/ScrollToTop";
 import PrivacyPolicy from "./component/privacy/PrivacyPolicy";
+// import Dashboard from "./pages/Dashboard/userDashboard/Dashboard";
+import UserSidebar from "./pages/Dashboard/userDashboard/sideBar/UserSidebar";
+import Dash_Home_page from "./pages/Dashboard/userDashboard/Dash_components/Dash_home/Dash_Home_page";
+import My_courses from "./pages/Dashboard/userDashboard/Dash_components/Dash_my_courses/My_courses";
 import Home from "./pages/Home";
 import UniversityPage from "./pages/UniversityPage/UniversityPage";
+import Discover from "./pages/Discover/Discover";
 
 // Inside your routes:
 // import ProtectedRoute from "./component/ProtectedRoute/ProtectedRoute";
@@ -28,15 +34,17 @@ function AppContent() {
   const location = useLocation();
 
   // Routes where the global Navbar should be hidden.
-  const hideNavbar = [
-    "/discover",
-    "/getStarted",
-    "/terms",
-    "/privacy",
-    "/dashboard",
-    "/signup",
-    "/login",
-  ].includes(location.pathname);
+  const hideNavbar =
+    location.pathname.startsWith("/dashboard") ||
+    [
+      "/discover",
+      "/getStarted",
+      "/terms",
+      "/privacy",
+      "/dashboard",
+      "/signup",
+      "/login",
+    ].includes(location.pathname);
 
   return (
     <>
@@ -45,10 +53,19 @@ function AppContent() {
       <Routes>
         {/* ── Public routes ─────────────────────────────────── */}
         <Route path="/" element={<Home />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/discover" element={<Discover />} />
+        {/* <Route path="/About" element={<About />} /> */}
+        {/* <Route path="/discover" element={<Discover />} /> */}
+        <Route />
+        <Route path="/dashboard" element={<UserSidebar />}>
+          <Route index element={<Navigate to="Home" replace />} />
+          <Route path="Home" element={<Dash_Home_page />} />
+          <Route path="my-courses" element={<My_courses />} />
+          <Route path="discover" element={<Discover />} />
+          <Route path="messages" element={<Discover />} />
+          <Route path="library" element={<Discover />} />
+        </Route>
         <Route path="/whats-new" element={<WhatsNew />} />
-        <Route path="/signup" element={<SignUp />} />
+        {/* <Route path="/signup" element={<SignUp />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/university/:slug" element={<UniversityPage />} />

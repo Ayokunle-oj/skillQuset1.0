@@ -1,7 +1,7 @@
 // UniversityPage.tsx
 // Route: /university/:slug
-// Full university detail page for SkillQuest — UniVibes edition
-// Tabs: Overview | Faculties | Ratings | News | UniVibes
+// Full university detail page for SkillQuest
+// Tabs: Overview | Faculties | Ratings | News
 // Constraints: no CSS vars, no Google Fonts, React Router, plain CSS file
 
 import { useEffect, useRef, useState, useCallback } from "react";
@@ -13,7 +13,7 @@ import type { University, FacultyData } from "./universities";
 // ─────────────────────────────────────────────────────────────
 // TYPES
 // ─────────────────────────────────────────────────────────────
-type TabId = "overview" | "faculties" | "ratings" | "news" | "vibes";
+type TabId = "overview" | "faculties" | "ratings" | "news";
 
 interface Toast {
   id: number;
@@ -99,11 +99,6 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
     );
   }
 
-  // Convert a course title to a URL-friendly slug
-  function toSlug(title: string) {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-  }
-
   return (
     <div
       className={`upage__faculty-card ${
@@ -164,8 +159,8 @@ function FacultyCard({ faculty }: { faculty: FacultyData }) {
                               className="upage__course-btn"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                // Navigate to /course/:slug (page not built yet)
-                                navigate(`/course/${toSlug(title)}`);
+                                // Navigate to login to access study materials
+                                navigate("/login");
                               }}
                             >
                               Study Materials
@@ -390,67 +385,6 @@ function NewsPanel({
 }
 
 // ─────────────────────────────────────────────────────────────
-// UNIVIBES PANEL
-// ─────────────────────────────────────────────────────────────
-function UniVibesPanel({
-  universityName,
-  onToast,
-}: {
-  universityName: string;
-  onToast: (msg: string) => void;
-}) {
-  const [email, setEmail] = useState("");
-
-  function handleSubmit() {
-    if (!email.trim() || !email.includes("@")) {
-      onToast("Please enter a valid email address");
-      return;
-    }
-    setEmail("");
-    onToast("You're on the list! 🎉");
-  }
-
-  return (
-    <div className="upage__panel upage__vibes">
-      {/* Animated glow background */}
-      <div className="upage__vibes__glow" />
-
-      {/* Lock / sparkle icon */}
-      <div className="upage__vibes__icon">✦</div>
-
-      {/* UniVibes logo */}
-      <div className="upage__vibes__logo">UniVibes</div>
-
-      {/* Tagline */}
-      <div className="upage__vibes__tagline">
-        Real student life, unfiltered.
-      </div>
-
-      {/* Description */}
-      <div className="upage__vibes__desc">
-        UniVibes is coming soon. Be the first to know when it drops for{" "}
-        <strong style={{ color: "#ffffff" }}>{universityName}</strong>.
-      </div>
-
-      {/* Email capture */}
-      <div className="upage__vibes__form">
-        <input
-          className="upage__vibes__input"
-          type="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-        />
-        <button className="upage__vibes__btn" onClick={handleSubmit}>
-          Notify Me
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────
 // MAIN PAGE COMPONENT
 // ─────────────────────────────────────────────────────────────
 export default function UniversityPage() {
@@ -509,7 +443,6 @@ export default function UniversityPage() {
     { id: "faculties", label: "Faculties" },
     { id: "ratings", label: "Ratings" },
     { id: "news", label: "News" },
-    { id: "vibes", label: "UniVibes", badge: "Coming Soon" },
   ];
 
   // ── Render tab content ─────────────────────────────────────
@@ -619,12 +552,6 @@ export default function UniversityPage() {
             isActive={activeTab === "news"}
             onToast={addToast}
           />
-        );
-
-      // ── UniVibes ──────────────────────────────────────────
-      case "vibes":
-        return (
-          <UniVibesPanel universityName={university.name} onToast={addToast} />
         );
 
       default:

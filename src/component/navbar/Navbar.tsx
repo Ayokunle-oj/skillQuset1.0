@@ -71,7 +71,7 @@ function Navbar() {
           {/* Right side: nav links + buttons */}
 
           <ul className={menu ? "navbar__menu active" : "navbar__menu"}>
-            <li className="navbar__item">
+            {/* <li className="navbar__item">
               <Link
                 to="/discover"
                 className="navbar__links"
@@ -79,17 +79,9 @@ function Navbar() {
               >
                 Discover
               </Link>
-            </li>
-            <li className="navbar__item">
-              <Link
-                to="/about"
-                className="navbar__links"
-                onClick={closeMobileMenu}
-              >
-                About
-              </Link>
-            </li>
-            <li className="navbar__item">
+            </li> */}
+
+            {/* <li className="navbar__item">
               <Link
                 to="/whats-new"
                 className="navbar__links"
@@ -98,6 +90,15 @@ function Navbar() {
                 What's New
               </Link>
             </li>
+            <li className="navbar__item">
+              <Link
+                to="/about"
+                className="navbar__links"
+                onClick={closeMobileMenu}
+              >
+                About Us
+              </Link>
+            </li> */}
 
             {/* Mobile-only CTA buttons inside the drawer */}
             <li className="navbar__item">
