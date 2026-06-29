@@ -1,5 +1,5 @@
-function messages() {
+function Messages() {
   return <div>coming Soon</div>;
 }
 
-export default messages;
+export default Messages;

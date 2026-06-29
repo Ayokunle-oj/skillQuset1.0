@@ -20,6 +20,9 @@ import PrivacyPolicy from "./component/privacy/PrivacyPolicy";
 import UserSidebar from "./pages/Dashboard/userDashboard/sideBar/UserSidebar";
 import Dash_Home_page from "./pages/Dashboard/userDashboard/Dash_components/Dash_home/Dash_Home_page";
 import My_courses from "./pages/Dashboard/userDashboard/Dash_components/Dash_my_courses/My_courses";
+import Messages from "./pages/Dashboard/userDashboard/Dash_components/Dash_massage/messages";
+import Library from "./pages/Dashboard/userDashboard/Dash_components/Dash_Library/Library";
+
 import Home from "./pages/Home";
 import UniversityPage from "./pages/UniversityPage/UniversityPage";
 import Discover from "./pages/Discover/Discover";
@@ -61,8 +64,8 @@ function AppContent() {
           <Route path="Home" element={<Dash_Home_page />} />
           <Route path="my-courses" element={<My_courses />} />
           <Route path="discover" element={<Discover />} />
-          <Route path="messages" element={<Discover />} />
-          <Route path="library" element={<Discover />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="library" element={<Library />} />
         </Route>
         <Route path="/whats-new" element={<WhatsNew />} />
         {/* <Route path="/signup" element={<SignUp />} /> */}
