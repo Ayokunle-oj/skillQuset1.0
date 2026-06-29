@@ -20,7 +20,7 @@ import PrivacyPolicy from "./component/privacy/PrivacyPolicy";
 import UserSidebar from "./pages/Dashboard/userDashboard/sideBar/UserSidebar";
 import Dash_Home_page from "./pages/Dashboard/userDashboard/Dash_components/Dash_home/Dash_Home_page";
 import My_courses from "./pages/Dashboard/userDashboard/Dash_components/Dash_my_courses/My_courses";
-import Messages from "./pages/Dashboard/userDashboard/Dash_components/Dash_massage/messages";
+import Messages from "./pages/Dashboard/userDashboard/Dash_components/Dash_massage/Messages";
 import Library from "./pages/Dashboard/userDashboard/Dash_components/Dash_Library/Library";
 
 import Home from "./pages/Home";
