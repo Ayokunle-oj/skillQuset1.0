@@ -220,7 +220,7 @@
 
 .dashboard-content {
   margin-left: 240px;
-  padding: 24px;
+  /* padding: 24px; */
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: #f0f4ff;
   flex: 1;
@@ -316,4 +316,149 @@
   font-weight: 600;
   cursor: default;
   letter-spacing: 0.3px;
+}
+
+/* ─── MOBILE BOTTOM NAVBAR ────────────────────────────────── */
+.mobile-navbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: linear-gradient(180deg, #1a3f9f 0%, #0f2c6f 100%);
+  box-shadow: 0 -4px 20px rgba(15, 44, 111, 0.25);
+  z-index: 200;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 6px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  padding: 6px 0;
+  transition:
+    color 0.2s,
+    transform 0.15s;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.92);
+}
+
+.mobile-nav-item.active {
+  color: #fff;
+}
+
+.mobile-nav-icon {
+  font-size: 18px;
+}
+
+.mobile-nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* raised center Dashboard button (matches your drawio) */
+.mobile-nav-item.center-item .mobile-nav-icon-wrap {
+  width: 46px;
+  height: 46px;
+  margin-top: -22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c6ff7, #4f8ef7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(124, 111, 247, 0.5);
+  border: 4px solid #0f2c6f;
+}
+
+.mobile-nav-item.center-item .mobile-nav-icon {
+  font-size: 18px;
+  color: #fff;
+}
+
+.mobile-nav-item.center-item .mobile-nav-label {
+  margin-top: 1px;
+  color: #fff;
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ──────────────────────────────── */
+
+/* Wide screens / TVs / ultra-wide monitors */
+@media (min-width: 1600px) {
+  .dashboard-content {
+    max-width: 1600px;
+    margin-left: 240px;
+  }
+  .sidebar.collapsed ~ .dashboard-content {
+    margin-left: 68px;
+  }
+}
+
+/* Tablets only — sidebar auto-collapses to icon-only, no manual toggle needed */
+@media (min-width: 769px) and (max-width: 900px) {
+  .sidebar {
+    width: 64px;
+  }
+  .sidebar .logo-text,
+  .sidebar .nav-label,
+  .sidebar .sidebar-premium {
+    opacity: 0;
+    width: 0;
+    pointer-events: none;
+  }
+  .sidebar .nav-item {
+    justify-content: center;
+    padding: 11px 0;
+  }
+  .dashboard-content {
+    margin-left: 64px;
+  }
+  .collapse-btn {
+    display: none;
+  }
+}
+
+/* Mobile phones — hide sidebar, show bottom nav */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .dashboard-content {
+    margin-left: 0;
+    padding-bottom: 76px; /* clears the bottom nav */
+  }
+  .mobile-navbar {
+    display: flex;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .mobile-navbar {
+    height: 58px;
+  }
+  .mobile-nav-icon {
+    font-size: 16px;
+  }
+  .mobile-nav-label {
+    font-size: 9px;
+  }
+  .mobile-nav-item.center-item .mobile-nav-icon-wrap {
+    width: 42px;
+    height: 42px;
+    margin-top: -20px;
+  }
 }
