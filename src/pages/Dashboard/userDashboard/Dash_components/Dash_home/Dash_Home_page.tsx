@@ -105,7 +105,18 @@ function Dash_Home_page() {
           </div>
           {/* ))} */}
         </div>
-        <div className="dash_grid_layout"></div>
+        <div className="dash_grid_layout">
+          <div className="dash_wrapper">
+            <div className="dash_grid">1</div>
+            <div className="dash_grid">2</div>
+            <div className="dash_grid">3</div>
+            <div className="dash_grid">4</div>
+            <div className="dash_grid">5</div>
+            <div className="dash_grid">6</div>
+            <div className="dash_grid">7</div>
+            <div className="dash_grid">8</div>
+          </div>
+        </div>
       </div>
     </div>
   );
