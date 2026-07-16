@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #f0f4ff;
   color: #1a1a2e;
 }
@@ -97,7 +97,10 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 0.2s, color 0.2s, transform 0.35s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.35s;
 }
 
 .collapse-btn:hover {
@@ -133,14 +136,17 @@ body {
   cursor: pointer;
   color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
-  transition: background 0.2s, color 0.2s, transform 0.15s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.15s;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
 }
 
 .nav-item::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.06);
@@ -160,7 +166,11 @@ body {
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, rgba(124, 111, 247, 0.35), rgba(79, 142, 247, 0.25));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 111, 247, 0.35),
+    rgba(79, 142, 247, 0.25)
+  );
   color: #fff;
   border: 1px solid rgba(124, 111, 247, 0.4);
 }
@@ -209,7 +219,7 @@ body {
   pointer-events: none;
   transition: opacity 0.15s;
   z-index: 200;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .sidebar.collapsed .nav-item:hover .nav-tooltip {
@@ -219,7 +229,11 @@ body {
 /* PREMIUM AD */
 .sidebar-premium {
   margin: 10px;
-  background: linear-gradient(135deg, rgba(124, 111, 247, 0.25), rgba(79, 142, 247, 0.15));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 111, 247, 0.25),
+    rgba(79, 142, 247, 0.15)
+  );
   border: 1px solid rgba(124, 111, 247, 0.3);
   border-radius: 14px;
   padding: 16px 14px;
@@ -329,7 +343,10 @@ body {
   justify-content: center;
   color: #5a6a8a;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, transform 0.15s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.15s;
   position: relative;
 }
 
@@ -411,8 +428,14 @@ body {
 }
 
 @keyframes dropIn {
-  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .dropdown-header {
@@ -434,7 +457,7 @@ body {
   font-size: 22px;
   font-weight: 700;
   color: #fff;
-  border: 3px solid rgba(255,255,255,0.25);
+  border: 3px solid rgba(255, 255, 255, 0.25);
 }
 
 .dropdown-user-name {
@@ -445,7 +468,7 @@ body {
 
 .dropdown-user-email {
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 2px;
 }
 
@@ -509,7 +532,8 @@ body {
   background: #fff0f0;
 }
 
-.dropdown-menu-item svg, .dropdown-menu-item .fa-icon {
+.dropdown-menu-item svg,
+.dropdown-menu-item .fa-icon {
   width: 16px;
   text-align: center;
   color: #8896b3;
@@ -549,17 +573,31 @@ body {
   gap: 18px;
   border: 1px solid #e8edf8;
   box-shadow: 0 2px 12px rgba(15, 44, 111, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   animation: fadeSlideUp 0.5s ease both;
 }
 
-.stat-card:nth-child(1) { animation-delay: 0.05s; }
-.stat-card:nth-child(2) { animation-delay: 0.10s; }
-.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.stat-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.stat-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
 
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stat-card:hover {
@@ -578,11 +616,21 @@ body {
   flex-shrink: 0;
 }
 
-.stat-icon-wrap.rank   { background: #fff5e0; color: #f7a800; }
-.stat-icon-wrap.points { background: #e8f0ff; color: #4f8ef7; }
-.stat-icon-wrap.streak { background: #ffece8; color: #f7533a; }
+.stat-icon-wrap.rank {
+  background: #fff5e0;
+  color: #f7a800;
+}
+.stat-icon-wrap.points {
+  background: #e8f0ff;
+  color: #4f8ef7;
+}
+.stat-icon-wrap.streak {
+  background: #ffece8;
+  color: #f7533a;
+}
 
-.stat-info {}
+.stat-info {
+}
 
 .stat-value {
   font-size: 26px;
@@ -658,7 +706,9 @@ body {
 }
 
 /* ─── TODAY'S ACTIVITY ────────────────────────────────────── */
-.activity-card { animation-delay: 0.2s; }
+.activity-card {
+  animation-delay: 0.2s;
+}
 
 .activity-gauge-wrap {
   display: flex;
@@ -753,7 +803,9 @@ body {
 }
 
 /* ─── MY COURSES PROGRESS ─────────────────────────────────── */
-.courses-card { animation-delay: 0.25s; }
+.courses-card {
+  animation-delay: 0.25s;
+}
 
 .course-item {
   display: flex;
@@ -828,7 +880,9 @@ body {
 }
 
 /* ─── COURSES COMPLETED ───────────────────────────────────── */
-.completed-card { animation-delay: 0.3s; }
+.completed-card {
+  animation-delay: 0.3s;
+}
 
 .completed-count-row {
   display: flex;
@@ -912,7 +966,9 @@ body {
 }
 
 /* ─── LEADERBOARD ─────────────────────────────────────────── */
-.leaderboard-card { animation-delay: 0.35s; }
+.leaderboard-card {
+  animation-delay: 0.35s;
+}
 
 .leaderboard-list {
   display: flex;
@@ -927,7 +983,9 @@ body {
   padding: 11px 14px;
   border-radius: 12px;
   background: #f7f9ff;
-  transition: background 0.15s, transform 0.15s;
+  transition:
+    background 0.15s,
+    transform 0.15s;
 }
 
 .lb-item:hover {
@@ -936,7 +994,11 @@ body {
 }
 
 .lb-item.is-user {
-  background: linear-gradient(135deg, rgba(124, 111, 247, 0.12), rgba(79, 142, 247, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 111, 247, 0.12),
+    rgba(79, 142, 247, 0.08)
+  );
   border: 1px solid rgba(124, 111, 247, 0.25);
 }
 
@@ -948,9 +1010,15 @@ body {
   text-align: center;
 }
 
-.lb-rank.gold   { color: #f7a800; }
-.lb-rank.silver { color: #9aa0ab; }
-.lb-rank.bronze { color: #cd7f32; }
+.lb-rank.gold {
+  color: #f7a800;
+}
+.lb-rank.silver {
+  color: #9aa0ab;
+}
+.lb-rank.bronze {
+  color: #cd7f32;
+}
 
 .lb-avatar {
   width: 36px;
@@ -995,10 +1063,18 @@ body {
 }
 
 /* ─── ANIMATIONS ──────────────────────────────────────────── */
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.15s; }
-.card:nth-child(3) { animation-delay: 0.2s; }
-.card:nth-child(4) { animation-delay: 0.25s; }
+.card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.card:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.card:nth-child(4) {
+  animation-delay: 0.25s;
+}
 
 /* ─── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 1100px) {

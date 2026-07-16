@@ -38,6 +38,8 @@
 // ============================================
 
 // import { Activity, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import "./dash_home.css";
 // interface DashboardData {
 //   greeting: string;
@@ -105,16 +107,313 @@ function Dash_Home_page() {
           </div>
           {/* ))} */}
         </div>
+        {/* this is the container */}
         <div className="dash_grid_layout">
+          {/* this is the wrapper */}
           <div className="dash_wrapper">
-            <div className="dash_grid">1</div>
-            <div className="dash_grid">2</div>
-            <div className="dash_grid">3</div>
-            <div className="dash_grid">4</div>
-            <div className="dash_grid">5</div>
-            <div className="dash_grid">6</div>
-            <div className="dash_grid">7</div>
-            <div className="dash_grid">8</div>
+            {/* item 1 */}
+
+            <div className="item-1">
+              <div className="item_wrapper">
+                <div className="item_icon">
+                  <FontAwesomeIcon icon={faStar} />
+                </div>
+                <div
+                  className="item_text_up"
+                  style={{ fontFamily: "Times New Roman" }}
+                >
+                  KEEP GOING
+                </div>
+              </div>
+              <div
+                className="item_number"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                56
+              </div>
+              <div
+                className="item_text_down"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                streaks
+              </div>
+            </div>
+            {/* item 2 */}
+            <div className="item-2">
+              <div className="item_wrapper">
+                <div className="item_icon"></div>
+                <div
+                  className="item_text_up"
+                  style={{ fontFamily: "Times New Roman" }}
+                >
+                  +5 new Views
+                </div>
+              </div>
+              <div
+                className="item_number"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                5M
+              </div>
+              <div
+                className="item_text_down"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                Followers
+              </div>
+            </div>
+            {/* item 3 */}
+            <div className="item-3">
+              <div className="item_wrapper">
+                <div className="item_icon"></div>
+                <div
+                  className="item_text_up"
+                  style={{ fontFamily: "Times New Roman" }}
+                >
+                  LEVEL UP
+                </div>
+              </div>
+              <div
+                className="item_number"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                1,056
+              </div>
+              <div
+                className="item_text_down"
+                style={{ fontFamily: "Times New Roman" }}
+              >
+                Coins
+              </div>
+            </div>
+            <div className="item-4">
+              <div className="cal-header">
+                <button className="cal-nav" aria-label="Previous month">
+                  <svg viewBox="0 0 8 14" fill="none">
+                    <path
+                      d="M7 1L1 7l6 6"
+                      stroke="#9a9a9a"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <span className="cal-title">August, 2023</span>
+                <button className="cal-nav" aria-label="Next month">
+                  <svg viewBox="0 0 8 14" fill="none">
+                    <path
+                      d="M1 1l6 6-6 6"
+                      stroke="#9a9a9a"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="cal-grid">
+                <div className="cal-cell weekday">S</div>
+                <div className="cal-cell weekday">M</div>
+                <div className="cal-cell weekday">T</div>
+                <div className="cal-cell weekday">W</div>
+                <div className="cal-cell weekday">T</div>
+                <div className="cal-cell weekday">F</div>
+                <div className="cal-cell weekday">S</div>
+
+                <div className="cal-cell faded">29</div>
+                <div className="cal-cell faded">30</div>
+                <div className="cal-cell faded">31</div>
+                <div className="cal-cell">1</div>
+                <div className="cal-cell">2</div>
+                <div className="cal-cell">3</div>
+                <div className="cal-cell">4</div>
+
+                <div className="cal-cell">5</div>
+                <div className="cal-cell">6</div>
+                <div className="cal-cell">7</div>
+                <div className="cal-cell">8</div>
+                <div className="cal-cell">9</div>
+                <div className="cal-cell">10</div>
+                <div className="cal-cell">11</div>
+
+                <div className="cal-cell">12</div>
+                <div className="cal-cell">13</div>
+                <div className="cal-cell">14</div>
+                <div className="cal-cell">15</div>
+                <div className="cal-cell">16</div>
+                <div className="cal-cell active">
+                  <span>17</span>
+                </div>
+                <div className="cal-cell">18</div>
+
+                <div className="cal-cell">19</div>
+                <div className="cal-cell">20</div>
+                <div className="cal-cell">21</div>
+                <div className="cal-cell">22</div>
+                <div className="cal-cell">23</div>
+                <div className="cal-cell">24</div>
+                <div className="cal-cell">25</div>
+
+                <div className="cal-cell">26</div>
+                <div className="cal-cell">27</div>
+                <div className="cal-cell">28</div>
+                <div className="cal-cell">29</div>
+                <div className="cal-cell">30</div>
+                <div className="cal-cell">31</div>
+                <div className="cal-cell faded">1</div>
+              </div>
+            </div>
+            <div className="item-5">
+              <div className="chart">
+                <div className="chart-header">
+                  <p className="chart-title">Hours Activity</p>
+                  <div className="period-dropdown">
+                    Weekly
+                    <svg viewBox="0 0 10 6" fill="none">
+                      <path
+                        d="M1 1l4 4 4-4"
+                        stroke="#4a4a4a"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="increase-row">
+                  <div className="increase-badge">
+                    <svg viewBox="0 0 12 12" fill="none">
+                      <path
+                        d="M2 10L10 2M10 2H4M10 2V8"
+                        stroke="#2fb463"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <span className="increase-text">
+                    <strong>+3%</strong> increase than last week
+                  </span>
+                </div>
+
+                <div className="chart-body">
+                  <div className="y-axis">
+                    <span>8h</span>
+                    <span>6h</span>
+                    <span>4h</span>
+                    <span>2h</span>
+                    <span>1h</span>
+                  </div>
+
+                  <div className="bars-area">
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "62%" }}></div>
+                      <span className="bar-label">Su</span>
+                    </div>
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "78%" }}></div>
+                      <span className="bar-label">Mo</span>
+                    </div>
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "34%" }}></div>
+                      <span className="bar-label">Tu</span>
+                    </div>
+                    <div className="bar-col">
+                      <div
+                        className="bar active"
+                        style={{ height: "85%" }}
+                      ></div>
+                      <div className="tooltip">
+                        <div className="tooltip-row">
+                          <span className="tooltip-clock">🕐</span> 6h 45 min
+                        </div>
+                        <div className="tooltip-row">
+                          <span className="tooltip-dot"></span> 5 Jan 2023
+                        </div>
+                      </div>
+                      <span className="bar-label">We</span>
+                    </div>
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "68%" }}></div>
+                      <span className="bar-label">Th</span>
+                    </div>
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "18%" }}></div>
+                      <span className="bar-label">Fr</span>
+                    </div>
+                    <div className="bar-col">
+                      <div className="bar" style={{ height: "62%" }}></div>
+                      <span className="bar-label">Sa</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="item-6">
+              <div className="leader-container">
+                <div className="title">🏆 Leadership Board</div>
+
+                <div className="row rank-1">
+                  <div className="row-left">
+                    <div className="icon">JD</div>
+                    <div className="name-con">
+                      <div className="name">user name</div>
+                      <div className="level">LEVEL 5</div>
+                    </div>
+                  </div>
+                  <div className="position">1st</div>
+                </div>
+
+                <div className="row rank-2">
+                  <div className="row-left">
+                    <div className="icon">JD</div>
+                    <div className="name-con">
+                      <div className="name">user name</div>
+                      <div className="level">LEVEL 5</div>
+                    </div>
+                  </div>
+                  <div className="position">2nd</div>
+                </div>
+
+                <div className="row rank-3">
+                  <div className="row-left">
+                    <div className="icon">JD</div>
+                    <div className="name-con">
+                      <div className="name">user name</div>
+                      <div className="level">LEVEL 5</div>
+                    </div>
+                  </div>
+                  <div className="position">3rd</div>
+                </div>
+
+                <div className="row rank-other">
+                  <div className="row-left">
+                    <div className="icon">JD</div>
+                    <div className="name-con">
+                      <div className="name">user name</div>
+                      <div className="level">LEVEL 5</div>
+                    </div>
+                  </div>
+                  <div className="position">4th</div>
+                </div>
+
+                <div className="row rank-other">
+                  <div className="row-left">
+                    <div className="icon">JD</div>
+                    <div className="name-con">
+                      <div className="name">user name</div>
+                      <div className="level">LEVEL 5</div>
+                    </div>
+                  </div>
+                  <div className="position">5th</div>
+                </div>
+              </div>
+            </div>
+            <div className="item-7">7</div>
           </div>
         </div>
       </div>

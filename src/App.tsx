@@ -22,7 +22,7 @@ import Dash_Home_page from "./pages/Dashboard/userDashboard/Dash_components/Dash
 import My_courses from "./pages/Dashboard/userDashboard/Dash_components/Dash_my_courses/My_courses";
 import Messages from "./pages/Dashboard/userDashboard/Dash_components/Dash_massage/Messages";
 import Library from "./pages/Dashboard/userDashboard/Dash_components/Dash_Library/Library";
-
+import SignUp from "./pages/Signup/SignUp";
 import Home from "./pages/Home";
 import UniversityPage from "./pages/UniversityPage/UniversityPage";
 import Discover from "./pages/Discover/Discover";
@@ -68,7 +68,7 @@ function AppContent() {
           <Route path="library" element={<Library />} />
         </Route>
         <Route path="/whats-new" element={<WhatsNew />} />
-        {/* <Route path="/signup" element={<SignUp />} /> */}
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/getStarted" element={<GetStarted />} />
         <Route path="/university/:slug" element={<UniversityPage />} />
